@@ -1,0 +1,173 @@
+body,html{
+    width: 100%;
+    height: 100%;
+}
+.userlogin{
+   
+    width: 100%;
+    height: 100%;
+    background: url('../assets/images/用户登录2.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    min-width: 1040px;
+    
+    .userlogin-box{
+       
+        width: 1030px;
+        height: 600px;
+        // background: pink;
+        position: absolute;
+        top: 140px;
+        right: 0px;
+        display: flex;
+        .userlogin-box-left{
+            border-top-left-radius: 15px;
+        border-bottom-left-radius:15px;
+           flex: 2;
+            height:600px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            .w{
+                border-top-left-radius: 5px;
+                border-bottom-left-radius:5px;
+                width: 65%;
+                height: 470px;
+                // background: black;
+                margin:  auto;
+                // border: 1px solid black;
+                // display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                .logo1{
+                    display: flex;
+                    background: url('../assets/images/logo1.png') no-repeat center center;
+                    background-size: cover;
+                    width: 130px;
+                    height: 45px;
+                }
+                .word{
+                    display: flex;
+                    font-size: 16px;
+                    color: #ff7d63;
+                    font-weight: 600;
+                    margin-top: 25px;
+                }
+                .form-login{
+                    width: 100%;
+                    margin-top: 60px;
+                    // background: #ff7d63;
+                    height: 300px;
+                    display: flex;
+                    flex-direction: column;
+                    .div{
+                        width: 100%;
+                        height: 40px;
+                        border:1px solid #e6e6e6;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-around;
+                        align-items: center;
+                        margin-top: 20px;
+                        border-radius: 5px;
+                        span{
+                            width: 40px;
+                            height: 20px;
+                            border-right: 1px solid #e6e6e6;
+                            display: flex;
+                        }
+                        .span1{
+                            background: url('../assets/images/用户名.png') no-repeat center center;
+                            background-size: 20px 20px;
+                        }
+                        .span2{
+                            background: url('../assets/images/密码1.png') no-repeat center center;
+                            background-size: 15px 20px;
+                        }
+                        input{
+                            display: flex;
+                            height: 100%;
+                            width: 100%;
+                            // background: black;
+                            border-radius: 5px;
+                            padding: 15px;
+                        }
+                        .button1{
+                            width: 110%;
+                            height: 100%;
+                            border-radius: 5px;
+                            color: #ffffff;
+                            font-size: 16px;
+                            font-weight: 600;
+                            text-align: center;
+                            line-height: 35px;
+                            background: #ff7d63;
+                            border: 1px solid  #ff7d63;
+                        }
+                        .button2{
+                            
+                            width: 110%;
+                            height: 100%;
+                            border-radius: 5px;
+                            color: #ffffff;
+                            font-size: 16px;
+                            font-weight: 600;
+                            text-align: center;
+                            line-height: 35px;
+                            background: #5070ff;
+                            border: 1px solid  #5070ff;
+                        }
+                    }
+                    .div1{
+                        width: 100%;
+                        height: 40px;
+                        position: relative;
+                        p{
+                            color: #999999;
+                            font-size: 14px;
+                            font-weight: 500; 
+                            position: absolute;
+                            right: 0;
+                        }
+                    }
+                    .div2{
+                        width: 100%;
+                        height: 60px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        i{
+                            display: flex;
+                            flex: 4;
+                            background: url('../assets/images/矩形4.png') no-repeat center center;
+                            background-size: cover;
+                            height: 2px;
+                        }
+                        p{
+                           
+                            flex: 2;
+                            height: 20px;
+                           text-align: center;
+                           color: #999999;
+                           font-size: 18px;
+                           font-weight: 500;
+                           line-height: 20px;
+                        }
+                    }
+                    
+                }
+            }
+           
+        }
+        .userlogin-box-right{
+            display: flex;
+            height: 600px;
+            flex: 3;
+            background: yellow;
+            background: url('../assets/images/user背景.png') no-repeat center center;
+            background-size: cover;
+        }
+    }
+}
