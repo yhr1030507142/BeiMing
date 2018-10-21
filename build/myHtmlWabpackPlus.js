@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const webpack = require('webpack')
 module.exports=[
     new HtmlWebpackPlugin({
         filename: 'index.html',
@@ -31,5 +32,9 @@ module.exports=[
         // necessary to consistently work with multiple chunks via CommonsChunkPlugin
         chunksSortMode: 'dependency',
         chunks:['manifest','vendor','user']
-      })
+      }),
+    　　new webpack.ProvidePlugin({
+    　　　　jQuery: "jquery",
+    　　　　$: "jquery"
+    　　}),
 ]

@@ -12,7 +12,21 @@
             </div>
 
             <div class="tableData">
-                <table class="data" style="border-collapse:separate; border-spacing:0 10px;">
+                  <el-table :data="data" stripe style="width: 100%"   @selection-change="handleSelectionChange">
+        <el-table-column  type="selection"  width="55"> </el-table-column>
+                <el-table-column   prop="id"  label="反馈编号" width="180"> </el-table-column>
+                <el-table-column prop="kind" label="反馈类型" width="180"> </el-table-column>
+                <el-table-column prop="name" label="反馈信息"></el-table-column>
+                <el-table-column prop="order_money" label="属性1"></el-table-column>
+                <el-table-column prop="sell_name" label="属性2"></el-table-column>
+                <el-table-column fixed="right" label="操作" width="100">
+                 <template slot-scope="scope">
+                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                 <el-button type="text" size="small">编辑</el-button>
+                    </template>
+                </el-table-column>
+                </el-table>
+                <!-- <table class="data" style="border-collapse:separate; border-spacing:0 10px;">
                     <thead>
                         <tr>
                             <th>反馈编号</th>
@@ -36,7 +50,7 @@
                             </tr>
                     </tbody>
                    
-                </table>
+                </table> -->
     
             </div>
         </div>
@@ -49,6 +63,17 @@ import mockdata from "../Mock/mock";
       data() {
         return {
           data: [],
+            form: {
+            id: '',
+            kind: '',
+            name: '',
+            property: '',
+            delivery: false,
+            type: [],
+            resource: '',
+            desc: ''
+           },
+           formLabelWidth: '120px'
         }
       },
       methods:{
@@ -57,7 +82,10 @@ import mockdata from "../Mock/mock";
                     this.data=res.data
                     console.log(this.data)
                 })            
-          } 
+          },
+            handleSelectionChange(val) {
+                console.log(val)
+            }      
       },
       mounted(){
           this.getData()

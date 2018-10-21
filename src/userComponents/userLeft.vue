@@ -16,8 +16,11 @@ export default {
             leftMenu:[
                 {to:'/userIndex/userRightMain',url:require('../assets/images/用户每日菜品选中.png'),url1:require('../assets/images/用户每日菜品未选.png'),backgroundSize:'45px 30px'},
                 {to:'/userIndex/userFeedBack',url:require('../assets/images/用户意见选中.png'),url1:require('../assets/images/用户意见未选.png'),backgroundSize:'40px 35px'},
-             
-            ],
+                {to:'/userIndex/userOrder',url:require('../assets/images/订单管理.png'),url1:require('../assets/images/订单管理未选.png'),backgroundSize:'40px 35px'},
+                {to:'/userIndex/userCart',url:require('../assets/images/购物车.png'),url1:require('../assets/images/购物车未选.png'),backgroundSize:'40px 35px'},
+                {to:'/userIndex/userSearch',url:require('../assets/images/商品查询1.png'),url1:require('../assets/images/商品查询.png'),backgroundSize:'40px 35px'},
+                {to:'/userIndex/userEvaluate',url:require('../assets/images/菜品评价.png'),url1:require('../assets/images/菜品评价未选.png'),backgroundSize:'40px 35px'},      
+           ],
            
             
         

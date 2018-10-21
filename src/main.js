@@ -12,9 +12,12 @@ import ElementUI from 'element-ui'
 import  'element-ui/lib/theme-chalk/index.css';
 import './assets/sass/base.scss'
 import './Mock/mock'
+import ImgInputer from 'vue-img-inputer'
+import 'vue-img-inputer/dist/index.css'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(vuex)
+Vue.component('ImgInputer', ImgInputer)
 Vue.prototype.$http=axios
 Vue.config.productionTip = false
 const router = new VueRouter({

@@ -4,7 +4,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const myHtmlWabpackPlus = require('./myHtmlWabpackPlus')
-
+const webpack = require("webpack") 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -38,7 +38,9 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-    }
+      
+    },
+    
   },
   module: {
     rules: [
@@ -96,5 +98,7 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
-  plugins:myHtmlWabpackPlus
+  plugins:myHtmlWabpackPlus,
+ 
+
 }

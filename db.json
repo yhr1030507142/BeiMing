@@ -1,55 +1,206 @@
 {
-	"data": [{
-			"id": 1,
-			"img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-			"kind": "东北菜",
-			"name": "锅包肉",
-			"property": "XXXXXX"
-		},
-		{
-			"id": 2,
-			"img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-			"kind": "川菜",
-			"name": "辣子鸡",
-			"property": "XXXXXX"
-		}
-	],
-	"menuData":[
-		{
-		"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-		"name":"抄手",
-		"num":1
-		},
-		{
-			"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-			"name":"锅包肉",
-			"num":2
-			},
-			{
-				"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-				"name":"大包子",
-				"num":1
-				},
-				{
-					"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-					"name":"馒头",
-					"num":1
-					},
-					{
-						"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-						"name":"花卷",
-						"num":1
-						},
-						{
-							"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-							"name":"油条",
-							"num":1
-							},
-							{
-								"pic":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
-								"name":"花卷",
-								"num":1
-								}
-	]
-	
+  "data": [
+    {
+      "id": 1,
+      "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "kind": "东北菜",
+      "name": "锅包肉",
+      "property": "XXXXXX"
+    },
+    {
+      "id": 2,
+      "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "kind": "川菜",
+      "name": "辣子鸡",
+      "property": "XXXXXX"
+    }
+  ],
+  "menuData": [
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "抄手",
+      "num": 1
+    },
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "锅包肉",
+      "num": 2
+    },
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "大包子",
+      "num": 1
+    },
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "馒头",
+      "num": 1
+    },
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "花卷",
+      "num": 1
+    },
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "油条",
+      "num": 1
+    },
+    {
+      "pic": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539083106396&di=87dec52060ff3523530effbe3211a4b7&imgtype=0&src=http://imgsrc.baidu.com/imgad/pic/item/9213b07eca8065389480578e9ddda144ac3482c1.jpg",
+      "name": "花卷",
+      "num": 1
+    }
+  ],
+  "userLogin": [
+    {
+      "name": "yhr123456",
+      "password": "123465"
+    }
+  ],
+  "register": [
+    {
+      "username": ""
+    }
+  ],
+  "order": [
+    {
+      "order_no": "123456789",
+      "order_create_date": "2018-10-16",
+      "order_status": 1,
+      "order_money": "100",
+      "sell_name": "杨力力"
+    },
+    {
+      "order_no": "123456789",
+      "order_create_date": "2018-10-16",
+      "order_status": 1,
+      "order_money": "100",
+      "sell_name": "杨力力"
+    },
+    {
+      "order_no": "123456789",
+      "order_create_date": "2018-10-16",
+      "order_status": 1,
+      "order_money": "100",
+      "sell_name": "杨力力"
+    },
+    {
+      "order_no": "123456789",
+      "order_create_date": "2018-10-16",
+      "order_status": 1,
+      "order_money": "100",
+      "sell_name": "杨力力"
+    },
+    {
+      "order_no": "123456789",
+      "order_create_date": "2018-10-16",
+      "order_status": 1,
+      "order_money": "100",
+      "sell_name": "杨力力"
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "name": "yhr",
+      "brand": "apple",
+      "img": "http://ordfm6aah.bkt.clouddn.com/shop/1.jpeg",
+      "sales": 1000,
+      "cost": 1288,
+      "color": "白色"
+    },
+    {
+      "id": 2,
+      "name": "yhr2",
+      "brand": "apple2",
+      "img": "http://ordfm6aah.bkt.clouddn.com/shop/2.jpeg",
+      "sales": 1000,
+      "cost": 1288,
+      "color": "白色"
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    }
+  ],
+  "cart1":{
+    "code": 100, 
+    "msg": "处理成功", 
+    "info": {
+        "shoppingCarInfo": [
+                      {
+                          "shopName": "闯码头", 
+                          "matchMenuDate": "2018-10-15", 
+                          "matchMenuTime": "午餐", 
+                          "menuDtos": [
+                              {
+                                  "shoppingCarId": 1, 
+                                  "matchMenuNum": 100, 
+                                  "menuName": "小面", 
+                                  "menuPicPath": "http://58.87.104.133:8080/upload/20180920/111709.jpg", 
+                                  "shoppingCarMenuNum": 4, 
+                                  "menuPrice": 19, 
+                                  "menuPropertiesCategoryName": "蒸菜", 
+                                  "menuPropertiesStyleName": "鲁菜", 
+                                  "menuPropertiesTasteName": "酸"
+                              },
+                              {
+                                "shoppingCarId": 2, 
+                                "matchMenuNum": 200, 
+                                "menuName": "抄手", 
+                                "menuPicPath": "http://58.87.104.133:8080/upload/20180920/111709.jpg", 
+                                "shoppingCarMenuNum": 2, 
+                                "menuPrice": 123, 
+                                "menuPropertiesCategoryName": "蒸菜", 
+                                "menuPropertiesStyleName": "鲁菜", 
+                                "menuPropertiesTasteName": "酸"
+                            }
+                          ]
+                      },
+                      {
+                        "shopName": "杨国力包子铺", 
+                        "matchMenuDate": "2018-10-28", 
+                        "matchMenuTime": "午餐", 
+                        "menuDtos": [
+                            {
+                                "shoppingCarId": 1, 
+                                "matchMenuNum": 100, 
+                                "menuName": "饺子", 
+                                "menuPicPath": "http://58.87.104.133:8080/upload/20180920/111709.jpg", 
+                                "shoppingCarMenuNum": 12, 
+                                "menuPrice": 19, 
+                                "menuPropertiesCategoryName": "蒸菜", 
+                                "menuPropertiesStyleName": "鲁菜", 
+                                "menuPropertiesTasteName": "酸"
+                            },
+                            {
+                              "shoppingCarId": 1, 
+                              "matchMenuNum": 100, 
+                              "menuName": "苏格兰打卤面", 
+                              "menuPicPath": "http://58.87.104.133:8080/upload/20180920/111709.jpg", 
+                              "shoppingCarMenuNum": 2, 
+                              "menuPrice": 123, 
+                              "menuPropertiesCategoryName": "蒸菜", 
+                              "menuPropertiesStyleName": "鲁菜", 
+                              "menuPropertiesTasteName": "酸"
+                          }
+                        ]
+                    }
+                  ]
+              }
+  }
+   
+
 }

@@ -21,48 +21,93 @@
                             <p>or</p>
                             <i></i>
                         </div>
-                          <div class="div" style="margin-top:0px;"><button class="button2">新用户注册</button></div>
+                          <div class="div" style="margin-top:0px;"><button class="button2" @click="register()" >新用户注册</button></div>
                     </div>
                 </div>
             </div>
             <div class="userlogin-box-right"></div>
         
         </div>
+
+
+
+<el-dialog  :visible.sync="dialogFormVisible" width="550px">
+            <userRegister></userRegister>
+</el-dialog>
     </div>
+    
 </template>
 <script>
+import userRegister from './userRegister'
 export default {
     data(){
         return{
             username:'',
-            password:''
+            password:'',
+            dialogFormVisible: this.$store.state.face,
+       
         }
+    },
+    components:{
+        userRegister
     },
     methods:{
         denglu(){
-            this.$http.post('/api/liugaoyang/login',
-               { 
-                    userId:this.username,
-                    password:this.password
-                },
+              this.$router.push('./userIndex')
+            if(this.username==""||this.username==null){
+                       this.$message({
+                      message: '用户名不能为空',
+                      type: 'warning'
+                     });
+                     return false
+                }
+                 if(this.username.length<6){
+                       this.$message({
+                      message: '用户名格式不正确',
+                      type: 'warning'
+                     });
+                     return false
+                }
+            if(this.password==''){
+                 this.$message({
+                      message: '密码不能为空',
+                      type: 'warning'
+                     });
+                      return false
+            }  
+             let param = new URLSearchParams()
+        param.append('empNo', this.username)
+     
+        param.append('userPwd', this.password) 
+            this.$http.post('/api/liugaoyang/user/login',param,  
             ).then((res)=>{
                 console.log(res)
-                console.log(res.data.code)
-                 console.log(res.data.info.message)
+                // console.log(res.data.code)
+                // console.log(res.data.info.message)
+                 
                  if(res.data.code==100){
-                       this.$message({
-                      message: '恭喜你，搭配成功',
+                    this.userInfo = res.data.info.userInfo;
+
+                    this.$message({
+                      message: res.data.msg,
                       type: 'success'
                      });
+                     window.sessionStorage.userInfo = JSON.stringify(this.userInfo);
                      this.$router.push('./userIndex')
                  }else{
                       this.$message({
-                      message: '登录失败',
+                      message: res.data.msg,
                       type: 'warning'
                      });
                  }
             })
             // this.$router.push('./userIndex')
+        },
+        register(){
+            // this.dialogFormVisible= true,
+            console.log(this.$store.state.face)
+               this.$store.commit('changeFaceT')
+               this.dialogFormVisible=this.$store.state.face
         }
     }
 }

@@ -11,6 +11,10 @@ import ElementUI from 'element-ui'
 import  'element-ui/lib/theme-chalk/index.css';
 import './assets/sass/base.scss'
 import './Mock/mock'
+import ImgInputer from 'vue-img-inputer'
+import 'vue-img-inputer/dist/index.css'
+import $ from 'jquery'
+Vue.component('ImgInputer', ImgInputer)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(vuex)
