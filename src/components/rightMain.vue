@@ -103,9 +103,7 @@
         <!-- 添加模态框开始 -->
             <el-dialog  :visible.sync="dialogFormVisible" width="500px">
             <el-form :model="form" ref="form">
-            <el-form-item label="菜品编号" :label-width="formLabelWidth">
-             <el-input v-model="form.menuNo" autocomplete="off" style="width:250px;"></el-input>
-            </el-form-item>
+          
 
             <el-form-item label="菜品名称" :label-width="formLabelWidth">
              <el-input v-model="form.menuName" autocomplete="off" style="width:250px;"></el-input>
@@ -138,9 +136,7 @@
             <input type="file" ref="fileImg">         
              </el-form-item>
             
-             <el-form-item label="商铺ID" :label-width="formLabelWidth">
-             <el-input v-model="form.shopId" autocomplete="off" style="width:250px;"></el-input>
-            </el-form-item>
+             
 
              </el-form>
              <div slot="footer" class="dialog-footer" style="text-align:center">
@@ -157,9 +153,7 @@
              <el-input v-model="updateForm.shopId" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
 
-            <el-form-item label="菜品编号" :label-width="formLabelWidth">
-             <el-input v-model="updateForm.menuNo" autocomplete="off" style="width:250px;"></el-input>
-            </el-form-item>
+          
              <el-form-item label="菜品名称" :label-width="formLabelWidth">
              <el-input v-model="updateForm.menuName" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
@@ -224,6 +218,8 @@ import Qs from 'qs'
           menuPropertiesStyle:'',
           menuPropertiesTaste:'',
           menuPropertiesCategory:'',
+          imgUpdate:'',
+          aa:'',
            form: {
             menuName:'',
             menuPropertiesCategoryId:'',
@@ -255,24 +251,22 @@ import Qs from 'qs'
         }
       },
       methods:{
-          getData(){
-                this.$http.get('/api/liangsijie/menu/findAllByPage',{params:{
-                    currentPage:3,
-                    pageSize:2
-                    }}).then((res)=>{
-                    // this.data=res.data
-                   console.log(res)
-                })            
-          },
+        //   getData(){
+        //         this.$http.post('/api/liangsijie/menu/findAllByPage',{params:{
+        //             currentPage:3,
+        //             pageSize:2
+        //             }}).then((res)=>{
+        //             // this.data=res.data
+        //            console.log(res)
+        //         })            
+        //   },
           getpage(){
-              this.$http.get('/api/liangsijie/menu/findAllByPage',{
-                  params:{
-                      currentPage:this.currentPage,
-                      pageSize:this.pageSize,  
-                  }
-              }).then((res)=>{
-                    this.data=res.data.list
-                    this.total=res.data.total
+              let param =new URLSearchParams
+              param.append('pageNum',this.currentPage)
+              param.append('pageSize',this.pageSize)
+              this.$http.post('/api/liangsijie/menu/findAllByPage',param).then((res)=>{
+                    this.data=res.data.info.info.list
+                    this.total=res.data.info.info.total
                     console.log(res)
               })
           },
@@ -282,22 +276,23 @@ import Qs from 'qs'
                  this.getpage()
           },
           search(){
-             this.$http.get('/api/liangsijie/menu/findAllByPage',{
-                  params:{
-                      currentPage:this.currentPage,
-                      pageSize:this.pageSize,  
-                      menuName:this.dishName
+              console.log(1)
+            let param =new URLSearchParams
+              param.append('pageNum',this.currentPage)
+              param.append('pageSize',this.pageSize)
+              param.append('menuName',this.dishName)
+             this.$http.post('/api/liangsijie/menu/findAllByPage',param
+              ).then((res)=>{
+                  if(res.data.code == 100){
+                     this.data=res.data.info.info.list
+                     this.total=res.data.info.info.total
                   }
-              }).then((res)=>{
-                     this.data=res.data.list
-                     this.total=res.data.total
-                    console.log(res)
               })
              
           },
           sizeChange(val){
               this.pageSize=val
-              this.getpage()
+              this.search()
           },
         handleSelectionChange(val) {
             console.log(val)
@@ -326,7 +321,10 @@ import Qs from 'qs'
         updateOk(){
                  let aa = this.$refs.imgFile
                  let reader =new FileReader();  
-                 let img1=aa.files[0]; 
+                  let img2=aa.files[0]; 
+
+                 this.imgUpdate =img2
+                 this.aa = aa
                  let img =new FormData()
                   var max_size = 300;
                  if(this.updateForm.menuNo==""){
@@ -373,14 +371,14 @@ import Qs from 'qs'
                         return false
                 }
               
-                if(img1 == undefined){
+                if(this.imgUpdate == undefined){
                 this.$message({
                       message:'图片不能为空',
                       type: 'warning'
                         });     
                         return false
                 }
-                 if(!/.(gif|jpg|jpeg|png|gif|jpg|png)$/.test(aa.value)){
+                 if(!/.(gif|jpg|jpeg|png|gif|jpg|png)$/.test(this.aa.value)){
                      this.$message({
                       message:'图片类型必须是.gif,jpeg,jpg,png中的一种',
                       type: 'warning'
@@ -388,7 +386,7 @@ import Qs from 'qs'
                         return false
                      
                      }
-                if (img1.size > max_size * 1024) {
+                if (this.imgUpdate.size > max_size * 1024) {
                       this.$message({
                       message:'图片大小不能超过300k',
                       type: 'warning'
@@ -403,13 +401,11 @@ import Qs from 'qs'
                         });     
                         return false
                 }
-                 img.append('uploadPic',img1)
+                 img.append('uploadPic',this.imgUpdate)
                  img.append('menuPropertiesCategory.menuPropertiesCategoryId',this.updateForm.menuPropertiesCategoryId)
                  img.append('menuPropertiesStyle.menuPropertiesStyleId',this.updateForm.menuPropertiesStyleId)
                  img.append('menuPropertiesTaste.menuPropertiesTasteId',this.updateForm.menuPropertiesTasteId)
-                 img.append('shop.shopId',this.updateForm.shopId)
                  img.append('menuPrice',this.updateForm.menuPrice)
-                 img.append('menuNo',this.updateForm.menuNo)
                  img.append('menuName',this.updateForm.menuName)
                  img.append('menuId',this.updateForm.menuId)
             this.$http.post('/api/liangsijie/menu/update',img).then((res)=>{
@@ -418,6 +414,11 @@ import Qs from 'qs'
                  this.$message({
                       message:'更新成功',
                       type: 'success'
+                        });     
+                     }else{
+                          this.$message({
+                      message:res.data.msg,
+                      type: 'warning'
                         });     
                      }
                       this.getpage()
@@ -519,17 +520,12 @@ import Qs from 'qs'
         addDishMenu(){
                 // let aa= this.form.imgFile 
                   let aa = this.$refs.fileImg
-                 let reader =new FileReader();  
                  let img1=aa.files[0]; 
+                 this.imgUpdate = img1
+                 this.aa = aa
                  let img =new FormData()
                   var max_size = 300;
-                    if(this.form.menuNo==""){
-                     this.$message({
-                      message:'菜品编号不能为空',
-                      type: 'warning'
-                        });     
-                        return false
-                }
+                 
                  if(this.form.menuName==""){
                      this.$message({
                       message:'菜品名称不能为空',
@@ -589,21 +585,13 @@ import Qs from 'qs'
                         });     
                         return false
                  }
-                  if(this.form.shopId==""){
-                     this.$message({
-                      message:'商铺编号不能为空',
-                      type: 'warning'
-                        });     
-                        return false
-                }
+                 
                 console.log(aa.value)
                  img.append('uploadPic',img1)
                  img.append('menuPropertiesCategory.menuPropertiesCategoryId',this.form.menuPropertiesCategoryId)
                  img.append('menuPropertiesStyle.menuPropertiesStyleId',this.form.menuPropertiesStyleId)
-                 img.append('menuPropertiesTaste.menuPropertiesTasteId',this.form.menuPropertiesTasteId)
-                 img.append('shop.shopId',this.form.shopId)
+                 img.append('menuPropertiesTaste.menuPropertiesTasteId',this.form.menuPropertiesTasteId)             
                  img.append('menuPrice',this.form.menuPrice)
-                 img.append('menuNo',this.form.menuNo)
                  img.append('menuName',this.form.menuName)
             this.$http.post('/api/liangsijie/menu/add',img).then((res)=>{
                 console.log(res)

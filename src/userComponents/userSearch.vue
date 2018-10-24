@@ -8,46 +8,44 @@
             </div>
             <div style="width:100%">
                  <el-carousel :interval="4000" type="card" height="300px">
-                <el-carousel-item v-for="item in pic" :key="item">
-                <!-- <h3>{{ item }}</h3> -->
-                <img :src="item.name" alt="" style="width:100%;height:100%">
+                <el-carousel-item v-for="(v,i) in pic" :key="i">
+                
+                <img :src="v" alt="" style="width:100%;height:100%">
                 </el-carousel-item>
-            </el-carousel>
+                </el-carousel>
             </div>
-            <div class="table">
-                    <el-input placeholder="请输入内容" v-model="inputSearch" class="input-with-select" style="width:380px;">
-                  <el-select v-model="select" slot="prepend" placeholder="请选择" style="width:90px;">
-                    <el-option label="餐厅名" value="1"></el-option>
-                    <el-option label="订单号" value="2"></el-option>
-                    <el-option label="用户电话" value="3"></el-option>
-                  </el-select>
-                  <el-button slot="append" icon="el-icon-search"></el-button>
+            <div >
+                    <el-input placeholder="请输入菜品名" v-model="inputSearch" class="input-with-select" style="width:380px;">
+                  <!-- <el-select v-model="select" slot="prepend" placeholder="请选择" style="width:90px;">
+                    <el-option label="菜品名称" value="1"></el-option>
+                    <el-option label="店铺名" value="2"></el-option>
+                    
+                  </el-select> -->
+                  <el-button slot="append" icon="el-icon-search" @click="searchShopName()"></el-button>
                 </el-input>
+                
+                <div>
+                    <ul class="ul1"><li class="type style" @click="searchAll()">全部</li></ul>    
+                    <ul class="ul1"><li class="type">类型：</li><li class="style" v-for="(v,i) in menuPropertiesCategory" :key="i" @click="searchCategory(v.menuPropertiesCategoryId)">{{v.menuPropertiesCategoryName}}</li></ul>    
+                    <ul class="ul1"><li class="type">菜系：</li><li class="style" v-for="(v,i) in menuPropertiesStyle" :key="i" @click="searchStyle(v.menuPropertiesStyleId)">{{v.menuPropertiesStyleName}}</li></ul>    
+                    <ul class="ul1"><li class="type">口味：</li><li class="style" v-for="(v,i) in menuPropertiesTaste" :key="i" @click="searchTaste(v.menuPropertiesTasteId)">{{v.menuPropertiesTasteName}}</li></ul>                       
+                   
+                    
+                </div> 
             </div>
 
-            <div class="tableData">
+            <div class="tableData" style="margin-top:30px;">
                 <ul class="ul">
-                    <li class="li">
-                        <a href="#"><img src="https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg" alt=""></a>
-                        <a href="#" class="aa"><i>￥</i><p>3000</p></a>
-                        <p>名字：大馅包子</p>
-                        <a href="#" class="bb">商铺：杨国力包子铺</a>
+                    <li   v-for="(v,i) in data" :key="i">
+                       <router-link tag="a" class="li" :to="'userGoods/'+v.menuId">
+                             <a href="#"><img :src="v.menuPicPath" alt=""></a>
+                             <a href="#" class="aa"><i>￥</i><p>{{v.menuPrice}}</p></a>
+                             <p>名字：{{v.menuName}}</p>
+                             <a href="#" class="bb">商铺：{{v.shop.shopName}}</a>
+                       </router-link>
+                      
+                        
                     </li>
-                     <li class="li"></li>
-                      <li class="li"></li>
-                       <li class="li"></li>
-                        <li class="li"></li>
-                         <li class="li"></li>
-                          <li class="li"></li>
-                      <li class="li"></li>
-                       <li class="li"></li>
-                        <li class="li"></li>
-                         <li class="li"></li>
-                          <li class="li"></li>
-                      <li class="li"></li>
-                       <li class="li"></li>
-                        <li class="li"></li>
-                         <li class="li"></li>
                 </ul>
                  
             </div>
@@ -56,58 +54,82 @@
 </template>
 
 <script>
-import mockdata from "../Mock/mock";
     export default {
       data() {
         return {
+            data:[],
             inputSearch:'',
             select:'1',
+            menuPropertiesTaste:[],
+            menuPropertiesStyle:[],
+            menuPropertiesCategory:[],
             pic:[
-                {name:'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg'},
-                {name:'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg'},
-                {name:'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg'}
-
-
+               'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg',
+                'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg',
+                'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg'
             ],
-          data: [],
-            form: {
-            id: '',
-            kind: '',
-            name: '',
-            property: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: ''
-           },
-           formLabelWidth: '120px'
         }
       },
       methods:{
-          getData(){
-                this.$http.get('/api/localhost/data').then((res)=>{
-                    this.data=res.data
-                    console.log(this.data)
-                })            
+          getdata(){
+               this.$http.post('/api/liangsijie/menu/findAllMenuInfo').then(res=>{
+                    this.data = res.data.info.info
+                    
+                    // console.log(res)
+              })
+           
           },
-            handleSelectionChange(val) {
-                console.log(val)
-            }      
+          searchAll(){
+              this.getdata()
+          },
+          searchCategory(val){
+              console.log(val)
+              let param = new URLSearchParams
+              param.append('menuPropertiesCategoryId',val)
+              this.$http.post('/api/liangsijie/findAllByMenuPropertiesCategoryId',param).then(res=>{
+                  console.log(res)
+                     this.data = res.data.info.Info
+              }) 
+          },
+          searchShopName(){
+               let param = new URLSearchParams
+              param.append('menuName',this.inputSearch)
+              this.$http.post('/api/liangsijie/menu/fuzzySearch',param).then(res=>{
+                  console.log(res)
+                     this.data = res.data.info.menuInfo
+              }) 
+          }
+
       },
       mounted(){
-          this.getData()
+          this.getdata()
+           //   口味
+              this.$http.post('/api/liangsijie/menuPropertiesTaste').then(res=>{
+                    this.menuPropertiesTaste = res.data.info.menuPropertiesCategories
+                    console.log(this.menuPropertiesTaste )
+              })
+            // 种类
+               this.$http.post('/api/liangsijie/menuPropertiesCategory').then(res=>{
+                    this.menuPropertiesCategory = res.data.info.menuPropertiesCategories
+                    console.log(this.menuPropertiesTaste )
+              })
+            //   菜系
+               this.$http.post('/api/liangsijie/menuPropertiesStyle').then(res=>{
+                    this.menuPropertiesStyle = res.data.info.menuPropertiesCategories
+                    console.log(this.menuPropertiesTaste )
+              }) 
       }
     }
   </script>
 <style lang="scss" scoped>
 @import '../assets/sass/feedback.scss';
-.el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 200px;
-    margin: 0;
-  }
+// .el-carousel__item h3 {
+//     color: #475669;
+//     font-size: 14px;
+//     opacity: 0.75;
+//     line-height: 200px;
+//     margin: 0;
+//   }
   
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
@@ -173,6 +195,31 @@ import mockdata from "../Mock/mock";
             
              
            
+        }
+    }
+
+    .ul1{
+        width: 100%;
+        height: 30px;
+        border-bottom: 1px solid #e8e2e1;
+        margin-top: 15px;
+        li{
+            float: left;
+            font-size: 16px;
+            margin-left: 12px;
+        }
+        .type{
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+        }
+        .style{
+             font-size: 14px;
+            color: #999;
+            &:hover{
+                color: #f60;
+                cursor: pointer;
+            }
         }
     }
 </style>

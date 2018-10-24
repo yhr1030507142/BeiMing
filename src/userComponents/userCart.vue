@@ -6,27 +6,35 @@
                    <p>Hi,UserName</p>
                      <p>快来看看您的购物车吧！</p>
             </div>
-            <div class="table">
+            <!-- <div class="table">
                    <div class="table">
                     <input  placeholder="请输入内容" class="search-input">
                     <button class="search-button"><i class="iconfont"></i></button>
                     </div>
-            </div>
+            </div> -->
+            <div style="height:20px;width:100%"></div>
             <div class="tableData" ref="tabData">
                 <div v-for="(v,i) in this.CartData.shoppingCarInfo" :key="i" style="width:100%;height:auto;border:1px solid black;margin-top:20px;">
-                <!-- <p>店铺名称:{{v.shopName}}</p>
+                <p>店铺名称:{{v.shopName}}</p>
                 <p>订餐日期:{{v.matchMenuDate}}</p>
                 <p>订餐类型:{{v.matchMenuTime}}</p>
-                {{i}} -->
                
-            <el-table :data="v.menuDtos" stripe style="width: 100%"  @selection-change="handleSelectionChange" >
+               
+            <el-table :data="v.menuDtos" stripe style="width: 100%"  @selection-change="handleSelectionChange">
                     
-                    <el-table-column  label="num">
+                 <!-- <el-table-column  label="num">
                    <template slot-scope="scope">   
                     <span style="margin-left: 10px">{{i}}</span>
                     </template>    
+                 </el-table-column>  -->
+                <el-table-column  type="selection"  width="55" :key="i" :selectable='checkboxInit'> </el-table-column>
+                  
+                   <el-table-column   label="是否选择">
+                   <template slot-scope="scope">   
+                    <span style="margin-left: 10px">{{scope.row.check}}</span>
+                    </template>    
                  </el-table-column> 
-                    <el-table-column  type="selection"  width="55" :key="i"> </el-table-column>
+
                 <el-table-column   label="菜品编号">
                    <template slot-scope="scope">   
                     <span style="margin-left: 10px">{{scope.row.shoppingCarId}}</span>
@@ -64,15 +72,19 @@
                     </template>  
                 </el-table-column>
                   <el-table-column label="菜品数量"  width="180">
-                    <template slot-scope="scope">   
-                       
-                <el-input-number v-model="scope.row.shoppingCarMenuNum" size="mini" controls-position="right" @change="handleChange" :min="1" ></el-input-number>
+                    <template slot-scope="scope">        
+                <el-input-number v-model="scope.row.shoppingCarMenuNum" size="mini" controls-position="right" @change="handleChange(scope.row,scope.row.shoppingCarMenuNum)" :min="1" ></el-input-number>
                     </template>  
                 </el-table-column>
                  
                   <el-table-column label="菜品总价">
                     <template slot-scope="scope">   
                        <span style="margin-left: 10px" ref="price">{{scope.row.shoppingCarMenuNum,scope.row.menuPrice |samllPrice}}</span>
+                    </template>  
+                </el-table-column>
+                   <el-table-column label="菜品状态">
+                    <template slot-scope="scope">   
+                       <span style="margin-left: 10px" ref="price">{{scope.row.statusInfo}}</span>
                     </template>  
                 </el-table-column>
                 <el-table-column  label="操作" width="100">
@@ -85,8 +97,8 @@
                 </el-table-column>
                 </el-table>
                 <div style="width:100%;height:60px;text-align:right;margin-top:20px;">
-                    <el-button style="float:right;margin-right:20px;" type="danger" @click="allPrice(v,i)">结算</el-button>
-                <p style="float:right;font-size:24px;color:#f60;margin-right:20px;"  v-show="aa" @click="allPrice(v,i)">点击计算总计:￥ {{v.price}}</p>
+                    <el-button style="float:right;margin-right:20px;" type="danger" @click="account(v,i)">结算</el-button>
+                <p style="float:right;font-size:24px;color:#f60;margin-right:20px;"  v-show="aa" @click="allPrice(v,i)">点击更新总计:￥ {{v.price}}</p>
                 </div>
 
                 </div> 
@@ -120,13 +132,16 @@
                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
              </div>
         </el-dialog>
-        
+        <el-dialog  :visible.sync="dialogFormVisible1" width="550px" :modal="false">
+                        <photo></photo>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 import mockdata from "../Mock/mock";
 import product_data from '../Mock/produce'
+import photo from './photo'
     export default {
       data() {
         return {
@@ -145,7 +160,12 @@ import product_data from '../Mock/produce'
           pp:'',
           price1 : 0,
           price:0,
-            aa:true,
+          aa:true,
+          arr:[],
+          all:0,
+          multipleSelection:[],
+          i:'',
+          dialogFormVisible1:false,
     form: {
             menuName: '546',
             order_create_date: '',
@@ -193,55 +213,133 @@ import product_data from '../Mock/produce'
             //     this.product = product_data.find(item => item.id === this.id)
             //     console.log(this.product)
             // },500)
-            //  this.$http.get('/api/yang/shopCar/list').then((res)=>{
-             this.$http.get('/api/localhost/cart1').then((res)=>{
+              this.$http.get('/api/gouwuche/shopCar/list').then((res)=>{
+            //  this.$http.get('/api/localhost/cart1').then((res)=>{
 
                 // console.log(res.data.info)
                 this.CartData=res.data.info
+
              for(var i =0 ;i< this.CartData.shoppingCarInfo.length;i++){
-                 this.$set(this.CartData.shoppingCarInfo[i],'price',0)
-                //   console.log(this.CartData.shoppingCarInfo)
+                
+                 this.$set(this.CartData.shoppingCarInfo[i],'price',this.all)
+              
                 }
+                let arr =[]
+             for(var i =0 ;i< this.CartData.shoppingCarInfo.length;i++){
+                    arr[i] = this.CartData.shoppingCarInfo[i].menuDtos
+                   
+                }
+                let arr1 = []
+                 for(var j =0;j<arr.length;j++){
+                        for(var m =0 ;m<arr[j].length;m++){
+                             this.$set(arr[j][m],'check',false)   
+                        }             
+                }
+                //  console.log(arr)
+                 this.arr = arr
                 // console.log(this.CartData)           
             })        
               
         },
+        checkboxInit(row,index){
+             if (row.statusInfo=="信息过期") 
+                return 0;//不可勾选
+             else
+                return 1;//可勾选
+        },
          handleSelectionChange(val) {
-           console.log(val)
-           this.price = 0;
-
-            for(var j in val){
-                console.log(j)
-                this.price += val[j].menuPrice* val[j].shoppingCarMenuNum                       
-            }
+        //    console.log(val)
+           for(var i in val){
+               val[i].check =true
+           }
             },
             allPrice(v,i){
-                for(var n= 0;n<this.CartData.shoppingCarInfo.length;n++){
-                 if(n == i){
-                    //  this.$set(this.CartData.shoppingCarInfo[n],'price',this.price1)
-                     v.price = this.price
-                 }    
+               let arr =[]
+               let pArr= 0
+                for(var j= 0;j<v.menuDtos.length;j++){
+                    if(v.menuDtos[j].check==true){
+                    pArr += (v.menuDtos[j].menuPrice)*(v.menuDtos[j].shoppingCarMenuNum)
+                    }
                 }
+                v.price = pArr   
             },
-        handleChange(value) {
-        console.log(value);
+          
+          account(v,i){
+              this.dialogFormVisible1=true
+            //    let arr =[]
+            //    let pArr= 0
+                // for(var j= 0;j<v.menuDtos.length;j++){
+                    // if(v.menuDtos[j].check==true){
+                    // arr.push({matchMenu:{matchMenuId:v.menuDtos[j].matchMenuId},orderMenuNum:v.menuDtos[j].shoppingCarMenuNum})  
+                    // pArr += (v.menuDtos[j].menuPrice)*(v.menuDtos[j].shoppingCarMenuNum)
+                    // }
+                // }
+                // console.log(JSON.stringify(arr))
+                // console.log(pArr)
+                // v.price = pArr
+                // console.log(v)
+                        //  let param = new URLSearchParams
+                        //  param.append('orderMenus',JSON.stringify(arr))
+                        //  param.append('snapData','')
+                        //  this.$http.post('/api/yangguoli/cq1024/order/add',param).then(res=>{
+                            //  console.log(res)
+                        //   if(res.data.code == 100){
+                            //  this.$message({
+                            //    type:'success',
+                            //    message:'下单成功'
+                            //  })
+                            // }else{
+                            //    this.$message({
+                                //    type:'info',
+                                //    message:res.data.msg
+                                //  })
+                            // }
+                    //   })
+            },
+        handleChange(a,b) {
+                console.log(a.shoppingCarId);
+                console.log(b)
+                let param =new URLSearchParams
+                param.append('shoppingCarMenuNum',b)
+                param.append('shoppingCarId',a.shoppingCarId)
+                this.$http.post('/api/gouwuche/shopCar/update',param).then((res)=>{
+                    console.log(res.data.msg)
+                })
       },
        handleDelete(index,row) {
            console.log(index)
                 console.log(row);
                  console.log(row[index].shoppingCarId);
-                this.$http.delete('/api/yang/shoppingCar/'+row[index].shoppingCarId).then((res)=>{
-                    console.log(res.msg)
+         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+             }).then(() => {
+                   this.$http.get('/api/gouwuche/shopCar/delete/'+row[index].shoppingCarId).then((res)=>{
+                    console.log(res.data.msg)
+                    if(res.data.code==100){
+                        this.$message({
+                            type:"success",
+                            message:res.data.msg
+                        })
+                           row.splice(index,1);
+                    }else{
+                        this.$message({
+                            type:"warning",
+                            message:res.data.msg
+                        })
+                    }
                 })
-                 row.splice(index,1);
+            }).catch(() => {
+             this.$message({
+               type: 'info',
+               message: '已取消删除'
+             });          
+        }); 
             },
         setPrice(){
-           
             var arr1 = this.CartData.shoppingCarInfo
-           
-           
-        }     
-         
+        }      
       },
       filters:{
            samllPrice(a,b){
@@ -274,14 +372,17 @@ import product_data from '../Mock/produce'
                    price += arr[i].menuPrice*arr[i].shoppingCarMenuNum
               }
               return price
-          }
-          
+          },
+   
       },
       mounted(){
         //    this.$store.dispatch('getCartList')
            this.getMenuData()
          
-      }
+      },
+       components:{
+              photo
+          }
     }
   </script>
 <style lang="scss" scoped>

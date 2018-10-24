@@ -5,7 +5,7 @@
                         <div class="registerLogo"></div>
                         <p class="word">欢迎来到北明食堂</p>
                     </div>
-                <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="form">
+                <el-form :model="ruleForm2" ref="ruleForm2" status-icon :rules="rules2"  label-width="100px" class="form">
                    <el-form-item label="员工号:" prop="userNo">
                     <el-input type="text" v-model="ruleForm2.userNo" autocomplete="off" style="width:250px;"></el-input>
                   </el-form-item>
@@ -19,13 +19,13 @@
                    <img-inputer v-model="ruleForm2.imgFile" theme="light" size="5px" :on-change="chooseImg" type="file" accept="image/png,image/gif,image/jpeg"/>  
                   </el-form-item>
                     <el-form-item label="人脸识别:">
-                            <a @click="shibie()" >开始识别</a>
+                            <a @click="shibie()" >开始识别</a><p>{{text}}</p>
                   </el-form-item>
                   <!-- <input type="file" @change='tijiao()' ref="fileImg"> -->
                    <!-- <input class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="update"/> -->
                 </el-form>
                 <!-- <div class="photo" v-show="$store.state.face"></div> -->
-                 <div class="div1"><button class="button1" @click="registerCheck()">注册</button></div>
+                 <div class="div1"><button class="button1" @click="register()">注册</button></div>
                   <div class="div1"><p>已有账号？请登录</p></div>
                 </div>
                   <!-- <router-view></router-view> -->
@@ -72,6 +72,7 @@ import photo from './photo'
         dialogVisible: false,
         dialogFormVisible1:false,
         photoBase:'',
+        text:'',
         ruleForm2: {
           userNo: '',
           userPass: '',
@@ -126,8 +127,9 @@ import photo from './photo'
             //上传照片时将图片转为base64
 	          let file = this.ruleForm2.imgFile 
 	          let reader = new FileReader()
-            let img = new FormData()
-            img.append('avatar', this.$refs.avatarInput.files[0])
+              let img = new Image()
+
+            // img.append('avatar', this.$refs.avatarInput.files[0])
 	          // 读取图片
 	          reader.readAsDataURL(file)
 	          // 读取完毕后的操作
@@ -194,9 +196,44 @@ import photo from './photo'
       },
       shibie(){
           this.dialogFormVisible1=true
+          this.$store.state.photoBox=false
       },
       registerCheck(){   
-      if(this.ruleForm2.userNo==''||this.ruleForm2.userNo.length<6){
+    
+        
+          // console.log("this.photoBase"+this.photoBase)
+          // console.log("this.ruleForm2.bases"+this.ruleForm2.base)
+
+        let param = new URLSearchParams()
+        param.append('empNo', this.ruleForm2.userNo)
+        param.append('snapData', this.photoBase) 
+        param.append('base64Data', this.ruleForm2.base) 
+         this.$http.post('/api/shexiangtou/user/registervalidate',param).then((res)=>{
+            console.log(res.data.code)
+            if(res.data.code==100){
+              console.log(100)
+                this.text="识别成功"
+            }else{
+               this.text="识别失败，请重新识别"
+                 this.$message({
+                      message: res.data.msg,
+                      type: 'warning'
+                     });     
+            }
+            
+        },(err)=>{
+            console.log(err)
+            this.$message({
+                      message: err.data.msg,
+                      type: 'warning'
+                     });     
+        })
+
+        
+      
+      },
+      register(){
+          if(this.ruleForm2.userNo==''||this.ruleForm2.userNo.length<6){
         this.$message({
                   message: '员工号格式不正确',
                   type: 'warning'
@@ -231,51 +268,58 @@ import photo from './photo'
                      });
                         return false
         }
-        else{
-        let param = new URLSearchParams()
-        param.append('empNo', this.ruleForm2.userNo)
-        param.append('snapData', this.photoBase) 
-        param.append('base64Data', this.ruleForm2.base) 
-         this.$http.post('/api/liugaoyang/user/registervalidate',param).then((res)=>{
-            console.log(res.data.code)
-            if(res.data.code==100){
-              console.log(1)
-                this.register()
-            }else{
-                 this.$message({
-                      message: res.data.msg,
-                      type: 'warning'
-                     });     
-            }
-            
-        },(err)=>{
-            console.log(err)
+        if( this.text!="识别成功"){
             this.$message({
-                      message: err.data.msg,
+                      message: '人脸识别失败',
                       type: 'warning'
-                     });     
-        })
-
+                     });
+                        return false
         }
-      
-      },
-      register(){
-        console.log(1)
+        else{
+           console.log(1)
          let param = new URLSearchParams()
         param.append('empNo', this.ruleForm2.userNo)
         param.append('userPwd', this.ruleForm2.userPass) 
-        this.$http.post('/api/liugaoyang/user/register',param).then((res)=>{
-              this.$message({
-                      message: '注册成功',
+        this.$http.post('/api/shexiangtou/user/register',param).then((res)=>{
+          if(res.data.code==100){
+             this.$message({
+                      message: res.data.msg,
                       type: 'success'
                      });
+                   setTimeout(() => {
+                    
+              this.$store.state.face=false
+                    
+
+                   }, 3000);
+          }else{
+             this.$message({
+                      message: res.data.msg,
+                      type: 'warning'
+                     });
+             setTimeout(() => {
+                //  location.reload();
+                //  this.ruleForm2.userNo='',
+                //       this.ruleForm2.userPass='',
+                    this.photoBase='',
+                     this.ruleForm2.base=''
+              this.$refs['ruleForm2'].resetFields();
+              this.$store.state.face=false
+                     
+                   }, 3000);
+
+          }
+             
         },(err)=>{
+          this.text='系统异常'
            this.$message({
                       message: res.data.msg,
                       type: 'warning'
                      });
         })
       }
+        }
+       
     
     
     },
@@ -288,15 +332,28 @@ import photo from './photo'
       },
       test(){
          return this.$store.state.test
+      },
+       photoBox(){
+         return this.$store.state.photoBox
       }
     },
     watch:{
       baseChange(val){
          this.photoBase = this.$store.state.base64
         console.log("监听到摄像头图片传值")
+        this.registerCheck()
       },
       test(val){
         console.log(val)
+      },
+      photoBox(val){
+        console.log('关闭摄像头')
+        if(this.$store.state.photoBox == true){
+          this.dialogFormVisible1=false
+        }
+         
+        
+      
       }
 
     }

@@ -20,7 +20,7 @@ module.exports = {
       },
       '/api/liugaoyang': {
           changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
-          target: 'http://192.168.0.121:9002/',// 接口的域名
+          target: 'http://192.168.0.121:9012/',// 接口的域名
           pathRewrite: {
             '^/api/liugaoyang': ''//后面可以使重写的新路径，一般不做更改
           }
@@ -34,23 +34,30 @@ module.exports = {
         },
         '/api/yangguoli': {
           changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
-          target: 'https://jsonplaceholder.typicode.com/posts/',// 接口的域名
+          target: 'http://192.168.0.198:15000/',// 接口的域名
           pathRewrite: {
             '^/api/yangguoli': ''//后面可以使重写的新路径，一般不做更改
           }
         },
-        '/api/yang': {
+        '/api/gouwuche': {
           changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
-          target: 'http://192.168.0.110:8003/',// 接口的域名
+          target: 'http://192.168.0.222:8003/',// 接口的域名
           pathRewrite: {
-            '^/api/yang': ''//后面可以使重写的新路径，一般不做更改
+            '^/api/gouwuche': ''//后面可以使重写的新路径，一般不做更改
           }
         },
         '/api/liangsijie': {
           changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
-          target: ' http://192.168.0.206:6001/',// 接口的域名
+          target: 'http://192.168.0.187:6002/',// 接口的域名
           pathRewrite: {
             '^/api/liangsijie': ''//后面可以使重写的新路径，一般不做更改
+          }
+        },
+        '/api/feedback': {
+          changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
+          target: ' http://192.168.0.222:8005/',// 接口的域名
+          pathRewrite: {
+            '^/api/feedback': ''//后面可以使重写的新路径，一般不做更改
           }
         },
         

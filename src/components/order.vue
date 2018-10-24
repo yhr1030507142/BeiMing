@@ -7,56 +7,114 @@
                      <p>来看看订单吧！</p>
             </div>
             <div class="table">
-                   <div class="table">
-                    <input  placeholder="请输入内容" class="search-input" @click="search()">
-                    <button class="search-button"><i class="iconfont"></i></button>
-                    </div>
-            </div>
+                   <div class="block" style="float:left">
+   
+    <el-date-picker
+      v-model="dateValue"
+      value-format="yyyy-MM-dd"
+      type="daterange"
+      align="right"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      @change="changDate"
+      :picker-options="pickerOptions">
+    </el-date-picker>
 
-            <div class="tableData">
-                <el-table :data="orderData" stripe style="width: 100%">
-                <el-table-column   prop="order_no"  label="订单编号" width="180"> </el-table-column>
-                <el-table-column prop="order_create_date" label="下单时间" width="180"> </el-table-column>
-                <el-table-column prop="order_status" label="订单状态"></el-table-column>
-                <el-table-column prop="order_money" label="订单金额"></el-table-column>
-                <el-table-column prop="sell_name" label="买家姓名"></el-table-column>
+     
+  </div>
+<div style="float:left">
+     <el-select v-model="orderStatusId" slot="prepend" placeholder="请选择" @change="changSelect">
+      <el-option label="全部订单"  :value='0' ></el-option>                   
+      <el-option :label="v.orderStatusName"  :value="v.orderStatusId" v-for="(v,i) in statusArr" :key="i"></el-option>      
+    </el-select>
+</div>
+
+            </div>
+            <div class="tableData">          
+    <el-table :data="orderData" style="width: 100%">    
+    
+     <el-table-column type="expand">     
+         <template slot-scope="props">
+               <el-table ref="multipleTable" :data="props.row.orderMenuDtos" tooltip-effect="dark" style="width: 100%">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column  label="菜品ID">
+    <template slot-scope="scope">{{ scope.row.menuId }}</template>
+    </el-table-column>
+
+    <el-table-column  label="菜品名称">
+    <template slot-scope="scope">{{ scope.row.menuName }}</template>
+    </el-table-column>
+
+    <el-table-column  label="菜品单价">
+    <template slot-scope="scope">{{ scope.row.menuPrice }}</template>
+    </el-table-column>
+
+     <el-table-column  label="菜品数量">
+    <template slot-scope="scope">{{ scope.row.menuNum }}</template>
+    </el-table-column>
+
+
+    
+  </el-table>
+       
+                <!-- <div v-for="(v,i) in props.row.orderMenuDtos" :key="i">
+                        {{v.menuId}}
+                </div> -->
+                <!-- {{props.row.orderMenuDtos}} -->
+         </template>
+    </el-table-column>
+    
+                <el-table-column prop="orderNo"  label="订单编号" width="180"> </el-table-column>
+                <el-table-column prop="orderCreateDate" label="下单时间" width="180"> </el-table-column>
+                <el-table-column prop="orderStatusName" label="订单状态"></el-table-column>
+                <el-table-column prop="totalPrice" label="订单总金额"></el-table-column>
+                <el-table-column prop="empName" label="买家姓名"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                  <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                 <el-button type="text" size="small">编辑</el-button>
-                    </template>
+                 <!-- <el-button type="text" size="small" @click="handleClick(scope.row)">编辑</el-button> -->
+                </template>
                 </el-table-column>
-                </el-table>
+    </el-table>
             </div>          
         </div>
         <el-dialog  :visible.sync="dialogFormVisible" width="500px">
             <el-form :model="form">
             <el-form-item label="订单编号" :label-width="formLabelWidth">
-             <el-input v-model="form.order_no" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.orderNo" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
              <el-form-item label="下单时间" :label-width="formLabelWidth">
-             <el-input v-model="form.order_create_date" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.orderCreateDate" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
              <el-form-item label="订单状态" :label-width="formLabelWidth">
-             <el-input v-model="form.order_status" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.orderStatusName" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
-             <el-form-item label="订单金额" :label-width="formLabelWidth">
-             <el-input v-model="form.order_money" autocomplete="off" style="width:250px;"></el-input>
+             <el-form-item label="订单总金额" :label-width="formLabelWidth">
+             <el-input v-model="form.totalPrice" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
-            <el-form-item label="商铺编号" :label-width="formLabelWidth">
-             <el-input v-model="form.name" autocomplete="off" style="width:250px;"></el-input>
+            <el-form-item label="买家名臣" :label-width="formLabelWidth">
+             <el-input v-model="form.empName" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
             <el-form-item label="商铺名称" :label-width="formLabelWidth">
-             <el-input v-model="form.name" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.shopName" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
             </el-form>
              <div slot="footer" class="dialog-footer" style="text-align:center">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                 <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button @click="changeOrder(form.btn1Url)" v-show="form.btn1">{{form.btn1}}</el-button>
+                <el-button @click="changeOrder(form.btn1Ur2)" v-show="form.btn2">{{form.btn2}}</el-button>   
              </div>
         </el-dialog>
-        <el-pagination background :page-sizes="[1,5,10,15,20]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
+        <div>
+        <el-pagination background :page-sizes="[1,2,5]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
+
+        </div>
     </div>
+
 </template>
 
 <script>
@@ -67,7 +125,7 @@ import mockdata from "../Mock/mock";
           data: [],
         //分页数据开始
           total:5,//默认数据总数
-          pageSize:1,//每页的数据条数
+          pageSize:2,//每页的数据条数
           currentPage:1,//默认开始页面
         //分页数据结束
           value1: '',
@@ -79,26 +137,99 @@ import mockdata from "../Mock/mock";
           orderData:[],
           dialogFormVisible:false,
           orderMinute:[],
+          orderDataChildren:[],
+          arr:[],
+        //   日期
+          dateValue:[],
+          orderStatusId:0,
+        //   状态接口
+          statusArr:[],
+          start:'',
+          end:'',
     form: {
-            order_no: '',
-            order_create_date: '',
-            order_status: '',
-            order_money: '',
+            orderNo: '',
+            orderCreateDate: '',
+            orderStatusName: '',
+            totalPrice: '',
+            empName:'',
+            shopName:'',
+            btns:[],
+            btn1:'',
+            btn2:'',
+            btn1Url:'',
+            btn1Ur2:'',
             delivery: false,
             type: [],
             resource: '',
             desc: ''
            },
-           formLabelWidth: '120px'
+           formLabelWidth: '120px',
+    
+    pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+              console.log(picker)
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
         }
+        
       },
       methods:{
         handleClick(row) {
+            console.log(row)
             this.dialogFormVisible=true
-            this.orderMinute=row
-            this.form.order_no=row.order_no
-            console.log(row.order_no);
+            this.code = row.orderNo
+              this.$http.get('/api/yangguoli/cq1024/order/details/'+this.code).then(res=>{
+                    console.log(res.data.info.orderDto)
+                     this.arr = res.data.info.orderDto
+                        this.form.orderNo = this.arr.orderNo
+                        this.form.orderCreateDate=this.arr.orderCreateDate
+                        this.form.orderStatusName=this.arr.orderStatusName,
+                        this.form.totalPrice=this.arr.totalPrice
+                        this.form.empName=this.arr.empName
+                        this.form.shopName=this.arr.shopName
+                        this.form.btns=this.arr.btns
+                       this.form.btn1 =this.arr.btns.btn1Name
+                       this.form.btn1Url=this.arr.btns.btn1Url
+                        this.form.btn2 =this.arr.btns.btn2Name
+                       this.form.btn1Ur2=this.arr.btns.btn2Url
+            console.log(row.orderNo);
+
+                })
+                console.log(this.arr)
+            
+          
         },
+            changDate(value){
+              console.log(value)
+              let value1= value[0]
+              let value2= value[1]
+              this.start = value1
+              this.end =value2
+              this.getpage()    
+          },
         clickCheck(){
             console.log(1)
             if(this.check==true){
@@ -108,22 +239,53 @@ import mockdata from "../Mock/mock";
               }
             
         },
-           open2() {
+       open2() {
         this.$message({
           message: '恭喜你，搭配成功',
           type: 'success'
         });
       },
         getpage(){
-            this.$http.get('/api/localhost/order',{
+          if(this.start == '' || this.end ==''){
+            this.$http.get('/api/yangguoli/cq1024/order/list',{
                   params:{
-                      pageNum:this.currentPage,
-                      pageSize:this.pageSize,               
+                      currentPage:this.currentPage,
+                      pageSize:this.pageSize, 
+                      statusId: this.orderStatusId          
                   }
                   }).then((res=>{
-                this.orderData=res.data
-                console.log(res)
+                    console.log(res)
+                this.orderData=res.data.info.orders.list
+                this.total =res.data.info.orders.total
+                // this.orderDataChildren=res.data.info.orders.list
+                let arr =[];
+                for(var i = 0;i<this.orderData.length;i++){
+                        arr[i]=this.orderData[i].orderMenuDtos
+                }
+                 this.orderDataChildren = arr
             }))
+          }else{
+               this.$http.get('/api/yangguoli/cq1024/order/list',{
+                  params:{
+                      currentPage:this.currentPage,
+                      pageSize:this.pageSize, 
+                      start:this.start,
+                      end:this.end,
+                      statusId: this.orderStatusId          
+                  }
+                  }).then((res=>{
+                    console.log(res)
+                this.orderData=res.data.info.orders.list
+                this.total =res.data.info.orders.total
+                // this.orderDataChildren=res.data.info.orders.list
+                let arr =[];
+                for(var i = 0;i<this.orderData.length;i++){
+                        arr[i]=this.orderData[i].orderMenuDtos
+                }
+                 this.orderDataChildren = arr
+            }))
+          }
+      
         },
           handleCurrentChange(val){
                 this.currentPage = val;
@@ -136,15 +298,62 @@ import mockdata from "../Mock/mock";
           sizeChange(val){
               this.pageSize=val
               this.getpage()
+          },
+        //   订单修改
+          changeOrder(val){
+              console.log(val)
+              this.$http.get('/api/yangguoli'+'cq1024'+val+'/'+this.code,{
+                  params:{
+                      snapData:''
+                  }
+              }).then(res=>{
+                    console.log(res)
+              })
+          },
+        //   更改下拉状态
+          getSelectData(){
+                this.$http.get('/api/yangguoli/cq1024/order/status').then(res=>{
+                    if(res.data.code==100){
+                    this.statusArr = res.data.info.orderStatuses
+                    }
+                     
+                })
+            
+          },
+
+          changSelect(val){
+             console.log(val)
+             if(val == 0){
+                this.orderStatusId = 0
+             }else{
+                this.orderStatusId = this.statusArr[val-1].orderStatusId
+                console.log(this.orderStatusId)
+             }
+                
+                 this.getpage()
           }
          
       },
+
       mounted(){
           this.getpage()
+          this.getSelectData()
       }
     }
   </script>
 <style lang="scss" scoped>
-@import '../assets/sass/rightMain.scss'
+@import '../assets/sass/rightMain.scss';
+.demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 </style>
 

@@ -22,7 +22,7 @@ export default[
         {path:'userCart',name:'userCart',component:userCart},
         {path:'userOrder',name:'userOrder',component:userOrder}, 
         {path:'userSearch',name:'userSearch',component:userSearch},
-        {path:'userGoods',name:'userGoods',component:userGoods},
+        {path:'userGoods/:id',name:'userGoods',component:userGoods},
         {path:'userEvaluate',name:'userEvaluate',component:userEvaluate}
 
     ]}

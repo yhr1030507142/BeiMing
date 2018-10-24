@@ -12,6 +12,7 @@ const state ={
     cartList:[],
     base64:'',
     userNo:'',
+    photoBox:'',
 }
 
 const getters ={
