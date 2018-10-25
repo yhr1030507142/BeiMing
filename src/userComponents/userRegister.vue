@@ -27,6 +27,7 @@
                 <!-- <div class="photo" v-show="$store.state.face"></div> -->
                  <div class="div1"><button class="button1" @click="register()">注册</button></div>
                   <div class="div1"><p>已有账号？请登录</p></div>
+                  <button @click="resetForm('ruleForm2')">resetForm</button>
                 </div>
                   <!-- <router-view></router-view> -->
                   <el-dialog  :visible.sync="dialogFormVisible1" width="550px" :modal="false">
@@ -180,6 +181,9 @@ import photo from './photo'
           }
         });
       },
+      clearValidate(formName) {
+        this.$refs[formName].clearValidate();
+      },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
@@ -301,15 +305,13 @@ import photo from './photo'
                 //  location.reload();
                 //  this.ruleForm2.userNo='',
                 //       this.ruleForm2.userPass='',
-                    this.photoBase='',
-                     this.ruleForm2.base=''
-              this.$refs['ruleForm2'].resetFields();
+                    // this.photoBase='',
+                    //  this.ruleForm2.base=''
+            
               this.$store.state.face=false
                      
                    }, 3000);
-
-          }
-             
+          }       
         },(err)=>{
           this.text='系统异常'
            this.$message({
@@ -318,10 +320,11 @@ import photo from './photo'
                      });
         })
       }
-        }
-       
-    
-    
+        },
+      clearValidate(formName) {
+      this.$refs[formName].clearValidate();
+      },
+
     },
     components:{
       photo
@@ -336,6 +339,7 @@ import photo from './photo'
        photoBox(){
          return this.$store.state.photoBox
       }
+     
     },
     watch:{
       baseChange(val){
@@ -351,13 +355,9 @@ import photo from './photo'
         if(this.$store.state.photoBox == true){
           this.dialogFormVisible1=false
         }
-         
-        
-      
-      }
-
-    }
-    
+      },
+  
+    },
   }
 </script>
 

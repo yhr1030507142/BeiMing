@@ -23,7 +23,7 @@ export default[
         {path:'userOrder',name:'userOrder',component:userOrder}, 
         {path:'userSearch',name:'userSearch',component:userSearch},
         {path:'userGoods/:id',name:'userGoods',component:userGoods},
-        {path:'userEvaluate',name:'userEvaluate',component:userEvaluate}
+        {path:'userEvaluate/:id',name:'userEvaluate',component:userEvaluate}
 
     ]}
     

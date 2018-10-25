@@ -298,6 +298,22 @@ import mockdata from "../Mock/mock";
           },
         //   订单修改
           changeOrder(val){
+            console.log(val)
+            if(val == "/order/menus"){
+                this.$http.get('/api/yangguoli'+'cq1024'+val+'/'+this.code,{
+                  params:{
+                      snapData:''
+                  }
+              }).then(res=>{
+                    console.log(res)
+                    let order = res.data.info.orderMenuDtos[0].orderNo
+                 
+                       this.$router.push('userEvaluate/'+order)
+                    //this.$router.push({name:'yaohuiqian'})
+                    // return false
+              })
+                
+            }
               console.log(val)
               this.$http.get('/api/yangguoli'+'cq1024'+val+'/'+this.code,{
                   params:{

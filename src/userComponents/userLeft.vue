@@ -19,7 +19,7 @@ export default {
                 {to:'/userIndex/userOrder',url:require('../assets/images/订单管理.png'),url1:require('../assets/images/订单管理未选.png'),backgroundSize:'40px 35px'},
                 {to:'/userIndex/userCart',url:require('../assets/images/购物车.png'),url1:require('../assets/images/购物车未选.png'),backgroundSize:'40px 35px'},
                 {to:'/userIndex/userSearch',url:require('../assets/images/商品查询1.png'),url1:require('../assets/images/商品查询.png'),backgroundSize:'40px 35px'},
-                {to:'/userIndex/userEvaluate',url:require('../assets/images/菜品评价.png'),url1:require('../assets/images/菜品评价未选.png'),backgroundSize:'40px 35px'},      
+                // {to:'/userIndex/userEvaluate',url:require('../assets/images/菜品评价.png'),url1:require('../assets/images/菜品评价未选.png'),backgroundSize:'40px 35px'},      
            ],
            
             
