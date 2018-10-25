@@ -6,19 +6,15 @@
                    <p>Hi,UserName</p>
                      <p>快来看看您的购物车吧！</p>
             </div>
-            <!-- <div class="table">
-                   <div class="table">
-                    <input  placeholder="请输入内容" class="search-input">
-                    <button class="search-button"><i class="iconfont"></i></button>
-                    </div>
-            </div> -->
             <div style="height:20px;width:100%"></div>
             <div class="tableData" ref="tabData">
-                <div v-for="(v,i) in this.CartData.shoppingCarInfo" :key="i" style="width:100%;height:auto;border:1px solid black;margin-top:20px;">
-                <p>店铺名称:{{v.shopName}}</p>
+                <div v-for="(v,i) in this.CartData.shoppingCarInfo" :key="i" style="width:100%;height:auto;background:#fff;border-radius:10px;margin-bottom:20px;">
+                <!-- <p style="font-size:14px;font-weight:600">店铺名称:{{v.shopName}}</p>
                 <p>订餐日期:{{v.matchMenuDate}}</p>
-                <p>订餐类型:{{v.matchMenuTime}}</p>
-               
+                <p>订餐类型:{{v.matchMenuTime}}</p> -->
+               <el-tag type="success">{{v.shopName}}</el-tag>
+                <el-tag type="info">{{v.matchMenuDate}}</el-tag>
+                <el-tag type="warning">{{v.matchMenuTime}}</el-tag>
                
             <el-table :data="v.menuDtos" stripe style="width: 100%"  @selection-change="handleSelectionChange">
                     
@@ -145,6 +141,7 @@ import photo from './photo'
     export default {
       data() {
         return {
+            photoBase:'',
           data: [],
           value1: '',
           pic:require('../assets/images/单选框未选.png'),
@@ -263,38 +260,18 @@ import photo from './photo'
                 }
                 v.price = pArr   
             },
-          
           account(v,i){
-              this.dialogFormVisible1=true
-            //    let arr =[]
-            //    let pArr= 0
-                // for(var j= 0;j<v.menuDtos.length;j++){
-                    // if(v.menuDtos[j].check==true){
-                    // arr.push({matchMenu:{matchMenuId:v.menuDtos[j].matchMenuId},orderMenuNum:v.menuDtos[j].shoppingCarMenuNum})  
-                    // pArr += (v.menuDtos[j].menuPrice)*(v.menuDtos[j].shoppingCarMenuNum)
-                    // }
-                // }
-                // console.log(JSON.stringify(arr))
-                // console.log(pArr)
-                // v.price = pArr
-                // console.log(v)
-                        //  let param = new URLSearchParams
-                        //  param.append('orderMenus',JSON.stringify(arr))
-                        //  param.append('snapData','')
-                        //  this.$http.post('/api/yangguoli/cq1024/order/add',param).then(res=>{
-                            //  console.log(res)
-                        //   if(res.data.code == 100){
-                            //  this.$message({
-                            //    type:'success',
-                            //    message:'下单成功'
-                            //  })
-                            // }else{
-                            //    this.$message({
-                                //    type:'info',
-                                //    message:res.data.msg
-                                //  })
-                            // }
-                    //   })
+               let arr =[]
+               let pArr= 0
+                for(var j= 0;j<v.menuDtos.length;j++){
+                    if(v.menuDtos[j].check==true){
+                    arr.push({matchMenu:{matchMenuId:v.menuDtos[j].matchMenuId},orderMenuNum:v.menuDtos[j].shoppingCarMenuNum})  
+                    pArr += (v.menuDtos[j].menuPrice)*(v.menuDtos[j].shoppingCarMenuNum)
+                    }
+                }
+                 v.price = pArr
+                this.$store.state.accountInfo=arr
+                this.$router.push('userFace')
             },
         handleChange(a,b) {
                 console.log(a.shoppingCarId);
@@ -373,7 +350,17 @@ import photo from './photo'
               }
               return price
           },
+            baseChange(){
+        return this.$store.state.base64
+      },
    
+      },
+      watch:{
+        baseChange(val){
+         this.photoBase = this.$store.state.base64
+        console.log("cart监听到摄像头图片传值")
+       
+      },
       },
       mounted(){
         //    this.$store.dispatch('getCartList')
@@ -386,6 +373,6 @@ import photo from './photo'
     }
   </script>
 <style lang="scss" scoped>
-@import '../assets/sass/rightMain.scss'
+@import '../assets/sass/rightMain.scss';
 </style>
 

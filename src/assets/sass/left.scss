@@ -11,7 +11,10 @@
     left: 0;
     top: 60px;
     width: 100px;
-    min-height: 990px;
+    // min-height: 990px;
+    margin-bottom: -10000px;
+    padding-bottom: 10000px;
+    overflow: hidden;
      border-right: 1px solid #e8e2e1;
      background: #ffffff;
     ul{

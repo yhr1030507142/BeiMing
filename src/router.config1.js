@@ -10,6 +10,7 @@ import userCart from './userComponents/userCart'
 import userSearch from './userComponents/userSearch'
 import userGoods from './userComponents/userGoods'
 import userEvaluate from './userComponents/userEvaluate'
+import userFace from './userComponents/userFace'
 export default[
    
     {path:'/userLogin',name:'userLogin',component:userLogin},
@@ -23,8 +24,8 @@ export default[
         {path:'userOrder',name:'userOrder',component:userOrder}, 
         {path:'userSearch',name:'userSearch',component:userSearch},
         {path:'userGoods/:id',name:'userGoods',component:userGoods},
-        {path:'userEvaluate/:id',name:'userEvaluate',component:userEvaluate}
-
+        {path:'userEvaluate/:id',name:'userEvaluate',component:userEvaluate},
+        {path:'userFace',name:'userFace',component:userFace}
     ]}
     
  ]

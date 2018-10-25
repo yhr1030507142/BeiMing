@@ -14,6 +14,8 @@ const state ={
     userNo:'',
     photoBox:'',
     menuId:'',
+    //全局传递订单结算信息
+    accountInfo:[]
 }
 
 const getters ={

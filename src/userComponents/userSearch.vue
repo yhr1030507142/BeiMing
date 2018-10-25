@@ -9,8 +9,7 @@
             <div style="width:100%">
                  <el-carousel :interval="4000" type="card" height="300px">
                 <el-carousel-item v-for="(v,i) in pic" :key="i">
-                
-                <img :src="v" alt="" style="width:100%;height:100%">
+             <img :src="v.pic" alt="" style="width:100%;height:100%" @click="toPage(v,i)">
                 </el-carousel-item>
                 </el-carousel>
             </div>
@@ -63,19 +62,24 @@
             menuPropertiesTaste:[],
             menuPropertiesStyle:[],
             menuPropertiesCategory:[],
-            pic:[
-               'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg',
-                'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg',
-                'https://img.alicdn.com/bao/uploaded/i7/TB1BaWYNXXXXXaOXVXXdtWs9XXX_035043.jpg'
-            ],
+            pic:[],
+            
         }
       },
       methods:{
           getdata(){
                this.$http.post('/api/liangsijie/menu/findAllMenuInfo').then(res=>{
-                    this.data = res.data.info.info
-                    
-                    // console.log(res)
+                   if(res.data.code == 100){
+                     this.data = res.data.info.info
+                    let a = res.data.info.info.slice(0,5)
+                     for(var i =0 ;i <a.length;i++){
+                     this.pic.push({pic:a[i].menuPicPath,menuId:a[i].menuId})
+                     }
+                    console.log(this.pic)
+                   }else{
+                       console.log(res.data.msg)
+                   }
+                  
               })
            
           },
@@ -87,37 +91,66 @@
               let param = new URLSearchParams
               param.append('menuPropertiesCategoryId',val)
               this.$http.post('/api/liangsijie/findAllByMenuPropertiesCategoryId',param).then(res=>{
-                  console.log(res)
-                     this.data = res.data.info.Info
+                if(res.data.code == 100){
+                        this.data = res.data.info.Info
+                }else{
+                    console.log(res.data.msg)
+                } 
               }) 
+          },
+          searchStyle(val){
+                let param = new URLSearchParams
+              param.append('menuPropertiesTasteId',val)
+              this.$http.post('/api/liangsijie/findAllByMenuPropertiesTasteId',param).then(res=>{
+                if(res.data.code == 100){
+                        this.data = res.data.info.Info
+                }else{
+                    console.log(res.data.msg)
+                }   
+              }) 
+          },
+          searchTaste(val){
+
           },
           searchShopName(){
                let param = new URLSearchParams
               param.append('menuName',this.inputSearch)
               this.$http.post('/api/liangsijie/menu/fuzzySearch',param).then(res=>{
-                  console.log(res)
+                if(res.data.code == 100){
                      this.data = res.data.info.menuInfo
+                }else{
+                    console.log(res.data.msg)
+                }   
               }) 
-          }
-
-      },
-      mounted(){
-          this.getdata()
-           //   口味
-              this.$http.post('/api/liangsijie/menuPropertiesTaste').then(res=>{
+          },
+            getSelectData(){
+           this.$http.post('/api/liangsijie/menuPropertiesTaste').then(res=>{
                     this.menuPropertiesTaste = res.data.info.menuPropertiesCategories
-                    console.log(this.menuPropertiesTaste )
+                    // console.log(this.menuPropertiesTaste )
               })
             // 种类
                this.$http.post('/api/liangsijie/menuPropertiesCategory').then(res=>{
                     this.menuPropertiesCategory = res.data.info.menuPropertiesCategories
-                    console.log(this.menuPropertiesTaste )
+                    // console.log(this.menuPropertiesTaste )
               })
             //   菜系
                this.$http.post('/api/liangsijie/menuPropertiesStyle').then(res=>{
                     this.menuPropertiesStyle = res.data.info.menuPropertiesCategories
-                    console.log(this.menuPropertiesTaste )
+                    // console.log(this.menuPropertiesTaste )
               }) 
+         },
+         toPage(v,i){
+             this.$router.push('userGoods/'+v.menuId)
+         }
+
+      },
+    
+      mounted(){
+          this.getSelectData()
+          this.getdata()
+         
+           //   口味
+             
       }
     }
   </script>
@@ -139,20 +172,26 @@
     background-color: #d3dce6;
   }
 .ul{
+   
     width:100%;
     height:auto;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-around;
     flex-wrap: wrap;
     .li{
          width:220px;
          height:300px;
-         border:1px solid black;
+         border:1px solid #e8e2e1;
          display:flex;
          margin-left: 20px;
-         margin-top: 10px;
+         margin-top: 20px;
+          margin-bottom: 20px;
          flex-direction: column;
+         opacity: .8;
+            &:hover{
+                 opacity: 1;
+            }
             a{
                 display: flex;
                 width: 100%;

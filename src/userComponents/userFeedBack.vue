@@ -25,7 +25,7 @@
                 <textarea name="" cols="200" rows="8" style="font-size:24px;border:1px solid #e8e2e1;border-radius:5px;width:100%;height:300px;" v-model="sugContent"></textarea>
                 <div style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:center;margin-top:30px;">
                      <div style="display:flex">
-                         <el-button type="danger"  style="width:200px;height:40px" @click="addSave">危险按钮</el-button>
+                         <el-button type="danger"  style="width:200px;height:40px" @click="addSave">建议成功</el-button>
                      </div>
                      </div>
                 </div>
