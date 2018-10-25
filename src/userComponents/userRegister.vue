@@ -27,7 +27,7 @@
                 <!-- <div class="photo" v-show="$store.state.face"></div> -->
                  <div class="div1"><button class="button1" @click="register()">注册</button></div>
                   <div class="div1"><p>已有账号？请登录</p></div>
-                  <button @click="resetForm('ruleForm2')">resetForm</button>
+                  <!-- <button @click="resetForm('ruleForm2')">resetForm</button> -->
                 </div>
                   <!-- <router-view></router-view> -->
                   <el-dialog  :visible.sync="dialogFormVisible1" width="550px" :modal="false">
@@ -338,6 +338,10 @@ import photo from './photo'
       },
        photoBox(){
          return this.$store.state.photoBox
+      },
+      face(){
+         return this.$store.state.face
+
       }
      
     },
@@ -356,6 +360,11 @@ import photo from './photo'
           this.dialogFormVisible1=false
         }
       },
+      face(){
+          this.$refs['ruleForm2'].resetFields();
+          this.ruleForm2.imgFile=''
+          this.photoBase=''
+      }
   
     },
   }

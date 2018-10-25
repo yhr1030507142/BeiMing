@@ -322,7 +322,6 @@ import Qs from 'qs'
                  let aa = this.$refs.imgFile
                  let reader =new FileReader();  
                   let img2=aa.files[0]; 
-
                  this.imgUpdate =img2
                  this.aa = aa
                  let img =new FormData()

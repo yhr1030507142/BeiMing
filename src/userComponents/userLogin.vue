@@ -31,7 +31,7 @@
 
 
 
-<el-dialog  :visible.sync="dialogFormVisible" width="550px">
+<el-dialog  :visible.sync="dialogFormVisible" width="550px" :before-close="handleClose">
             <userRegister></userRegister>
 </el-dialog>
     </div>
@@ -108,8 +108,13 @@ export default {
             console.log(this.$store.state.face)
                this.$store.commit('changeFaceT')
                this.dialogFormVisible=this.$store.state.face
+        },
+        handleClose(done){
+            this.$store.state.face = false
+            done()
         }
-    }
+    },
+  
 }
 </script>
 

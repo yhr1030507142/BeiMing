@@ -13,6 +13,7 @@ const state ={
     base64:'',
     userNo:'',
     photoBox:'',
+    menuId:'',
 }
 
 const getters ={

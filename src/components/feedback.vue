@@ -82,8 +82,7 @@ import mockdata from "../Mock/mock";
                          this.data=res.data.info.sugs
                          this.total=res.data.info.total
                     console.log(res.data)
-                    }
-                    
+                    } 
                 })            
           },
            handleCommand(command) {

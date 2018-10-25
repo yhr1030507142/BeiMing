@@ -98,7 +98,7 @@ import mockdata from "../Mock/mock";
                         console.log(res)
                         if(res.data.code==100){
                             this.$message({
-                                type:'sucess',
+                                type:'success',
                                 message:'评价成功'
                             })
                         }else{
