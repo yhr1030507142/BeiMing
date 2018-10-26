@@ -77,7 +77,7 @@ import mockdata from "../Mock/mock";
               param.append('pageSize',this.pageSize)
               param.append('pageNum',this.pageNum)
               param.append('sugType',this.sugType)
-                this.$http.post('/api/feedback/sug/list',param).then((res)=>{
+                this.$http.post('/api1/1024/cq1024/sug/list',param).then((res)=>{
                     if(res.data.code==100){
                          this.data=res.data.info.sugs
                          this.total=res.data.info.total
@@ -91,7 +91,7 @@ import mockdata from "../Mock/mock";
                      param.append('pageSize',this.pageSize)
                      param.append('pageNum',this.pageNum)
                      param.append('sugType',command)
-                     this.$http.post('/api/feedback/sug/list',param).then((res)=>{
+                     this.$http.post('/api1/1024/cq1024/sug/list',param).then((res)=>{
                      if(res.data.code==100){
                          this.data=res.data.info.sugs
                          this.total=res.data.info.total

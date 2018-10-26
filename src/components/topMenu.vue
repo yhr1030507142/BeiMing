@@ -8,12 +8,12 @@
              </div>
         </div>
         <div class="right">
-            <div class="name"><p>UserName</p></div>
-            <div class="pic">
+            <div class="name"><p>{{userName}}</p></div>
+            <div class="pic" @click="toIndex">
                 <a href="#"><img src="../assets/images/01.jpg" alt=""></a>
                 </div>
             <div class="close">
-                <a href="#"></a>
+                <a href="#" @click="loginOut()"></a>
             </div>
         </div>
     </div>
@@ -22,9 +22,40 @@
 export default {
     data(){
         return{
-           
+           info:'',
+           userName:'',
+           shopId:'',
+           shopName:'',
+        }
+        
+    },
+
+    methods:{
+        toIndex(){
+            this.$router.push('/index')
+        },
+         loginOut(){
+            this.$http.post('/api1/1024/cq1024/user/user/loginout').then((res)=>{
+                    console.log(res)
+                    sessionStorage.setItem('info','');
+                    this.$router.push('/login')
+            })
+        },
+        getSession(){
+            this.info = window.sessionStorage.info
+             // console.log('top'+this.info)
+            this.userName = JSON.parse(this.info).userInfo.emp.empName
+            this.shopName = JSON.parse(this.info).userShopInfo.shopName
+            this.shopId = JSON.parse(this.info).userShopInfo.shopId
+            this.$store.state.userLogin.userName = this.userName
+            this.$store.state.userLogin.shopName = this.shopName
+            this.$store.state.userLogin.shopId = this.shopId
+             //console.log(window.sessionStorage)
         }
     },
+    mounted(){
+        this.getSession()
+    }
 
 }
 </script>

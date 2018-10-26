@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">菜品搭配</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>{{$store.state.userLogin.userName}}</p>
                      <p>现在为每天的菜品进行搭配吧！</p>
             </div>
             <div class="table">
@@ -32,7 +32,7 @@
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p>{{v.menuName}}</p>
                                 <div class="num">
-                                  <el-input-number size="small" v-model="v.matchMenuNum"></el-input-number>
+                                  <el-input-number size="small" v-model="v.matchMenuNum" @change="handleChange(v)"></el-input-number>
                                 </div>
                             </li>
                              
@@ -60,7 +60,7 @@
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p>{{v.menuName}}</p>
                                 <div class="num">
-                                  <el-input-number size="small" v-model="v.matchMenuNum"></el-input-number>
+                                  <el-input-number size="small" v-model="v.matchMenuNum" @change="handleChange(v)"></el-input-number>
                                 </div>
                             </li>
                         </ul>
@@ -86,7 +86,7 @@
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p>{{v.menuName}}</p>
                                 <div class="num">
-                                  <el-input-number size="small" v-model="v.matchMenuNum"></el-input-number>
+                                  <el-input-number size="small" v-model="v.matchMenuNum" @change="handleChange(v)"></el-input-number>
                                 </div>
                             </li>
                         </ul>
@@ -109,7 +109,6 @@
 </template>
 
 <script>
-import mockdata from "../Mock/mock";
     export default {
          
       data() {
@@ -168,10 +167,9 @@ import mockdata from "../Mock/mock";
         });
       },
         getMenuData(){
-            // this.$http.get('/api/localhost/menuData').then((res=>{
-            //     this.menuData=res.data
-            //     console.log(res)
-            // }))
+          //  this.$http.get('/api1/1024/cq1024/collocationofdishes/collocationofdishes/menulist').then(res=>{
+          //     console.log(res)
+          //  })
             var dd=new Date();
             var dateArr=[];
              dateArr[0]=dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate()
@@ -179,9 +177,9 @@ import mockdata from "../Mock/mock";
                 dd.setDate(dd.getDate()+1);
                 dateArr.push(dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate())
             }
-            // this.$set(this.dateArr,this.dateArr[0],dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate())
             this.dateNow = dateArr[0]
-             this.$http.get('/api/liugaoyang/collocationofdishes/menulist').then((res=>{
+             this.$http.get('/api1/1024/cq1024/collocationofdishes/collocationofdishes/menulist').then((res=>{
+               console.log(res)
                 this.menuData=res.data.info.menuList
                 console.log(this.menuData)
                   for (let i = 0; i <= this.menuData.length; i++) {
@@ -204,11 +202,14 @@ import mockdata from "../Mock/mock";
          */
         showMenuInfo(){
               let param =new URLSearchParams
-             param.append('shopId',1)
+              console.log(this.$store.state.userLogin.shopId)
+             param.append('shopId',this.$store.state.userLogin.shopId)
              param.append('matchMenuDate',this.dateNow)
-               this.$http.post('/api/liugaoyang/collocationofdishes/listofdishes',param).then((res)=>{
+               this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/listofdishes',param).then((res)=>{
+                   console.log(res)
                    if(res.data.code==100){
                    this.breakfast=res.data.info.moring.info.collocationOfDishes
+                   console.log(this.breakfast)
                    this.lunch=res.data.info.noon.info.collocationOfDishes
                    this.dinner=res.data.info.evening.info.collocationOfDishes
                    }else{
@@ -232,7 +233,7 @@ import mockdata from "../Mock/mock";
           },
           addBreakFast(){
             //   console.log(this.dateNow)
-              let date = this.dateNow.replace(/\//g,'-')
+            let date = this.dateNow.replace(/\//g,'-')
             //   console.log(date)
             console.log(this.value.length)
             console.log(this.value)
@@ -247,7 +248,7 @@ import mockdata from "../Mock/mock";
               let param = new URLSearchParams
               param.append('jsonMatchMenus',JSON.stringify(arr))
               param.append('seven',false)
-            this.$http.post('/api/liugaoyang/collocationofdishes/addmatchmenu',param).then((res)=>{
+            this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/addmatchmenu',param).then((res)=>{
             //    console.log(res)
                 console.log(res.data.code)
             if(res.data.code == 100){
@@ -289,7 +290,7 @@ import mockdata from "../Mock/mock";
               let param = new URLSearchParams
               param.append('jsonMatchMenus',JSON.stringify(arr))
               param.append('seven',this.check)
-            this.$http.post('/api/liugaoyang/collocationofdishes/addmatchmenu',param).then((res)=>{
+            this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/addmatchmenu',param).then((res)=>{
             //    console.log(res)
                 console.log(res.data.code)
             if(res.data.code == 100){
@@ -327,7 +328,7 @@ import mockdata from "../Mock/mock";
               let param = new URLSearchParams
               param.append('jsonMatchMenus',JSON.stringify(arr))
               param.append('seven',this.check)
-            this.$http.post('/api/liugaoyang/collocationofdishes/addmatchmenu',param).then((res)=>{
+            this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/addmatchmenu',param).then((res)=>{
             //    console.log(res)
                 console.log(res.data.code)
             if(res.data.code == 100){
@@ -363,7 +364,7 @@ import mockdata from "../Mock/mock";
                    let param = new URLSearchParams
                    param.append('matchMenuId',v.matchMenuId)
                    param.append('seven',this.check)
-              this.$http.post('/api/liugaoyang/collocationofdishes/delmatchmenu',param).then(res=>{
+              this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/delmatchmenu',param).then(res=>{
                   if(res.data.code==100){
                     this.$message({
                    type: 'success',
@@ -390,14 +391,21 @@ import mockdata from "../Mock/mock";
                  });          
                });
           },
-         
-         
-         
+          handleChange(v) {
+                // console.log('更改数量成功'+v.matchMenuNum)
+                let param =new URLSearchParams
+                param.append('matchMenuId',v.matchMenuId)
+                param.append('matchMenuNum',v.matchMenuNum)
+                param.append('seven',this.check)
+                this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/updatematchmenunum',param).then((res)=>{
+                       if(res.data.code == 100){
+                         console.log('修改数量OK')
+                       }
+                       
+                })
+      },
       },
     computed:{
-      
-     
-       
     },
     filters:{
        

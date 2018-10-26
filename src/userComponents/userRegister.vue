@@ -212,7 +212,7 @@ import photo from './photo'
         param.append('empNo', this.ruleForm2.userNo)
         param.append('snapData', this.photoBase) 
         param.append('base64Data', this.ruleForm2.base) 
-         this.$http.post('/api/shexiangtou/user/registervalidate',param).then((res)=>{
+         this.$http.post('/api/1024/cq1024/user/user/registervalidate',param).then((res)=>{
             console.log(res.data.code)
             if(res.data.code==100){
               console.log(100)

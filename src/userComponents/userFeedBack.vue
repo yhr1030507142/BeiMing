@@ -46,12 +46,6 @@ import mockdata from "../Mock/mock";
         }
       },
       methods:{
-        //   getData(){
-        //         this.$http.post('/api/data').then((res)=>{
-        //             this.data=res.data
-        //             console.log(this.data)
-        //         })            
-        //   },
           showMenu(){
               if(this.menu==false){
                   this.menu=true
@@ -80,7 +74,8 @@ import mockdata from "../Mock/mock";
           let param = new URLSearchParams
           param.append('sugContent',this.sugContent)
           param.append('sugType',this.sugType)
-          this.$http.post('/api/feedback/sug/add',param).then((res)=>{
+          this.$http.post('/api1/1024/cq1024/sug/add',param).then((res)=>{
+              console.log(res)
               if(res.data.code == 100){
                 this.$message({
                        type:'success',

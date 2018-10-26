@@ -17,33 +17,6 @@
             </div>
 
             <div class="tableData">
-                <!-- <table class="data" style="border-collapse:separate; border-spacing:0 10px;">
-                    <thead>
-                        <tr>
-                            <th>菜品编号</th>
-                            <th>菜名</th>
-                            <th>种类</th>
-                            <th>图片</th>
-                            <th>属性</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            <tr  v-for="(v,i) in this.data" :key="i"> -->
-                             <!-- <td rowspan="1" colspan="1">{{v.id}}</td>
-                             <td rowspan="1" colspan="1">{{v.name}}</td>
-                             <td rowspan="1" colspan="1">{{v.kind}}</td>
-                             <td rowspan="1" colspan="1"><img :src="v.img" alt=""></td>
-                             <td rowspan="1" colspan="1">{{v.property}}</td> -->
-                             <!-- <td>{{v.menuName}}</td>
-                             <td>
-                                 <span></span>
-                                 <span></span>
-                             </td>
-                            </tr>
-                    </tbody>
-                   
-                </table> -->
                 <el-table :data="data" stripe style="width: 100%"  @selection-change="handleSelectionChange">
                 <el-table-column  type="selection"  width="55"> </el-table-column>
                 <el-table-column   label="菜品ID">
@@ -106,7 +79,7 @@
           
 
             <el-form-item label="菜品名称" :label-width="formLabelWidth">
-             <el-input v-model="form.menuName" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.menuName" autocomplete="off" style="width:250px;" placeholder="菜品名称"></el-input>
             </el-form-item>
 
              <el-form-item label="菜品类型" :label-width="formLabelWidth">
@@ -122,13 +95,13 @@
             </el-form-item>
 
              <el-form-item label="菜品口味" :label-width="formLabelWidth">
-            <el-select v-model="form.menuPropertiesTasteId" placeholder="菜品类型" style="width:250px;">
+            <el-select v-model="form.menuPropertiesTasteId" placeholder="菜品口味" style="width:250px;">
                 <el-option :label="v.menuPropertiesTasteName" :value="v.menuPropertiesTasteId" v-for="(v,i) in menuPropertiesTaste" :key="i"></el-option>
             </el-select>
             </el-form-item>
 
              <el-form-item label="菜品价格" :label-width="formLabelWidth">
-             <el-input v-model="form.menuPrice" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.menuPrice" autocomplete="off" style="width:250px;" placeholder="菜品价格"></el-input>
             </el-form-item>
             
              <el-form-item label="菜品图片" :label-width="formLabelWidth">
@@ -251,20 +224,11 @@ import Qs from 'qs'
         }
       },
       methods:{
-        //   getData(){
-        //         this.$http.post('/api/liangsijie/menu/findAllByPage',{params:{
-        //             currentPage:3,
-        //             pageSize:2
-        //             }}).then((res)=>{
-        //             // this.data=res.data
-        //            console.log(res)
-        //         })            
-        //   },
           getpage(){
               let param =new URLSearchParams
               param.append('pageNum',this.currentPage)
               param.append('pageSize',this.pageSize)
-              this.$http.post('/api/liangsijie/menu/findAllByPage',param).then((res)=>{
+              this.$http.post('/api1/1024/cq1024/shop-menu/menu/findAllByPage',param).then((res)=>{
                     this.data=res.data.info.info.list
                     this.total=res.data.info.info.total
                     console.log(res)
@@ -281,7 +245,7 @@ import Qs from 'qs'
               param.append('pageNum',this.currentPage)
               param.append('pageSize',this.pageSize)
               param.append('menuName',this.dishName)
-             this.$http.post('/api/liangsijie/menu/findAllByPage',param
+             this.$http.post('/api1/1024/cq1024/shop-menu/menu/findAllByPage',param
               ).then((res)=>{
                   if(res.data.code == 100){
                      this.data=res.data.info.info.list
@@ -370,14 +334,8 @@ import Qs from 'qs'
                         return false
                 }
               
-                if(this.imgUpdate == undefined){
-                this.$message({
-                      message:'图片不能为空',
-                      type: 'warning'
-                        });     
-                        return false
-                }
-                 if(!/.(gif|jpg|jpeg|png|gif|jpg|png)$/.test(this.aa.value)){
+               
+                    if(!/.(gif|jpg|jpeg|png|gif|jpg|png)$/.test(this.aa.value)){
                      this.$message({
                       message:'图片类型必须是.gif,jpeg,jpg,png中的一种',
                       type: 'warning'
@@ -392,6 +350,8 @@ import Qs from 'qs'
                         });     
                         return false
                  }
+                
+               
                
                   if(this.updateForm.shopId==""){
                      this.$message({
@@ -407,7 +367,7 @@ import Qs from 'qs'
                  img.append('menuPrice',this.updateForm.menuPrice)
                  img.append('menuName',this.updateForm.menuName)
                  img.append('menuId',this.updateForm.menuId)
-            this.$http.post('/api/liangsijie/menu/update',img).then((res)=>{
+            this.$http.post('/api1/1024/cq1024/shop-menu/menu/update',img).then((res)=>{
                 console.log(res)
                 if(res.data.code==0){
                  this.$message({
@@ -437,7 +397,7 @@ import Qs from 'qs'
                          cancelButtonText: '取消',
                          type: 'warning'
                         }).then(() => {
-                         this.$http.get('/api/liangsijie//menu/delete',{params:{menuId:row.menuId}}).then((res)=>{
+                         this.$http.get('/api1/1024/cq1024/shop-menu/menu/delete',{params:{menuId:row.menuId}}).then((res)=>{
                          console.log(res)
                   if(res.data.code==100){ 
                       this.data.splice(index,1)
@@ -469,7 +429,7 @@ import Qs from 'qs'
                      }
                      var arr1 =arr.join(",")
                      console.log(arr1)
-                      this.$http.get('/api/liangsijie//menu/delete',{params:{menuId:arr1}}).then((res)=>{
+                      this.$http.get('/api1/1024/cq1024/shop-menu/menu/delete',{params:{menuId:arr1}}).then((res)=>{
                           console.log(res)
                           if(res.data.code==100)
                         { 
@@ -496,19 +456,19 @@ import Qs from 'qs'
         },
         // 获取下拉数据
         getSelectData(){
-             this.$http.get('api/liangsijie/menuPropertiesStyle').then((res)=>{
+             this.$http.get('api1/1024/cq1024/shop-menu/menuPropertiesStyle').then((res)=>{
                     this.menuPropertiesStyle=res.data.info.menuPropertiesCategories
                     console.log(res.data.info.menuPropertiesCategories)
               },(err)=>{
                   console.log(res)
               });
-                this.$http.get('api/liangsijie/menuPropertiesTaste').then((res)=>{
+                this.$http.get('api1/1024/cq1024/shop-menu/menuPropertiesTaste').then((res)=>{
                     this.menuPropertiesTaste=res.data.info.menuPropertiesCategories
                     console.log(res.data.info.menuPropertiesCategories)
               },(err)=>{
                   console.log(res)
               });
-                this.$http.get('api/liangsijie/menuPropertiesCategory').then((res)=>{
+                this.$http.get('api1/1024/cq1024/shop-menu/menuPropertiesCategory').then((res)=>{
                     this.menuPropertiesCategory=res.data.info.menuPropertiesCategories
                     console.log(res.data.info.menuPropertiesCategories)
               },(err)=>{
@@ -592,15 +552,15 @@ import Qs from 'qs'
                  img.append('menuPropertiesTaste.menuPropertiesTasteId',this.form.menuPropertiesTasteId)             
                  img.append('menuPrice',this.form.menuPrice)
                  img.append('menuName',this.form.menuName)
-            this.$http.post('/api/liangsijie/menu/add',img).then((res)=>{
+            this.$http.post('/api1/1024/cq1024/shop-menu/menu/add',img).then((res)=>{
                 console.log(res)
-                if(res.data.code==0){
+                if(res.data.code==100){
                  this.$message({
                       message:'添加成功',
                       type: 'success'
                         });     
-                     }
-                      this.getpage()
+                     
+                this.getpage()
                 var self = this
                 setTimeout(function(){ 
                      self.form.menuName = ''
@@ -615,7 +575,13 @@ import Qs from 'qs'
                     self.dialogFormVisible=false
                 
                 },1500)
-            },(err)=>{
+                }else{
+                     this.$message({
+                      message:res.data.msg,
+                      type: 'warning'
+                        });     
+                }
+            },err=>{
                 console.log(err)
             })
         },

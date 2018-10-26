@@ -64,7 +64,7 @@ import mockdata from "../Mock/mock";
                 //     this.data=res.data
                 //     console.log(this.data)
                 // })     
-                 this.$http.get('/api/yangguoli/cq1024/order/menus/'+this.$route.params.id).then((res)=>{
+                 this.$http.get('/api1/1024/cq1024/order/menus/'+this.$route.params.id).then((res)=>{
                       console.log(res)
                     this.data =res.data.info.orderMenuDtos
                     this.shopName = res.data.info.shopName
@@ -94,7 +94,7 @@ import mockdata from "../Mock/mock";
                  console.log(JSON.stringify(menuSugs))
                 param.append('menuSugs',JSON.stringify(menuSugs))
                 param.append('orderNo',this.$route.params.id)
-                this.$http.post('/api/yangguoli/cq1024/order/appraise',param).then(res=>{
+                this.$http.post('/api1/1024/cq1024/order/appraise',param).then(res=>{
                         console.log(res)
                         if(res.data.code==100){
                             this.$message({

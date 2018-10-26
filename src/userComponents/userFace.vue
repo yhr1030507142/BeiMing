@@ -82,7 +82,7 @@ var mediaStreamTrack;
     check(){
          let param = new URLSearchParams
          param.append('snapData',this.img1)
-         this.$http.post('/api/yangguoli/cq1024/order/checkface',param).then(res=>{
+         this.$http.post('/api1/1024/cq1024/order/checkface',param).then(res=>{
              console.log(res)
              if(res.data.code == 100){
                  this.$message({
@@ -109,7 +109,7 @@ var mediaStreamTrack;
      account(){
            let param = new URLSearchParams
            param.append('orderMenus',JSON.stringify(this.$store.state.accountInfo))
-           this.$http.post('/api/yangguoli/cq1024/order/add',param).then(res=>{
+           this.$http.post('/api1/1024/cq1024/order/add',param).then(res=>{
                console.log(res)
             if(res.data.code == 100){
                this.$message({

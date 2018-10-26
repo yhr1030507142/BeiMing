@@ -53,7 +53,7 @@ export default {
     },
     methods:{
         denglu(){
-              this.$router.push('./userIndex')
+            //   this.$router.push('./userIndex')
             if(this.username==""||this.username==null){
                        this.$message({
                       message: '用户名不能为空',
@@ -77,23 +77,32 @@ export default {
             }  
              let param = new URLSearchParams()
         param.append('empNo', this.username)
-     
         param.append('userPwd', this.password) 
-            this.$http.post('/api/liugaoyang/user/login',param,  
-            ).then((res)=>{
+        this.$http.post('/api1/1024/cq1024/user/user/login',param,  
+        ).then((res)=>{
                 console.log(res)
                 // console.log(res.data.code)
                 // console.log(res.data.info.message)
                  
                  if(res.data.code==100){
                     this.userInfo = res.data.info.userInfo;
+                     console.log(res.data.info.userInfo)
 
-                    this.$message({
-                      message: res.data.msg,
-                      type: 'success'
-                     });
+                     if(this.userInfo.roleId == 2){
+                        this.$message({
+                         message: res.data.msg,
+                        type: 'success'
+                        });
                      window.sessionStorage.userInfo = JSON.stringify(this.userInfo);
+                     console.log('login'+window.sessionStorage.userInfo)
                      this.$router.push('./userIndex')
+                     }else{
+                          this.$message({
+                          message: '身份不符',
+                          type: 'success'
+                         });
+                     }
+                    
                  }else{
                       this.$message({
                       message: res.data.msg,
@@ -114,12 +123,15 @@ export default {
             done()
         }
     },
+    mounted(){
+        if(sessionStorage.getItem('userInfo') != null){
+               this.$router.push('./userIndex')
+        }
+    }
   
 }
 </script>
 
 <style lang='scss'>
-
    @import '../assets/userSass/userLogin.scss'
 </style>
-

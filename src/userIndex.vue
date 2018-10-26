@@ -10,8 +10,24 @@
 import leftMenu from './userComponents/userLeft'
 import topMenu  from './userComponents/userTop'
 export default {
+  data(){
+    return{
+      userInfo:[],
+      userName:'',
+    }
+  },
+  methods:{
+    getSession(){
+      this.userInfo = JSON.parse(window.sessionStorage.userInfo)
+      this.userName = this.userInfo.emp.empName
+      console.log(this.userInfo)
+    }
+  },
   components:{
     leftMenu,topMenu
+  },
+  mounted(){
+    // this.getSession()
   }
 }
 </script>

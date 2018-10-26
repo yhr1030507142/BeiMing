@@ -247,7 +247,7 @@ import mockdata from "../Mock/mock";
       },
         getpage(){
           if(this.start == '' || this.end ==''){
-            this.$http.get('/api/yangguoli/cq1024/order/list',{
+            this.$http.get('/api1/1024/cq1024/order/order/list',{
                   params:{
                       currentPage:this.currentPage,
                       pageSize:this.pageSize, 
@@ -265,7 +265,7 @@ import mockdata from "../Mock/mock";
                  this.orderDataChildren = arr
             }))
           }else{
-               this.$http.get('/api/yangguoli/cq1024/order/list',{
+               this.$http.get('/api1/1024/cq1024/order/order/list',{
                   params:{
                       currentPage:this.currentPage,
                       pageSize:this.pageSize, 
@@ -302,7 +302,8 @@ import mockdata from "../Mock/mock";
         //   订单修改
           changeOrder(val){
               console.log(val)
-              this.$http.get('/api/yangguoli'+'cq1024'+val+'/'+this.code,{
+              
+              this.$http.get('/api1/1024/cq1024/order/update'+val+'/'+this.code,{
                   params:{
                       snapData:''
                   }
@@ -312,7 +313,7 @@ import mockdata from "../Mock/mock";
           },
         //   更改下拉状态
           getSelectData(){
-                this.$http.get('/api/yangguoli/cq1024/order/status').then(res=>{
+                this.$http.get('/api1/1024/cq1024/order/status').then(res=>{
                     if(res.data.code==100){
                     this.statusArr = res.data.info.orderStatuses
                     }

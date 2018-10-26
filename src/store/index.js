@@ -15,7 +15,14 @@ const state ={
     photoBox:'',
     menuId:'',
     //全局传递订单结算信息
-    accountInfo:[]
+    accountInfo:[],
+
+    //登录信息
+    userLogin:{
+        userName:'',
+        shopName:'',
+        shopId:'',
+    }
 }
 
 const getters ={

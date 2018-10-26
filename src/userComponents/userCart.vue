@@ -25,11 +25,11 @@
                  </el-table-column>  -->
                 <el-table-column  type="selection"  width="55" :key="i" :selectable='checkboxInit'> </el-table-column>
                   
-                   <el-table-column   label="是否选择">
+                   <!-- <el-table-column   label="是否选择">
                    <template slot-scope="scope">   
                     <span style="margin-left: 10px">{{scope.row.check}}</span>
                     </template>    
-                 </el-table-column> 
+                 </el-table-column>  -->
 
                 <el-table-column   label="菜品编号">
                    <template slot-scope="scope">   
@@ -94,7 +94,8 @@
                 </el-table>
                 <div style="width:100%;height:60px;text-align:right;margin-top:20px;">
                     <el-button style="float:right;margin-right:20px;" type="danger" @click="account(v,i)">结算</el-button>
-                <p style="float:right;font-size:24px;color:#f60;margin-right:20px;"  v-show="aa" @click="allPrice(v,i)">点击更新总计:￥ {{v.price}}</p>
+                <p style="float:right;font-size:24px;color:#f60;margin-right:20px;">￥{{v.price}}</p>
+                <el-button @click="allPrice(v,i)">查看总价</el-button>
                 </div>
 
                 </div> 
@@ -157,7 +158,7 @@ import photo from './photo'
           pp:'',
           price1 : 0,
           price:0,
-          aa:true,
+          aa:false,
           arr:[],
           all:0,
           multipleSelection:[],
@@ -201,30 +202,15 @@ import photo from './photo'
       },
       
         getMenuData(){
-            // this.$http.get('/api/chengpeng/shoppingCars').then((res=>{
-            //     this.CartData=res.data.info.shoppingCarInfo
-            //     console.log(res.data.info.shoppingCarInfo[0].matchMenu.menu.menuName)
-            //     this.form.menuName=res.data.info.shoppingCarInfo[0].matchMenu.menu.menuName
-            // }))
-            // setTimeout(()=>{
-            //     this.product = product_data.find(item => item.id === this.id)
-            //     console.log(this.product)
-            // },500)
-              this.$http.get('/api/gouwuche/shopCar/list').then((res)=>{
-            //  this.$http.get('/api/localhost/cart1').then((res)=>{
-
-                // console.log(res.data.info)
-                this.CartData=res.data.info
-
-             for(var i =0 ;i< this.CartData.shoppingCarInfo.length;i++){
-                
-                 this.$set(this.CartData.shoppingCarInfo[i],'price',this.all)
-              
+              this.$http.get('/api1/1024/cq1024/shop-car/shopCar/list').then((res)=>{
+                  if(res.data.code == 100){
+                        this.CartData=res.data.info
+                         for(var i =0 ;i< this.CartData.shoppingCarInfo.length;i++){                
+                 this.$set(this.CartData.shoppingCarInfo[i],'price',this.all)             
                 }
                 let arr =[]
              for(var i =0 ;i< this.CartData.shoppingCarInfo.length;i++){
-                    arr[i] = this.CartData.shoppingCarInfo[i].menuDtos
-                   
+                    arr[i] = this.CartData.shoppingCarInfo[i].menuDtos                  
                 }
                 let arr1 = []
                  for(var j =0;j<arr.length;j++){
@@ -235,11 +221,13 @@ import photo from './photo'
                 //  console.log(arr)
                  this.arr = arr
                 // console.log(this.CartData)           
-            })        
-              
+                  }
+            
+            
+            })                      
         },
         checkboxInit(row,index){
-             if (row.statusInfo=="信息过期") 
+             if (row.statusInfo=="信息过期" || row.statusInfo=="不可下单" || row.statusInfo=="余量不足") 
                 return 0;//不可勾选
              else
                 return 1;//可勾选
@@ -279,7 +267,7 @@ import photo from './photo'
                 let param =new URLSearchParams
                 param.append('shoppingCarMenuNum',b)
                 param.append('shoppingCarId',a.shoppingCarId)
-                this.$http.post('/api/gouwuche/shopCar/update',param).then((res)=>{
+                this.$http.post('/api1/1024/cq1024/shop-car/shopCar/update',param).then((res)=>{
                     console.log(res.data.msg)
                 })
       },
@@ -292,7 +280,7 @@ import photo from './photo'
                         cancelButtonText: '取消',
                         type: 'warning'
              }).then(() => {
-                   this.$http.get('/api/gouwuche/shopCar/delete/'+row[index].shoppingCarId).then((res)=>{
+                   this.$http.get('/api1/1024/cq1024/shop-car/shopCar/delete/'+row[index].shoppingCarId).then((res)=>{
                     console.log(res.data.msg)
                     if(res.data.code==100){
                         this.$message({

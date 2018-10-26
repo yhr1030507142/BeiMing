@@ -8,7 +8,8 @@
             <div class="tableDataBox">
                <div class="box">
                   <div class="pic">
-                        <img-zoom :src="imgSrc" width="450" height="450" :bigsrc="imgSrc" :configs="configs"></img-zoom>
+                        <!-- <img-zoom :src="imgSrc" width="150" height="450" :bigsrc="imgSrc" :configs="configs"></img-zoom> -->
+                        <img :src="imgSrc" alt="">
                   </div>   
                </div>
            
@@ -69,7 +70,7 @@ import imgZoom from 'vue2.0-zoom'
              getdata(id){
                let param = new URLSearchParams
                param.append('menuId',id)
-               this.$http.post('/api/liangsijie/menu/findByMenuId',param).then(res=>{
+               this.$http.post('/api1/1024/cq1024/shop-menu/menu/findByMenuId',param).then(res=>{
                  this.data = res.data.info.menu
                  this.imgSrc = res.data.info.menu.menuPicPath
                   this.title = res.data.info.menu.menuName
@@ -103,7 +104,7 @@ import imgZoom from 'vue2.0-zoom'
                 let param =new URLSearchParams
                 param.append('matchMenu.matchMenuId',this.mathMenuId)
                 param.append('shoppingCarMenuNum',this.num1)
-                this.$http.post('/api/gouwuche/shopCar/add',param).then(res=>{
+                this.$http.post('/api1/1024/cq1024/shop-car/shopCar/add',param).then(res=>{
                   console.log(res)
                   if(res.data.code == 100){
                     this.$message({
@@ -192,6 +193,10 @@ import imgZoom from 'vue2.0-zoom'
                     display: flex;
                     width: 100%;
                     height: 100%;
+                    img{
+                       width: 100%;
+                    height: 100%;
+                    }
                 }
 
             }

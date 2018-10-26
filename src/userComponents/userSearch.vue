@@ -68,7 +68,7 @@
       },
       methods:{
           getdata(){
-               this.$http.post('/api/liangsijie/menu/findAllMenuInfo').then(res=>{
+               this.$http.post('/api1/1024/cq1024/shop-menu/menu/findAllMenuInfo').then(res=>{
                    if(res.data.code == 100){
                      this.data = res.data.info.info
                     let a = res.data.info.info.slice(0,5)
@@ -90,7 +90,7 @@
               console.log(val)
               let param = new URLSearchParams
               param.append('menuPropertiesCategoryId',val)
-              this.$http.post('/api/liangsijie/findAllByMenuPropertiesCategoryId',param).then(res=>{
+              this.$http.post('/api1/1024/cq1024/shop-menu/findAllByMenuPropertiesCategoryId',param).then(res=>{
                 if(res.data.code == 100){
                         this.data = res.data.info.Info
                 }else{
@@ -98,10 +98,11 @@
                 } 
               }) 
           },
-          searchStyle(val){
+          searchTaste(val){
+          
                 let param = new URLSearchParams
               param.append('menuPropertiesTasteId',val)
-              this.$http.post('/api/liangsijie/findAllByMenuPropertiesTasteId',param).then(res=>{
+              this.$http.post('/api1/1024/cq1024/shop-menu/findAllByMenuPropertiesTasteId',param).then(res=>{
                 if(res.data.code == 100){
                         this.data = res.data.info.Info
                 }else{
@@ -109,13 +110,21 @@
                 }   
               }) 
           },
-          searchTaste(val){
-
+          searchStyle(val){
+                let param = new URLSearchParams
+                 param.append('menuPropertiesStyleId',val)
+                 this.$http.post('/api1/1024/cq1024/shop-menu/findAllByMenuPropertiesStyleId',param).then(res=>{
+                if(res.data.code == 100){
+                        this.data = res.data.info.Info
+                }else{
+                    console.log(res.data.msg)
+                }   
+              }) 
           },
           searchShopName(){
                let param = new URLSearchParams
               param.append('menuName',this.inputSearch)
-              this.$http.post('/api/liangsijie/menu/fuzzySearch',param).then(res=>{
+              this.$http.post('/api1/1024/cq1024/shop-menu/menu/fuzzySearch',param).then(res=>{
                 if(res.data.code == 100){
                      this.data = res.data.info.menuInfo
                 }else{
@@ -124,17 +133,17 @@
               }) 
           },
             getSelectData(){
-           this.$http.post('/api/liangsijie/menuPropertiesTaste').then(res=>{
+           this.$http.post('/api1/1024/cq1024/shop-menu/menuPropertiesTaste').then(res=>{
                     this.menuPropertiesTaste = res.data.info.menuPropertiesCategories
                     // console.log(this.menuPropertiesTaste )
               })
             // 种类
-               this.$http.post('/api/liangsijie/menuPropertiesCategory').then(res=>{
+               this.$http.post('/api1/1024/cq1024/shop-menu/menuPropertiesCategory').then(res=>{
                     this.menuPropertiesCategory = res.data.info.menuPropertiesCategories
                     // console.log(this.menuPropertiesTaste )
               })
             //   菜系
-               this.$http.post('/api/liangsijie/menuPropertiesStyle').then(res=>{
+               this.$http.post('/api1/1024/cq1024/shop-menu/menuPropertiesStyle').then(res=>{
                     this.menuPropertiesStyle = res.data.info.menuPropertiesCategories
                     // console.log(this.menuPropertiesTaste )
               }) 
@@ -177,14 +186,14 @@
     height:auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-wrap: wrap;
     .li{
          width:220px;
          height:300px;
          border:1px solid #e8e2e1;
          display:flex;
-         margin-left: 20px;
+         margin-left: 10px;
          margin-top: 20px;
           margin-bottom: 20px;
          flex-direction: column;

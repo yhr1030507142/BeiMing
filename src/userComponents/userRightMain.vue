@@ -140,7 +140,7 @@
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p style="font-size:14px;">￥{{v.menuPrice}}</p>
                                 <p style="font-size:14px;">{{v.menuAvgRating}}分</p>        
-                                  <p style="font-size:14px;"><span :style="v.matchMenuNum<=10?'color:red':'color:#999'">{{v.matchMenuNum}}</span>份</p>                                 
+                                <p style="font-size:14px;"><span :style="v.matchMenuNum<=10?'color:red':'color:#999'">{{v.matchMenuNum}}</span>份</p>                                 
                                 
                                
                                 </li>
@@ -179,7 +179,7 @@ import mockdata from "../Mock/mock";
         // 菜品名称
           input5: '',
           //店铺ID
-          shopId:1,
+          shopId:'',
         // tab 默认展示名称
           activeName: 0,
         // 部分商铺名称
@@ -223,7 +223,7 @@ import mockdata from "../Mock/mock";
             let param =new URLSearchParams
             param.append('shopId',this.shopId)
             param.append('matchMenuDate',this.dateNow)
-                this.$http.post('/api/liugaoyang/collocationofdishes/listofdishes',param).then((res=>{
+                this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/listofdishes',param).then((res=>{
                   this.breakFast = res.data.info.moring.info.collocationOfDishes
                     this.lunch = res.data.info.noon.info.collocationOfDishes
                       this.dinner = res.data.info.evening.info.collocationOfDishes
@@ -238,33 +238,38 @@ import mockdata from "../Mock/mock";
             /**
              * 获取店铺列表
              */
-             this.$http.get('/api/liugaoyang/collocationofdishes/shoplist').then((res=>{
+             this.$http.get('/api1/1024/cq1024/collocationofdishes/collocationofdishes/shoplist').then((res=>{
+               console.log(res)
+                   this.shopId = res.data.info.shopList[0].shopId
+                   console.log(this.shopId)
                    this.shopMenuName=res.data.info.shopList.slice(0,3)
-                   this.shopMenuMoreName=res.data.info.shopList.slice(3)     
-            }))
-            /**
-             * 未来七天日期
-             */
-            var dd=new Date();
-            this.dateArr=[];
-            this.dateArr[0]=dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate()
-            for(var i=0;i<7;i++){
-                dd.setDate(dd.getDate()+1);
-                this.dateArr.push(dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate())
-            }
-            console.log(typeof(this.dateArr[1]))
-            this.dateNow = this.dateArr[0]
-            this.showList()  
+                   this.shopMenuMoreName=res.data.info.shopList.slice(3)   
+                     /**
+                      * 未来七天日期
+                      */
+                     var dd=new Date();
+                     this.dateArr=[];
+                     this.dateArr[0]=dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate()
+                     for(var i=0;i<7;i++){
+                         dd.setDate(dd.getDate()+1);
+                         this.dateArr.push(dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate())
+                     }
+                     console.log(typeof(this.dateArr[1]))
+                     this.dateNow = this.dateArr[0]
+                     this.showList()    
+                         }))
+          
         },
           /**
              * 初始化显示列表
              */
          showList(){
-                 let param =new URLSearchParams
+            let param =new URLSearchParams
             param.append('shopId',this.shopId)
             param.append('matchMenuDate',this.dateNow)
-                this.$http.post('/api/liugaoyang/collocationofdishes/listofdishes',param).then((res=>{
-                  this.breakFast = res.data.info.moring.info.collocationOfDishes
+                this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/listofdishes',param).then((res=>{
+                    console.log(res)
+                    this.breakFast = res.data.info.moring.info.collocationOfDishes
                     this.lunch = res.data.info.noon.info.collocationOfDishes
                       this.dinner = res.data.info.evening.info.collocationOfDishes
                      console.log(res.data.info.evening.info.collocationOfDishes)
@@ -317,7 +322,7 @@ import mockdata from "../Mock/mock";
             let param =new URLSearchParams
             param.append('matchMenu.matchMenuId',v.matchMenuId)
             param.append('shoppingCarMenuNum',v.num)
-            this.$http.post('/api/gouwuche/shopCar/add',param).then(res=>{
+            this.$http.post('/api1/1024/cq1024/shop-car/shopCar/add',param).then(res=>{
                 if(res.data.code==100){
                           this.$message({
                             type:'success',
@@ -349,7 +354,7 @@ import mockdata from "../Mock/mock";
             let param = new URLSearchParams
             let arr0=[]
             param.append('menuName',this.input5)
-            this.$http.post('/api/liugaoyang/collocationofdishes/querymenu',param).then(res=>{
+            this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/querymenu',param).then(res=>{
                 if(res.data.code == 100){
                 this.showSeven=true
                 this.searchInfo = res.data.info.menuInfoList
@@ -395,25 +400,27 @@ import mockdata from "../Mock/mock";
            * 结算
            */
           account(v,i){
-            let arr =[]
-            arr.push({matchMenu:{matchMenuId:v.matchMenuId},orderMenuNum:v.num})
-             console.log(JSON.stringify(arr))
-             let param = new URLSearchParams
-             param.append('orderMenus',JSON.stringify(arr))
-             param.append('snapData','')
-             this.$http.post('/api/yangguoli/cq1024/order/add',param).then(res=>{
-               if(res.data.code == 100){
-                    this.$message({
-                      type:'success',
-                      message:'下单成功'
-                    })
-               }else{
-                  this.$message({
-                      type:'info',
-                      message:res.data.msg
-                    })
-               }
-             })
+                let arr =[]
+                arr.push({matchMenu:{matchMenuId:v.matchMenuId},orderMenuNum:v.num})
+                this.$store.state.accountInfo=arr
+                this.$router.push('userFace')
+            //  console.log(JSON.stringify(arr))
+            //  let param = new URLSearchParams
+            //  param.append('orderMenus',JSON.stringify(arr))
+            //  param.append('snapData','')
+            //  this.$http.post('/api/yangguoli/cq1024/order/add',param).then(res=>{
+            //    if(res.data.code == 100){
+            //         this.$message({
+            //           type:'success',
+            //           message:'下单成功'
+            //         })
+            //    }else{
+            //       this.$message({
+            //           type:'info',
+            //           message:res.data.msg
+            //         })
+            //    }
+            //  })
           }  
       },
       mounted(){

@@ -7,12 +7,12 @@
             <form action="">
                 <div class="form-input">
                     <label>用户名</label>
-                    <input type="text" placeholder="UsingName@beiming.com" />
+                    <input type="text" placeholder="UsingName@beiming.com" v-model="username"/>
                     <i class="icon"></i>
                 </div>
                 <div class="form-input">
                 <label>密码</label>
-                <input type="password" placeholder='PassWord'/>
+                <input type="password" placeholder='PassWord' v-model="password"/>
                     <i class="icon1"></i>
                 </div>
                <div class="form-input">
@@ -32,10 +32,78 @@
 </template>
 <script>
 export default {
-    methods:{
-        denglu(){
-            this.$router.push('./index')
+    data(){
+        return{
+              username:'',
+              password:'',
         }
+    },
+    methods:{
+         denglu(){
+            //  console.log(window.sessionStorage.Info)
+            //   this.$router.push('index')
+            if(this.username==""||this.username==null){
+                       this.$message({
+                      message: '用户名不能为空',
+                      type: 'warning'
+                     });
+                     return false
+                }
+                 if(this.username.length<6){
+                       this.$message({
+                      message: '用户名格式不正确',
+                      type: 'warning'
+                     });
+                     return false
+                }
+            if(this.password==''){
+                 this.$message({
+                      message: '密码不能为空',
+                      type: 'warning'
+                     });
+                      return false
+            }  
+         let param = new URLSearchParams()
+        param.append('empNo', this.username)
+        param.append('userPwd', this.password) 
+            this.$http.post('/api1/1024/cq1024/user/user/login',param,  
+            ).then((res)=>{
+                console.log(res)
+                // console.log(res.data.code)
+                // console.log(res.data.info.message)
+                 
+                 if(res.data.code==100){
+                    this.info = res.data.info;
+                    if(this.info.userInfo.roleId == 1){
+                        this.$message({
+                         message: res.data.msg,
+                         type: 'success'
+                        });
+                 window.sessionStorage.info = JSON.stringify(this.info);
+                 //console.log('login'+res.data.info)
+                 this.$router.push('./index')
+                    }else{
+                         this.$message({
+                         message: '身份不符',
+                         type: 'success'
+                        });
+                    }
+                   
+                   
+                 }else{
+                      this.$message({
+                      message: res.data.msg,
+                      type: 'warning'
+                     });
+                 }
+            })
+         }
+            // this.$router.push('./userIndex')
+    },
+    mounted(){
+        //  if(sessionStorage.getItem('info')!=''){
+        //        this.$router.push('./index')
+        // }
     }
 }
 </script>
