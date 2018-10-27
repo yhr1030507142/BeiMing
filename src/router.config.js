@@ -10,7 +10,11 @@ import getFood from './components/getFood'
 export default[
    
         {path:'/login',name:'login',component:login},
-        {path:'/',name:'login',component:login},
+        {path:'/',name:'index',component:index,
+        meta: {
+            requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+        }
+    },
         {path:'/index',name:'index', 
         meta: {
             requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的

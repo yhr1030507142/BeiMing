@@ -65,6 +65,8 @@ export default {
             this.$http.post('/api1/1024/cq1024/user/user/loginout').then((res)=>{
                     console.log(res)
                      sessionStorage.setItem('userInfo','');
+                    this.$router.push('/userLogin')
+
             })
            
         }

@@ -16,8 +16,16 @@ export default[
     {path:'/userLogin',name:'userLogin',component:userLogin},
     {path:'/userRegister',name:'userRegister',component:userRegister},
     {path:'/photo',name:'photo',component:photo},
-    {path:'/',name:'userLogin',component:userLogin},
-       {path:'/userIndex',name:'userIndex',component:userIndex,children:[
+    {path:'/',name:'userLogin',component:userLogin,
+    meta: {
+        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    },
+    },
+       {path:'/userIndex',name:'userIndex',component:userIndex,
+       meta: {
+        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    },
+       children:[
         {path:'userRightMain',name:'userRightMain',component:userRightMain},
         {path:'userFeedBack',name:'userFeedBack',component:userFeedBack},
         {path:'userCart',name:'userCart',component:userCart},
@@ -26,6 +34,8 @@ export default[
         {path:'userGoods/:id',name:'userGoods',component:userGoods},
         {path:'userEvaluate/:id',name:'userEvaluate',component:userEvaluate},
         {path:'userFace',name:'userFace',component:userFace}
-    ]}
+    ]},
+    {path:'*',component:userIndex,redirect:{ name: 'userIndex' }},
+
     
  ]
