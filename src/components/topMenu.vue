@@ -47,9 +47,9 @@ export default {
             this.userName = JSON.parse(this.info).userInfo.emp.empName
             this.shopName = JSON.parse(this.info).userShopInfo.shopName
             this.shopId = JSON.parse(this.info).userShopInfo.shopId
-            this.$store.state.userLogin.userName = this.userName
-            this.$store.state.userLogin.shopName = this.shopName
-            this.$store.state.userLogin.shopId = this.shopId
+            this.$store.state.indexLogin.userName = this.userName
+            this.$store.state.indexLogin.shopName = this.shopName
+            this.$store.state.indexLogin.shopId = this.shopId
              //console.log(window.sessionStorage)
         }
     },

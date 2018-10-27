@@ -37,7 +37,7 @@ export default {
     leftMenu,topMenu
   },
   mounted(){
-    // this.getSession()
+  this.getSession()
   }
 }
 </script>

@@ -90,12 +90,12 @@ export default {
 
                      if(this.userInfo.roleId == 2){
                         this.$message({
-                         message: res.data.msg,
+                         message: '登陆成功',
                         type: 'success'
                         });
                      window.sessionStorage.userInfo = JSON.stringify(this.userInfo);
                      console.log('login'+window.sessionStorage.userInfo)
-                     this.$router.push('./userIndex')
+                     this.$router.push('./userIndex/userRightMain')
                      }else{
                           this.$message({
                           message: '身份不符',

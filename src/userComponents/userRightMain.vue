@@ -3,40 +3,35 @@
         <div class="w">
            <h2 class="dishes-font">每日菜品</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.userLogin.userName}}</p>
                      <p>饿了吧？来看看给您准备的菜品</p>
             </div>
             <div style="margin-top: 15px;">
-  <el-input placeholder="请输入菜品名" v-model="input5" class="input-with-select" style="width:380px;">
-    <!-- <el-select v-model="select" slot="prepend" placeholder="请选择" style="width:90px;">
-      <el-option label="餐厅名" value="1"></el-option>
-      <el-option label="订单号" value="2"></el-option>
-      <el-option label="用户电话" value="3"></el-option>
-    </el-select> -->
-    <el-button slot="append" icon="el-icon-search" @click="searchMenu"></el-button>
-  </el-input>
-</div>
+          <el-input placeholder="请输入菜品名" v-model="input5" class="input-with-select" style="width:380px;">
+            <el-button slot="append" icon="el-icon-search" @click="searchMenu"></el-button>
+          </el-input>
+        </div>
             
             <div class="table">
                     <ul>
 
-                    <li v-for="(v,i) in shopMenuName" :key="i" style="min-width:100px;float:left;border-right:1px solid black;text-align:center" @click="searchshop(v,i)"  :class="{active : active == v.shopName}" >{{v.shopName}}</li>
+                    <li v-for="(v,i) in shopMenuName" :key="i" class="shopName" @click="searchshop(v,i)"  :class="{active : active == v.shopName}" >{{v.shopName}}</li>
                     </ul> 
                     <ul v-show="hideMenu">
-                    <li v-for="(v,i) in shopMenuMoreName" :key="i" style="min-width:100px;float:left;border-right:1px solid black;margin-left:10px;text-align:center" @click="searchshop(v,i)">{{v.shopName}}</li>
+                    <li v-for="(v,i) in shopMenuMoreName" :key="i" class="shopName"  @click="searchshop(v,i)">{{v.shopName}}</li>
                     </ul>
                     <a href="#" @click="toggle()" style="color:red;margin-left:5px;display:inline-block"><p>{{more}}</p></a>
 
             </div>
                 
             <div>
-                <p v-show="showSeven">搜索结果(未来七天出售此商品的商铺):</p> <a href="#" v-show="showSeven" v-for="(v,i) in shopNameArr" :key="i" style="color:#f60;display:inline-block;margin-left:10px;">{{v.shopName}}({{v.dateTime}}[{{v.dayNoon}}])</a>
+                <p v-show="showSeven"><el-tag type="danger">搜索结果<span style="color:#999">(未来七天出售此商品的商铺)</span></el-tag></p> <a href="#" v-show="showSeven" v-for="(v,i) in shopNameArr" :key="i" style="color:#f60;display:inline-block;margin-left:10px;margin-top:5px"><el-tag type="info">{{v.shopName}}({{v.dateTime}}[{{v.dayNoon}}])</el-tag></a>
             
             </div>
                 <div class="showSeven" style="width:100%;height:100px;">
                  <el-tabs v-model="activeName" @tab-click="handleClick" tabPosition="bottom">
-                 <el-tab-pane :label="v"  v-for="(v,i) in this.dateArr" :key="i">
-                 当前日期：{{dateNow}}
+                 <el-tab-pane :label="v"  v-for="(v,i) in this.dateArr1" :key="i">
+                 <el-tag>日期:</el-tag><el-tag type="success">{{dateNow}}</el-tag>
                  <div class="tableData">
                  <div class="box breakfast ">
                         <div class="box-top">
@@ -174,6 +169,8 @@ import mockdata from "../Mock/mock";
           hideMenu:false,
           more:'展开更多',
           select: '',
+          //默认店铺
+          shopName1:'',
         //   显示提示头
         showSeven:false,
         // 菜品名称
@@ -195,6 +192,8 @@ import mockdata from "../Mock/mock";
           shopName:'',
         // 未来七天的日期
           dateArr:[],
+          //未来七天格式2018-11-12
+          dateArr1:[],
         // 当前日期
           dateNow:'',
         //查询未来七天拥有该商品的商铺     
@@ -241,6 +240,8 @@ import mockdata from "../Mock/mock";
              this.$http.get('/api1/1024/cq1024/collocationofdishes/collocationofdishes/shoplist').then((res=>{
                console.log(res)
                    this.shopId = res.data.info.shopList[0].shopId
+                   this.shopName1 = res.data.info.shopList[0].shopName
+                   this.active = this.shopName1
                    console.log(this.shopId)
                    this.shopMenuName=res.data.info.shopList.slice(0,3)
                    this.shopMenuMoreName=res.data.info.shopList.slice(3)   
@@ -250,8 +251,10 @@ import mockdata from "../Mock/mock";
                      var dd=new Date();
                      this.dateArr=[];
                      this.dateArr[0]=dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate()
-                     for(var i=0;i<7;i++){
+                     this.dateArr1[0]=dd.getFullYear()+"年"+(dd.getMonth()+1)+"月"+dd.getDate()+"日"
+                     for(var i=0;i<6;i++){
                          dd.setDate(dd.getDate()+1);
+                         this.dateArr1.push(dd.getFullYear()+"年"+(dd.getMonth()+1)+"月"+dd.getDate()+"日")                         
                          this.dateArr.push(dd.getFullYear()+"/"+(dd.getMonth()+1)+"/"+dd.getDate())
                      }
                      console.log(typeof(this.dateArr[1]))
@@ -442,6 +445,18 @@ import mockdata from "../Mock/mock";
 //    border: 1px solid #fd7522;
 //    color: #fff;
 color: #fd7522;
+ }
+ .shopName{
+     min-width:120px;
+     float:left;
+     border-right:1px solid #999;
+     margin-left:10px;
+     text-align:center;
+     &:hover{
+         color: #fd7522;
+         cursor: pointer;
+     }
+
  }
 </style>
 

@@ -23,6 +23,12 @@ const state ={
         shopName:'',
         shopId:'',
         userInfo:[],
+    },
+    indexLogin:{
+        userName:'',
+        shopName:'',
+        shopId:'',
+        userInfo:[],
     }
 }
 

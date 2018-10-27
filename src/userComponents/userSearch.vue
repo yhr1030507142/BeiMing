@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">菜品查询</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.userLogin.userName}}</p>
                      <p>快来查询你想点的菜品吧！</p>
             </div>
             <div style="width:100%">
@@ -24,7 +24,7 @@
                 </el-input>              
                 <div>
                     <ul class="ul1"><li class="type style" @click="searchAll()">全部</li></ul>    
-                    <ul class="ul1"><li class="type">类型：</li><li class="style" v-for="(v,i) in menuPropertiesCategory" :key="i" @click="searchCategory(v.menuPropertiesCategoryId)">{{v.menuPropertiesCategoryName}}</li></ul>    
+                    <ul class="ul1"><li class="type">类型：</li><li class="style" v-for="(v,i) in menuPropertiesCategory" :key="i" @click="searchCategory(v.menuPropertiesCategoryId)" >{{v.menuPropertiesCategoryName}}</li></ul>    
                     <ul class="ul1"><li class="type">菜系：</li><li class="style" v-for="(v,i) in menuPropertiesStyle" :key="i" @click="searchStyle(v.menuPropertiesStyleId)">{{v.menuPropertiesStyleName}}</li></ul>    
                     <ul class="ul1"><li class="type">口味：</li><li class="style" v-for="(v,i) in menuPropertiesTaste" :key="i" @click="searchTaste(v.menuPropertiesTasteId)">{{v.menuPropertiesTasteName}}</li></ul>                       
                    
@@ -38,7 +38,7 @@
                        <router-link tag="a" class="li" :to="'userGoods/'+v.menuId">
                              <a href="#"><img :src="v.menuPicPath" alt=""></a>
                              <a href="#" class="aa"><i>￥</i><p>{{v.menuPrice}}</p></a>
-                             <p>名字：{{v.menuName}}</p>
+                             <p>菜名：{{v.menuName}}</p>
                              <a href="#" class="bb">商铺：{{v.shop.shopName}}</a>
                        </router-link>
                       
@@ -208,11 +208,13 @@
                          margin: 10px auto;
                          width: 90%;
                          height: 200px;
+                          border-radius: 5px;
                          }
               }
             .aa{
                   display: flex;
-                width: 100%;
+                  margin: 0 auto;
+                width: 90%;
                 flex-direction: row;
                   i{
                         display: flex;
@@ -227,12 +229,16 @@
                     }       
                 }
             p{
+                 margin: 0 auto;
+                width: 90%;
                       display: flex;
-                      font-size: 20px;
+                      font-size: 18px;
                       font-weight: 600;
                      
             }       
             .bb{
+                 margin: 0 auto;
+                width: 90%;
                 color: #999;
               margin-top: 20px;
               font-size: 14px;

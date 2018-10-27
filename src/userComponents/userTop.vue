@@ -53,8 +53,11 @@ export default {
       },
       getSession(){
         this.userInfo =window.sessionStorage.userInfo
-
         this.userName = JSON.parse(this.userInfo).emp.empName
+
+
+        this.$store.state.userLogin.userName = this.userName
+
         //  console.log( 'yop'+this.userInfo)
         //  console.log(this.userName)
         },

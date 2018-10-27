@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">订单管理</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.userLogin.userName}}</p>
                      <p>来看看订单吧！</p>
             </div>
             <div class="table">
@@ -32,16 +32,17 @@
 </div>
 
             </div>
-            <div class="tableData">          
-    <el-table :data="orderData" style="width: 100%">    
+    <div class="tableData">          
+    <el-table :data="orderData" style="width: 100%;">    
     
-     <el-table-column type="expand">     
-         <template slot-scope="props">
-               <el-table ref="multipleTable" :data="props.row.orderMenuDtos" tooltip-effect="dark" style="width: 100%">
-    <el-table-column
+     <el-table-column type="expand">
+       
+    <template slot-scope="props">
+    <el-table ref="multipleTable" :data="props.row.orderMenuDtos" tooltip-effect="dark" style="width: 100%;height:auto">
+    <!-- <el-table-column
       type="selection"
       width="55">
-    </el-table-column>
+    </el-table-column> -->
 
     <el-table-column  label="菜品名称">
     <template slot-scope="scope">{{ scope.row.menuName }}</template>
@@ -58,12 +59,10 @@
 
     
   </el-table>
-       
-                <!-- <div v-for="(v,i) in props.row.orderMenuDtos" :key="i">
-                        {{v.menuId}}
-                </div> -->
-                <!-- {{props.row.orderMenuDtos}} -->
+
          </template>
+         
+       
     </el-table-column>
     
                 <el-table-column prop="orderNo"  label="订单编号" width="180"> </el-table-column>
@@ -78,27 +77,29 @@
                 </template>
                 </el-table-column>
     </el-table>
-            </div>          
+            </div>       
+        <el-pagination background :page-sizes="[1,2,5,10]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
+
         </div>
         <el-dialog  :visible.sync="dialogFormVisible" width="500px">
             <el-form :model="form">
             <el-form-item label="订单编号" :label-width="formLabelWidth">
-             <el-input v-model="form.orderNo" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.orderNo" autocomplete="off" style="width:250px;" readonly="readonly"></el-input>
             </el-form-item>
              <el-form-item label="下单时间" :label-width="formLabelWidth">
-             <el-input v-model="form.orderCreateDate" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.orderCreateDate" autocomplete="off" style="width:250px;" readonly="readonly"></el-input>
             </el-form-item>
              <el-form-item label="订单状态" :label-width="formLabelWidth">
-             <el-input v-model="form.orderStatusName" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.orderStatusName" autocomplete="off" style="width:250px;" readonly="readonly"></el-input>
             </el-form-item>
              <el-form-item label="订单总金额" :label-width="formLabelWidth">
-             <el-input v-model="form.totalPrice" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.totalPrice" autocomplete="off" style="width:250px;" readonly="readonly"></el-input>
             </el-form-item>
             <el-form-item label="买家名臣" :label-width="formLabelWidth">
-             <el-input v-model="form.empName" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.empName" autocomplete="off" style="width:250px;" readonly="readonly"></el-input>
             </el-form-item>
             <el-form-item label="商铺名称" :label-width="formLabelWidth">
-             <el-input v-model="form.shopName" autocomplete="off" style="width:250px;"></el-input>
+             <el-input v-model="form.shopName" autocomplete="off" style="width:250px;" readonly="readonly"></el-input>
             </el-form-item>
             </el-form>
              <div slot="footer" class="dialog-footer" style="text-align:center">
@@ -107,9 +108,11 @@
              </div>
         </el-dialog>
         <div>
-        <el-pagination background :page-sizes="[1,2,5]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
 
         </div>
+
+
+
     </div>
 
 </template>
@@ -294,7 +297,7 @@ import mockdata from "../Mock/mock";
           changeOrder(val){
             console.log(val)
             if(val == "/order/menus"){
-                this.$http.get('/api1/1024/cq1024/order/update'+val+'/'+this.code,{
+                this.$http.get('/api1/1024/cq1024/'+val+'/'+this.code,{
                   params:{
                       snapData:''
                   }

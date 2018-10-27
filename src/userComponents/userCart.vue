@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">购物车</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.userLogin.userName}}</p>
                      <p>快来看看您的购物车吧！</p>
             </div>
             <div style="height:20px;width:100%"></div>
@@ -249,6 +249,7 @@ import photo from './photo'
                 v.price = pArr   
             },
           account(v,i){
+              
                let arr =[]
                let pArr= 0
                 for(var j= 0;j<v.menuDtos.length;j++){
@@ -258,6 +259,14 @@ import photo from './photo'
                     }
                 }
                  v.price = pArr
+                 console.log(arr.length)
+                 if(arr.length == 0){
+                       this.$message({
+                       message: '请选择菜品',
+                       type: 'info'
+                     });
+                     return false
+                 }
                 this.$store.state.accountInfo=arr
                 this.$router.push('userFace')
             },

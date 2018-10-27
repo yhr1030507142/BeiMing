@@ -100,9 +100,7 @@ export default {
          }
     },
     mounted(){
-        //  if(sessionStorage.getItem('info')!=''){
-        //        this.$router.push('./index')
-        // }
+       
     }
 }
 </script>

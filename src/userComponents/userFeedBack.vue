@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">用户反馈</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.userLogin.userName}}</p>
                      <p>这里是用户反馈面板</p>
             </div>
             <div class="table">
@@ -19,13 +19,14 @@
                         <el-button type="primary" round v-show="menu" @click="setSugType('c')">卫生建议</el-button>
                            </transition>
             </div>
-               <p v-show="this.sugType==''">请选择建议类型</p> {{this.sugType}}
+               <p v-show="this.sugType==''"><el-tag type="danger">请选择建议类型</el-tag></p> <el-tag v-show="this.sugType!=''">{{this.sugType}}</el-tag>
             <div class="tableData">
                 <div >
-                <textarea name="" cols="200" rows="8" style="font-size:24px;border:1px solid #e8e2e1;border-radius:5px;width:100%;height:300px;" v-model="sugContent"></textarea>
+                <textarea name="" cols="200" rows="8"  @input = "descInput" style="font-size:24px;border:1px solid #e8e2e1;border-radius:5px;width:100%;height:300px;" v-model="sugContent" ref="text" maxlength="200"></textarea>
+               <span class="circle" style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:flex-end;"><span class="text" style="display:flex;color:#999">限制{{remnant}}/200字以内</span></span>
                 <div style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:center;margin-top:30px;">
                      <div style="display:flex">
-                         <el-button type="danger"  style="width:200px;height:40px" @click="addSave">建议成功</el-button>
+                         <el-button type="danger"  style="width:200px;height:40px" @click="addSave">提交建议</el-button>
                      </div>
                      </div>
                 </div>
@@ -42,7 +43,8 @@ import mockdata from "../Mock/mock";
           data: [],
           menu:true,
           sugContent:'',
-          sugType:''
+          sugType:'',
+          remnant:'',
         }
       },
       methods:{
@@ -68,6 +70,13 @@ import mockdata from "../Mock/mock";
                     this.$message({
                        type:'warning',
                        message:'建议不能为空'
+                   })
+                    return false
+               }
+               if(this.remnant>200){
+                   this.$message({
+                       type:'warning',
+                       message:'内容大于200字，请删繁就简！'
                    })
                     return false
                }
@@ -115,7 +124,12 @@ import mockdata from "../Mock/mock";
                     break;
                     
             }
-        }
+        },
+        //倒计数
+            descInput(){
+              var txtVal = this.sugContent.length;
+              this.remnant = 200-txtVal;
+            },
       },
      
       mounted(){
