@@ -315,6 +315,7 @@ import mockdata from "../Mock/mock";
                        type:'success',
                        message:'操作成功'
                      })
+                     this.getpage()
                 }else{
                    this.$message({
                        type:'info',

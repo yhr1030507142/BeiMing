@@ -23,22 +23,23 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   routes
 })
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
-//       if (this.$store.state.userInfo) {  //通过vuex state获取当前的token是否存在
-//           next();
-//       }
-//       else {
-//           next({
-//               path: '/login',
-//               query: {redirect: to.fullPath}  //将跳转的路由path作为参数，登录成功后跳转到该路由
-//           })
-//       }
-//   }
-//   else {
-//       next();
-//   }
-// })
+
+/* eslint-disable no-new */
+router.beforeEach((to, from, next) => { 
+  if (to.matched.some(res => res.meta.requireAuth)) { // 验证是否需要登陆 
+   if (sessionStorage.getItem('info')) { // 查询本地存储信息是否已经登陆 
+    next(); 
+   } else { 
+    next({ 
+     path: '/login', // 未登录则跳转至login页面 
+    //  query: {redirect: to.fullPath} // 登陆成功后回到当前页面，这里传值给login页面，to.fullPath为当前点击的页面 
+     }); 
+   } 
+  } else { 
+   next(); 
+  } 
+ });
+
 new Vue({
   el: '#app',
   router,

@@ -14,9 +14,10 @@
                      <div class="box">
                       <video src="" id="video" ref="video" width="320" height="320" class="video" v-show="!btnShow"></video>
                       <canvas width="100" height="100" id="outrec" ref="outrec" class="video1" style="display:none"></canvas>
-                      <el-button type="primary" class="btn" @click="paizhao()" v-show="btnShow">重新识别</el-button>
+<div class="btn-box">
+                          <el-button type="primary" class="btn" @click="paizhao()" v-show="btnShow">重新识别</el-button>
                       <el-button type="primary" class="btn" @click="close1()" v-show="btnShow">关闭</el-button>
-
+</div>
                      </div>   
                  </div>
         </div>
@@ -91,7 +92,7 @@ var mediaStreamTrack;
                  })
                  this.account()
              }else{
-                 this.btnShow=true
+                //  this.btnShow=true
                   this.$message({
                      type:'warning',
                      message:res.data.msg
@@ -154,11 +155,17 @@ var mediaStreamTrack;
     .vedio{
         display: flex;
     }
+    .btn-box{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     .btn{
         height: 50px;
         display: flex;
         margin-left: 50px;
     }
+    }
+   
 }
 </style>
 

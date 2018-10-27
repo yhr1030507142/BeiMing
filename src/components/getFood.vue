@@ -12,7 +12,7 @@
             </div>
             <div class="tableData">       
                      <div class="box">
-                      <video src="" id="video" ref="video" width="320" height="320" class="video" v-show="!btnShow"></video>
+                      <video src="" id="video" ref="video" width="320" height="320" class="video"></video>
                       <canvas width="100" height="100" id="outrec" ref="outrec" class="video1" style="display:none"></canvas>
                       <el-button type="primary" class="btn" @click="paizhao()">{{text}}</el-button>
                       <!-- <el-button type="primary" class="btn" @click="close1()" v-show="btnShow">关闭</el-button> -->
@@ -62,7 +62,7 @@ var mediaStreamTrack;
 
     // 拍照
      paizhao() {
-        this.btnShow=true
+        // this.btnShow=true
       //视频转换到canvs
       var outrec = this.$refs.outrec;
       var outreccon = outrec.getContext("2d");
@@ -85,7 +85,7 @@ var mediaStreamTrack;
     check(){
          let param = new URLSearchParams
          param.append('snapData',this.img1)
-         param.append('orderNo',this.$router.param.id)
+         param.append('orderNo',this.$route.params.id)
          this.$http.post('/api1/1024/cq1024/order/checkface',param).then(res=>{
              console.log(res)
              if(res.data.code == 100){
@@ -107,7 +107,7 @@ var mediaStreamTrack;
                      type:'warning',
                      message:'系统异常'
                  })
-                 this.btnShow=true        
+                //  this.btnShow=true        
          })
     },
     paySuccess(){
@@ -121,6 +121,7 @@ var mediaStreamTrack;
                           type:'success',
                           message:'取餐成功'
                       })
+                      this.$router.go(-1)
                   }else{
                        this.$message({
                           type:'info',

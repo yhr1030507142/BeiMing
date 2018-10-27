@@ -18,10 +18,20 @@ export default {
   },
   methods:{
     getSession(){
-      this.userInfo = JSON.parse(window.sessionStorage.userInfo)
-      this.userName = this.userInfo.emp.empName
-      console.log(this.userInfo)
+      // this.userInfo = JSON.parse(window.sessionStorage.userInfo)
+      // this.userName = this.userInfo.emp.empName
+      // console.log(this.userInfo)
+       this.$http.post('api1/1024/cq1024/user/user/issession').then(res=>{
+        console.log(res)
+        if(res.data.code != 100){
+          this.$message({
+            type:'info',
+            message:res.data.msg
+          })
+        }
+      })
     }
+    
   },
   components:{
     leftMenu,topMenu
