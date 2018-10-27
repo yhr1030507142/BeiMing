@@ -40,6 +40,7 @@ export default {
     },
     methods:{
          denglu(){
+            //  this.$router.push({name:'index'})
             //  console.log(window.sessionStorage.Info)
             //   this.$router.push('index')
             if(this.username==""||this.username==null){
@@ -71,7 +72,6 @@ export default {
                 console.log(res)
                 // console.log(res.data.code)
                 // console.log(res.data.info.message)
-                 
                  if(res.data.code==100){
                     this.info = res.data.info;
                     if(this.info.userInfo.roleId == 1){
@@ -80,25 +80,24 @@ export default {
                          type: 'success'
                         });
                  window.sessionStorage.info = JSON.stringify(this.info);
-                 //console.log('login'+res.data.info)
-                 this.$router.push('./index')
+                 this.$store.state.userInfo =  this.info
+                 this.$router.push({name:'index'})
                     }else{
                          this.$message({
                          message: '身份不符',
                          type: 'success'
                         });
-                    }
-                   
-                   
+                    } 
                  }else{
                       this.$message({
                       message: res.data.msg,
                       type: 'warning'
                      });
                  }
+            },err=>{
+               console.loga(err)
             })
          }
-            // this.$router.push('./userIndex')
     },
     mounted(){
         //  if(sessionStorage.getItem('info')!=''){

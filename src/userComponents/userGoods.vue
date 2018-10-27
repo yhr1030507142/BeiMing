@@ -156,7 +156,7 @@ import imgZoom from 'vue2.0-zoom'
         mounted(){
           this.getdata(this.$route.params.id)
         },
-        components: { imgZoom }
+        // components: { imgZoom }
       }
   </script>
 <style lang="scss" scoped>
@@ -202,12 +202,14 @@ import imgZoom from 'vue2.0-zoom'
             }
           .box1{
             display: flex;
-             width: 400px;
-              height: 500px;
+              width: 400px;
+              height: 560px;
               // border: 1px solid black;
-              margin-left: 40px;
+              margin-left: 50px;
               flex-direction: column;
-              background: #f3f3f3;
+              background: #f0f0f0;
+              border-radius: 10px;
+              padding: 20px 20px;
               div {
                 display: flex;
                 margin-top: 20px;
@@ -260,6 +262,8 @@ import imgZoom from 'vue2.0-zoom'
                     display: flex;
                     flex-direction: row;
                     margin-top: 60px;
+                    padding-bottom: 30px;
+                   
                     .button1{
                         width: 150px;
                         height: 50px;

@@ -22,6 +22,7 @@ const state ={
         userName:'',
         shopName:'',
         shopId:'',
+        userInfo:[],
     }
 }
 

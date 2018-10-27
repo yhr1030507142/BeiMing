@@ -28,7 +28,8 @@
                         </div>
                         <ul>
                             <li class="box-bottom" v-for="(v,i) in breakfast " :key='i'>
-                                <span @click="deleteMenu(v,i)"></span>
+                                <!-- <span @click="deleteMenu(v,i)"></span> -->
+                              <div class="delete-box"><i class="el-icon-delete delete" @click="deleteMenu(v,i)"></i></div>
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p>{{v.menuName}}</p>
                                 <div class="num">
@@ -56,7 +57,8 @@
                         </div>
                         <ul>
                             <li class="box-bottom" v-for="(v,i) in lunch " :key='i'>
-                                <span @click="deleteMenu(v,i)"></span>
+                                <!-- <span @click="deleteMenu(v,i)"></span> -->
+                              <div class="delete-box"><i class="el-icon-delete delete" @click="deleteMenu(v,i)"></i></div>                               
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p>{{v.menuName}}</p>
                                 <div class="num">
@@ -82,7 +84,8 @@
                         </div>
                         <ul>
                             <li class="box-bottom" v-for="(v,i) in dinner " :key='i'>
-                                <span @click="deleteMenu(v,i)"></span>
+                                <!-- <span @click="deleteMenu(v,i)"></span> -->
+                              <div class="delete-box"><i class="el-icon-delete delete" @click="deleteMenu(v,i)"></i></div>                              
                                 <a href="#"><img :src="v.menuPicPath" alt=""></a>
                                 <p>{{v.menuName}}</p>
                                 <div class="num">
@@ -247,7 +250,7 @@
                 console.log(JSON.stringify(arr))
               let param = new URLSearchParams
               param.append('jsonMatchMenus',JSON.stringify(arr))
-              param.append('seven',false)
+              param.append('seven',this.check)
             this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/addmatchmenu',param).then((res)=>{
             //    console.log(res)
                 console.log(res.data.code)
@@ -416,6 +419,18 @@
     }
   </script>
 <style lang="scss" scoped>
-@import '../assets/sass/match.scss'
+@import '../assets/sass/match.scss';
+.delete-box{
+  width: 40px;
+  .delete{
+    font-size: 24px;
+    color: #606266;
+    &:hover{
+      cursor: pointer;
+      color: #f60;
+    }
+    }
+}
+
 </style>
 

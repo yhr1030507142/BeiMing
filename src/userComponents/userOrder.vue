@@ -198,7 +198,7 @@ import mockdata from "../Mock/mock";
             console.log(row)
             this.dialogFormVisible=true
             this.code = row.orderNo
-              this.$http.get('/api1/1024/cq1024/order/order/details/'+this.code).then(res=>{
+              this.$http.get('/api1/1024/cq1024/order/details/'+this.code).then(res=>{
                     console.log(res.data.info.orderDto)
                      this.arr = res.data.info.orderDto
                         this.form.orderNo = this.arr.orderNo
@@ -236,15 +236,9 @@ import mockdata from "../Mock/mock";
               }
             
         },
-       open2() {
-        this.$message({
-          message: '恭喜你，搭配成功',
-          type: 'success'
-        });
-      },
         getpage(){
           if(this.start == '' || this.end ==''){
-            this.$http.get('/api1/1024/cq1024/order/order/list',{
+            this.$http.get('/api1/1024/cq1024/order/list',{
                   params:{
                       currentPage:this.currentPage,
                       pageSize:this.pageSize, 
@@ -262,7 +256,7 @@ import mockdata from "../Mock/mock";
                  this.orderDataChildren = arr
             }))
           }else{
-               this.$http.get('/api1/1024/cq1024/order/order/list',{
+               this.$http.get('/api1/1024/cq1024/order/list',{
                   params:{
                       currentPage:this.currentPage,
                       pageSize:this.pageSize, 
@@ -307,15 +301,13 @@ import mockdata from "../Mock/mock";
               }).then(res=>{
                     console.log(res)
                     let order = res.data.info.orderMenuDtos[0].orderNo
-                 
-                       this.$router.push('userEvaluate/'+order)
+                    this.$router.push('userEvaluate/'+order)
                     //this.$router.push({name:'yaohuiqian'})
                     // return false
               })
-                
             }
               console.log(val)
-              this.$http.get('/api1/1024/cq1024/order/update'+val+'/'+this.code,{
+              this.$http.get('/api1/1024/cq1024/'+val+'/'+this.code,{
                   params:{
                       snapData:''
                   }

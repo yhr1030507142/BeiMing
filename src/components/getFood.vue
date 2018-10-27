@@ -14,8 +14,8 @@
                      <div class="box">
                       <video src="" id="video" ref="video" width="320" height="320" class="video" v-show="!btnShow"></video>
                       <canvas width="100" height="100" id="outrec" ref="outrec" class="video1" style="display:none"></canvas>
-                      <el-button type="primary" class="btn" @click="paizhao()" v-show="btnShow">重新识别</el-button>
-                      <el-button type="primary" class="btn" @click="close1()" v-show="btnShow">关闭</el-button>
+                      <el-button type="primary" class="btn" @click="paizhao()">{{text}}</el-button>
+                      <!-- <el-button type="primary" class="btn" @click="close1()" v-show="btnShow">关闭</el-button> -->
 
                      </div>   
                  </div>
@@ -30,6 +30,7 @@ var mediaStreamTrack;
       data() {
         return {
              img1:'',
+             text:'开始识别',
              btnShow:false,
         }
       },
@@ -51,9 +52,11 @@ var mediaStreamTrack;
     //用户拒绝使用,或者没有摄像头
     Devicestate.catch(function (err) {
         alert('无法识别摄像头，请重新识别')
-        console.log(err.name);
+        // console.log(err.name);
+        setTimeout(this.close1,1500);
+        
     });
-     setTimeout(this.paizhao, 5000)
+    // setTimeout(this.paizhao, 5000)
     // console.log(this.$store.state.test)
     },
 
@@ -69,7 +72,7 @@ var mediaStreamTrack;
       // var imgvideo =this.refs.imgvideo;
       // imgvideo.attr('src', img);
       this.img1 = outrec.toDataURL("image/png")
-      this.$store.state.base64=this.img1
+    //   this.$store.state.base64=this.img1
     //    console.log(this.img1)
     },
     // 关闭
@@ -82,6 +85,7 @@ var mediaStreamTrack;
     check(){
          let param = new URLSearchParams
          param.append('snapData',this.img1)
+         param.append('orderNo',this.$router.param.id)
          this.$http.post('/api1/1024/cq1024/order/checkface',param).then(res=>{
              console.log(res)
              if(res.data.code == 100){
@@ -89,16 +93,13 @@ var mediaStreamTrack;
                      type:'success',
                      message:'识别成功'
                  })
-                 this.account()
+                 this.paySuccess()
              }else{
-                 this.btnShow=true
                   this.$message({
                      type:'warning',
                      message:res.data.msg
                  })
-
-
-
+                 this.text = '重新识别'
              }  
          },err=>{
              this.btnShow=true
@@ -106,31 +107,30 @@ var mediaStreamTrack;
                      type:'warning',
                      message:'系统异常'
                  })
-                 this.btnShow=true
-                 
+                 this.btnShow=true        
          })
     },
-     account(){
-           let param = new URLSearchParams
-           param.append('orderMenus',JSON.stringify(this.$store.state.accountInfo))
-           this.$http.post('/api1/1024/cq1024/order/add',param).then(res=>{
-               console.log(res)
-            if(res.data.code == 100){
-               this.$message({
-                 type:'success',
-                 message:'下单成功'
-               })
-              let _this =this
-              setTimeout(_this.close1,1500);
-              }else{
-                 this.$message({
-                     type:'info',
-                     message:res.data.msg
-                   })
-                
-              }
-        })
-            },
+    paySuccess(){
+         this.$http.get('/api1/1024/cq1024/order/update/4/'+this.$route.params.id,{
+                  params:{
+                      snapData:''
+                  }
+              }).then(res=>{
+                  if(res.data.code == 100){
+                      this.$message({
+                          type:'success',
+                          message:'取餐成功'
+                      })
+                  }else{
+                       this.$message({
+                          type:'info',
+                          message:res.data.msg
+                      })
+                  }
+              },err=>{
+                  console.log(err)
+              })
+    }
  },
     watch:{
         img1(){
@@ -138,9 +138,9 @@ var mediaStreamTrack;
         }
     },
       mounted(){
-        this.openPhoto()
+         this.openPhoto()
        
-        console.log( JSON.stringify(this.$store.state.accountInfo))
+         console.log(this.$route.params.id)
       }
     }
   </script>

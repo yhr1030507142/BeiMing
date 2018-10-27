@@ -16,15 +16,15 @@
       align="right"
       unlink-panels
       range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
+      start-placeholder="开始预定日期"
+      end-placeholder="结束预定日期"
       @change="changDate"
       :picker-options="pickerOptions">
     </el-date-picker>
 
      
   </div>
-<div style="float:left">
+<div style="float:left;margin-left:30px;">
      <el-select v-model="orderStatusId" slot="prepend" placeholder="请选择" @change="changSelect">
       <el-option label="全部订单"  :value='0' ></el-option>                   
       <el-option :label="v.orderStatusName"  :value="v.orderStatusId" v-for="(v,i) in statusArr" :key="i"></el-option>      
@@ -38,14 +38,13 @@
      <el-table-column type="expand">     
          <template slot-scope="props">
                <el-table ref="multipleTable" :data="props.row.orderMenuDtos" tooltip-effect="dark" style="width: 100%">
-    <el-table-column
+    <!-- <el-table-column
       type="selection"
       width="55">
-    </el-table-column>
-    <el-table-column  label="菜品ID">
+    </el-table-column> -->
+    <!-- <el-table-column  label="菜品ID">
     <template slot-scope="scope">{{ scope.row.menuId }}</template>
-    </el-table-column>
-
+    </el-table-column> -->
     <el-table-column  label="菜品名称">
     <template slot-scope="scope">{{ scope.row.menuName }}</template>
     </el-table-column>
@@ -109,7 +108,7 @@
                 <el-button @click="changeOrder(form.btn1Ur2)" v-show="form.btn2">{{form.btn2}}</el-button>   
              </div>
         </el-dialog>
-        <div>
+        <div style="margin-top:30px;">
         <el-pagination background :page-sizes="[1,2,5]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
 
         </div>
@@ -201,7 +200,7 @@ import mockdata from "../Mock/mock";
             console.log(row)
             this.dialogFormVisible=true
             this.code = row.orderNo
-              this.$http.get('/api/yangguoli/cq1024/order/details/'+this.code).then(res=>{
+              this.$http.get('/api1/1024/cq1024/order/details/'+this.code).then(res=>{
                     console.log(res.data.info.orderDto)
                      this.arr = res.data.info.orderDto
                         this.form.orderNo = this.arr.orderNo
@@ -247,7 +246,7 @@ import mockdata from "../Mock/mock";
       },
         getpage(){
           if(this.start == '' || this.end ==''){
-            this.$http.get('/api1/1024/cq1024/order/order/list',{
+            this.$http.get('/api1/1024/cq1024/order/list',{
                   params:{
                       currentPage:this.currentPage,
                       pageSize:this.pageSize, 
@@ -265,7 +264,7 @@ import mockdata from "../Mock/mock";
                  this.orderDataChildren = arr
             }))
           }else{
-               this.$http.get('/api1/1024/cq1024/order/order/list',{
+               this.$http.get('/api1/1024/cq1024/order/list',{
                   params:{
                       currentPage:this.currentPage,
                       pageSize:this.pageSize, 
@@ -302,14 +301,30 @@ import mockdata from "../Mock/mock";
         //   订单修改
           changeOrder(val){
               console.log(val)
-              
-              this.$http.get('/api1/1024/cq1024/order/update'+val+'/'+this.code,{
+              if(val == '/order/update/4'){
+                  console.log(this.code)
+                  this.$router.push('getFood/'+this.code)
+              }else{
+                  this.$http.get('/api1/1024/cq1024/'+val+'/'+this.code,{
                   params:{
                       snapData:''
                   }
               }).then(res=>{
+                if(res.data.code == 100){
+                     this.$message({
+                       type:'success',
+                       message:'操作成功'
+                     })
+                }else{
+                   this.$message({
+                       type:'info',
+                       message:res.data.msg
+                     })
+                }
                     console.log(res)
               })
+              }
+            
           },
         //   更改下拉状态
           getSelectData(){

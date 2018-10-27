@@ -7,8 +7,11 @@
                      <p>这里是菜品管理面板</p>
             </div>
             <div class="table">
-                    <input  placeholder="请输入内容" class="search-input" v-model="dishName">
-                    <button class="search-button" @click="search()"><i class="iconfont"></i></button>
+                    <!-- <input  placeholder="请输入内容" class="search-input" v-model="dishName">
+                    <button class="search-button" @click="search()"><i class="iconfont"></i></button> -->
+            <el-input placeholder="请输入菜品名" v-model="dishName" class="input-with-select" style="width:380px;">
+            <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
+            </el-input>
               <div class="button-group">
                   
                      <button @click="handleDeleteAll()">批量删除</button>

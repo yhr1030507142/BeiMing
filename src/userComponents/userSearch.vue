@@ -21,8 +21,7 @@
                     
                   </el-select> -->
                   <el-button slot="append" icon="el-icon-search" @click="searchShopName()"></el-button>
-                </el-input>
-                
+                </el-input>              
                 <div>
                     <ul class="ul1"><li class="type style" @click="searchAll()">全部</li></ul>    
                     <ul class="ul1"><li class="type">类型：</li><li class="style" v-for="(v,i) in menuPropertiesCategory" :key="i" @click="searchCategory(v.menuPropertiesCategoryId)">{{v.menuPropertiesCategoryName}}</li></ul>    
@@ -197,6 +196,7 @@
          margin-top: 20px;
           margin-bottom: 20px;
          flex-direction: column;
+         border-radius: 5px;
          opacity: .8;
             &:hover{
                  opacity: 1;
@@ -205,7 +205,8 @@
                 display: flex;
                 width: 100%;
                      img{
-                         width: 100%;
+                         margin: 10px auto;
+                         width: 90%;
                          height: 200px;
                          }
               }
@@ -235,6 +236,7 @@
                 color: #999;
               margin-top: 20px;
               font-size: 14px;
+              padding-bottom: 5px;
                 &:hover{
                     text-decoration: red;
                      color: red;

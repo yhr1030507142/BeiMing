@@ -2,14 +2,14 @@
    
     <div class="top">
         <div class="left">
-             <a href="#" class="logo"></a>
+             <a href="#" class="logo"  @click="toIndex()"></a>
              <div class="title">
                  <a href="#">北明食堂服务系统</a>
              </div>
         </div>
         <div class="right">
             <div class="name"><p>{{userName}}</p></div>
-            <div class="pic" @click="toIndex">
+            <div class="pic">
                 <a href="#"><img src="../assets/images/01.jpg" alt=""></a>
                 </div>
             <div class="close">

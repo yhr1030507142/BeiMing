@@ -26,17 +26,25 @@
                 <el-table-column prop="sugType" label="反馈类型" > </el-table-column>
                 <el-table-column prop="sugContent" label="反馈信息"></el-table-column>
                 <el-table-column prop="sugCreateDate" label="反馈日期"></el-table-column>
-                <!-- <el-table-column fixed="right" label="操作" width="100">
+                <el-table-column fixed="right" label="操作" width="100">
                  <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                 <el-button type="text" size="small">编辑</el-button>
+                <el-button @click="handleClick(scope.row)" type="text" size="small">反馈详情</el-button>
+                 <!-- <el-button type="text" size="small">编辑</el-button> -->
                     </template>
-                </el-table-column> -->
+                </el-table-column>
                 </el-table>
 <el-pagination background :page-sizes="[5,10]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="pageNum" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
 
             </div>
         </div>
+        <el-dialog title="反馈信息" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+                <textarea name="" cols="200" rows="8" style="font-size:24px;border:1px solid #e8e2e1;border-radius:5px;width:100%;height:300px;" v-model="nodeSug"></textarea>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -49,6 +57,8 @@ import mockdata from "../Mock/mock";
           pageSize:5,//每页的数据条数
           pageNum:1,//默认开始页面
           data: [],
+          nodeSug:'',
+          dialogFormVisible:false,
           suggesList:[  
                          {name:'全部',sugType:""},
                          {name:'菜品建议',sugType:"菜品建议"},
@@ -121,7 +131,13 @@ import mockdata from "../Mock/mock";
           },
             handleSelectionChange(val) {
                 console.log(val)
-            }      
+            },
+            handleClick(val){
+                this.dialogFormVisible=true
+                this.nodeSug=val.sugContent
+                console.log(val)
+
+            }   
       },
       mounted(){
           this.getData()

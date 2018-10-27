@@ -6,7 +6,7 @@
                    <p>Hi,UserName</p>
                      <p>这里是店铺管理面板</p>
             </div>
-           <p style="font-size:18px;color:#f60"> *{{text}}</p>
+           <p style="font-size:18px;color:#f60">{{text}}</p>
             <div class="table">
                    <input  type="text" v-model="shopName" style="float:left;width:180px;height:50px;font-size:25px;background:#f5f5f5" disabled="disabled" ref="shopName" @click.stop=""/><div style="float:left;margin-left:20px;margin-top:5px;"><el-button type="primary" icon="el-icon-edit" circle @click.stop="updateShopName()"></el-button> </div>
               <!-- <div class="button-group">

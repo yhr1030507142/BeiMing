@@ -5,10 +5,8 @@
       <div class="rightMain" style="margin-left:300px;">
         <div class="w">
           <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"> </div>
- 
         </div>
       </div>
- 
       <router-view></router-view>
   </div>
 </template>
@@ -37,11 +35,11 @@ export default {
     },
     width: {
       type: String,
-      default: '500px'
+      default: '600px'
     },
     height: {
       type: String,
-      default: '500px'
+      default: '600px'
     }
   },
   name: 'App',
