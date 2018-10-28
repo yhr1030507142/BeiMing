@@ -61,6 +61,7 @@ export default {
   data(){
      return{
        show:false,
+       code:'',
        data:[],
        num:[],
        start:'',
@@ -186,8 +187,14 @@ export default {
      
     },
     getSession(){
+       if(this.$store.state.indexLogin.username=='' || this.$store.state.indexLogin.username==null ||this.$store.state.indexLogin.username== 'undefined'){
+          this.$router.push({name:'login'})
+          return false
+      }
+      console.log(this.$store.state.indexLogin.username)
       this.$http.post('api1/1024/cq1024/user/user/issession').then(res=>{
         console.log(res)
+        this.code = res.data.code
         if(res.data.code != 100){
           this.$message({
             type:'info',
@@ -222,11 +229,24 @@ export default {
           },
     
   },
+  computed:{
+    username(){
+      return this.$store.state.indexLogin.username
+    }
+  },
   mounted(){
     this.getSession()
     this.getData()
     this.initChart();
     // console.log(window.sessionStorage)
+  },
+  watch:{
+    code(val){
+      if(this.code != 100){
+            sessionStorage.setItem('info','')
+            this.router.push('./login')
+          }
+    }
   }
 }
 </script>
