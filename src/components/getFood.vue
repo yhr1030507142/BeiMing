@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">商品结算</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.indexLogin.userName}}</p>
                      <p>这里是支付界面</p>
             </div>
             <div class="table">
@@ -15,7 +15,7 @@
                       <video src="" id="video" ref="video" width="320" height="320" class="video"></video>
                       <canvas width="100" height="100" id="outrec" ref="outrec" class="video1" style="display:none"></canvas>
                       <el-button type="primary" class="btn" @click="paizhao()">{{text}}</el-button>
-                      <!-- <el-button type="primary" class="btn" @click="close1()" v-show="btnShow">关闭</el-button> -->
+                      <el-button type="primary" class="btn" @click="close1()">关闭</el-button>
 
                      </div>   
                  </div>

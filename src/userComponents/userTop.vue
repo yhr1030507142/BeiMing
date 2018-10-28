@@ -62,7 +62,7 @@ export default {
         //  console.log(this.userName)
         },
         toIndex(){
-            this.$router.push('./userIndex')
+            this.$router.push({name:'userRightMain'})
         },
         loginOut(){
             this.$http.post('/api1/1024/cq1024/user/user/loginout').then((res)=>{

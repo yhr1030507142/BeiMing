@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">用户反馈</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.indexLogin.userName}}</p>
                      <p>这里是用户反馈面板</p>
             </div>
             <div class="table">
@@ -24,7 +24,7 @@
                 
                 <el-table-column prop="" label="" width="60"> </el-table-column>
                 <el-table-column prop="sugType" label="反馈类型" > </el-table-column>
-                <el-table-column prop="sugContent" label="反馈信息"></el-table-column>
+                <el-table-column prop="sugContent" label="反馈信息" :show-overflow-tooltip="true"></el-table-column>
                 <el-table-column prop="sugCreateDate" label="反馈日期"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                  <template slot-scope="scope">

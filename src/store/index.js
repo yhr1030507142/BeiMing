@@ -29,6 +29,9 @@ const state ={
         shopName:'',
         shopId:'',
         userInfo:[],
+        morning:'',
+        noon:'',
+        evening:'',
     }
 }
 

@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">店铺管理</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.indexLogin.userName}}</p>
                      <p>这里是店铺管理面板</p>
             </div>
            <p style="font-size:18px;color:#f60">{{text}}</p>

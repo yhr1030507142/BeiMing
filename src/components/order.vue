@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">订单管理</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.indexLogin.userName}}</p>
                      <p>来看看订单吧！</p>
             </div>
             <div class="table">
@@ -56,7 +56,8 @@
      <el-table-column  label="菜品数量">
     <template slot-scope="scope">{{ scope.row.menuNum }}</template>
     </el-table-column>
-
+ 
+  
 
     
   </el-table>
@@ -70,6 +71,7 @@
     
                 <el-table-column prop="orderNo"  label="订单编号" width="180"> </el-table-column>
                 <el-table-column prop="orderCreateDate" label="下单时间" width="180"> </el-table-column>
+                <el-table-column prop="bookingDate" label="预定菜品时间" width="180"> </el-table-column>
                 <el-table-column prop="orderStatusName" label="订单状态"></el-table-column>
                 <el-table-column prop="totalPrice" label="订单总金额"></el-table-column>
                 <el-table-column prop="empName" label="买家姓名"></el-table-column>

@@ -30,8 +30,9 @@
                             </div>
                         </div>
                          <div class="box-bottom" style="padding-bottom:30px;">
-                              <textarea name="" v-model="v.sugContent" id="500" cols="200" rows="8" style="border:1px solid #e8e2e1;border-radius:5px;"></textarea>
+                              <textarea name="" v-model="v.sugContent" id="500" cols="200" rows="8" style="border:1px solid #e8e2e1;border-radius:5px;" maxlength="200"></textarea>
                          </div>
+
                        </div>
                 </div>
             </div>
@@ -56,6 +57,8 @@ import mockdata from "../Mock/mock";
             whichMeal:'',
             orderPayDate:'',
             text:'',
+            remnant:200,
+            sugContent:'',
         }
       },
       methods:{
@@ -91,7 +94,7 @@ import mockdata from "../Mock/mock";
                     menuSugs.push({menuSugId:this.data[i].menuSugId,menu:{menuId:this.data[i].menuId},sugContent:this.data[i].sugContent,menuRating:this.data[i].menuRating})
                 }
                 
-                 console.log(JSON.stringify(menuSugs))
+                console.log(JSON.stringify(menuSugs))
                 param.append('menuSugs',JSON.stringify(menuSugs))
                 param.append('orderNo',this.$route.params.id)
                 this.$http.post('/api1/1024/cq1024/order/appraise',param).then(res=>{
@@ -116,7 +119,8 @@ import mockdata from "../Mock/mock";
             },
             backGo(){
                 this.$router.go(-1)
-            }   
+            },
+           
       },
       mounted(){
           this.getData()

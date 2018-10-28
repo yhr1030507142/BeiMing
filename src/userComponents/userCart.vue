@@ -15,7 +15,7 @@
                <el-tag type="success">{{v.shopName}}</el-tag>
                 <el-tag type="info">{{v.matchMenuDate}}</el-tag>
                 <el-tag type="warning">{{v.matchMenuTime}}</el-tag>
-               
+             
             <el-table :data="v.menuDtos" stripe style="width: 100%"  @selection-change="handleSelectionChange">
                     
                  <!-- <el-table-column  label="num">
@@ -36,7 +36,7 @@
                     <span style="margin-left: 10px">{{scope.row.shoppingCarId}}</span>
                     </template>    
                  </el-table-column> 
-                <el-table-column  label="菜品名称">
+                <el-table-column  label="菜品名称" :show-overflow-tooltip="true">
                     <template slot-scope="scope">   
                     <span style="margin-left: 10px">{{scope.row.menuName}}</span>
                     </template>    
@@ -78,7 +78,7 @@
                        <span style="margin-left: 10px" ref="price">{{scope.row.shoppingCarMenuNum,scope.row.menuPrice |samllPrice}}</span>
                     </template>  
                 </el-table-column>
-                   <el-table-column label="菜品状态">
+                   <el-table-column label="菜品状态" :show-overflow-tooltip="true">
                     <template slot-scope="scope">   
                        <span style="margin-left: 10px" ref="price">{{scope.row.statusInfo}}</span>
                     </template>  
@@ -164,6 +164,8 @@ import photo from './photo'
           multipleSelection:[],
           i:'',
           dialogFormVisible1:false,
+          boxShow:true,
+          carLength:'',
     form: {
             menuName: '546',
             order_create_date: '',
@@ -249,7 +251,6 @@ import photo from './photo'
                 v.price = pArr   
             },
           account(v,i){
-              
                let arr =[]
                let pArr= 0
                 for(var j= 0;j<v.menuDtos.length;j++){
@@ -281,10 +282,11 @@ import photo from './photo'
                 })
       },
        handleDelete(index,row) {
-           console.log(index)
-                console.log(row);
-                 console.log(row[index].shoppingCarId);
-         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        //    console.log(index)
+        //  this.carLength = row.length
+        //   console.log(row[index].shoppingCarId);
+        console.log(index)
+         this.$confirm('是否删除?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
@@ -296,7 +298,9 @@ import photo from './photo'
                             type:"success",
                             message:res.data.msg
                         })
-                           row.splice(index,1);
+                         row.splice(index,1);
+                       this.getMenuData()
+                          
                     }else{
                         this.$message({
                             type:"warning",
@@ -356,8 +360,13 @@ import photo from './photo'
         baseChange(val){
          this.photoBase = this.$store.state.base64
         console.log("cart监听到摄像头图片传值")
-       
-      },
+        },
+        carLength(val){
+        //       if(row.length == 0){
+        //      
+        //    }
+             console.log(val)
+        }
       },
       mounted(){
         //    this.$store.dispatch('getCartList')

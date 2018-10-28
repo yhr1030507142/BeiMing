@@ -19,7 +19,7 @@ export default {
                 {to:'/index/feedback',url:require('../assets/images/用户反馈1.png'),url1:require('../assets/images/用户反馈.png'),backgroundSize:'40px 35px'},
                 {to:'/index/order',url:require('../assets/images/订单管理未选.png'),url1:require('../assets/images/订单管理.png'),backgroundSize:'40px 35px'},
                 {to:'/index/store',url:require('../assets/images/店铺管理未选.png'),url1:require('../assets/images/店铺管理.png'),backgroundSize:'40px 35px'},
-                {to:'/index/getFood',url:require('../assets/images/人脸识别未选.png'),url1:require('../assets/images/人脸识别.png'),backgroundSize:'40px 35px'},
+                // {to:'/index/getFood',url:require('../assets/images/人脸识别未选.png'),url1:require('../assets/images/人脸识别.png'),backgroundSize:'40px 35px'},
            
            ],
         }

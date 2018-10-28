@@ -12,12 +12,13 @@
             </div>
             <div class="tableData">       
                      <div class="box">
-                      <video src="" id="video" ref="video" width="320" height="320" class="video" v-show="!btnShow"></video>
+                      <video src="" id="video" ref="video" width="320" height="320" class="video"
+                      ></video>
                       <canvas width="100" height="100" id="outrec" ref="outrec" class="video1" style="display:none"></canvas>
-<div class="btn-box">
-                          <el-button type="primary" class="btn" @click="paizhao()" v-show="btnShow">重新识别</el-button>
-                      <el-button type="primary" class="btn" @click="close1()" v-show="btnShow">关闭</el-button>
-</div>
+            <div class="btn-box" v-show="btnShow">
+                          <el-button type="primary" class="btn" @click="paizhao()">重新识别</el-button>
+                      <el-button type="primary" class="btn" @click="close1()">关闭</el-button>
+            </div>
                      </div>   
                  </div>
         </div>
@@ -97,7 +98,7 @@ var mediaStreamTrack;
                      type:'warning',
                      message:res.data.msg
                  })
-
+                    this.btnShow=true
 
 
              }  
@@ -128,7 +129,7 @@ var mediaStreamTrack;
                      type:'info',
                      message:res.data.msg
                    })
-                
+                this.btnShow=true
               }
         })
             },

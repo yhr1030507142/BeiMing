@@ -3,28 +3,27 @@
         <div class="w">
            <h2 class="dishes-font">菜品信息</h2>
             <div class="showName">
-                  
+                   <p>Hi,{{$store.state.userLogin.userName}}</p>
+                     <p>快来看看美味吧！</p>
             </div>
+            
             <div class="tableDataBox">
                <div class="box">
                   <div class="pic">
                         <!-- <img-zoom :src="imgSrc" width="150" height="450" :bigsrc="imgSrc" :configs="configs"></img-zoom> -->
                         <img :src="imgSrc" alt="">
                   </div>   
+                   <div class="word">
+                   <span>{{this.title}}</span>
+                 </div>
                </div>
-           
-
-
                <div class="box1">
                     <div class="title">{{this.title}}</div>
-                    <div class="style"><span>店铺:</span><el-tag type="success">{{this.shopName}}</el-tag></div>
-                    <div class="price"><span>价格:</span> <i>￥</i><p>{{this.price}}</p></div>
-                    <div class="style"><span>菜系:</span><p><el-tag type="info">{{this.menuPropertiesStyle}}</el-tag></p></div>
-                    <div class="kind"><span>种类:</span><p><el-tag type="warning">{{this.menuPropertiesCategory}}</el-tag></p></div>
-                    <div class="taste"><span>口味:</span><p><el-tag type="danger">{{this.menuPropertiesTaste}}</el-tag></p></div>
-                    <div><el-input-number v-model="num1" @change="handleChange" :min="1"  label="请选择菜品数量"></el-input-number></div>
-                   <div style="height:100px;">
-        <el-select v-model="orderStatusId" slot="prepend" placeholder="请选择搭配日期" @change="changSelect">
+                    <div><el-tag type="success">{{this.shopName}}</el-tag></div>
+                    <div><el-tag type="info">{{this.menuPropertiesStyle}}</el-tag><el-tag type="warning">{{this.menuPropertiesCategory}}</el-tag><el-tag type="danger">{{this.menuPropertiesTaste}}</el-tag></div>
+                    <div><el-input-number size="small" v-model="num1" @change="handleChange" :min="1"  label="请选择菜品数量"></el-input-number></div>
+        <div >
+       <el-select v-model="orderStatusId" slot="prepend" placeholder="请选择搭配日期" @change="changSelect">
        <el-option :label="v1.matchMenuDate+'|'+v1.matchMenuTime"  :value="v1.matchMenuId" v-for="(v1,i1) in arr" :key="i1"></el-option>      
       </el-select>
       </div>
@@ -34,8 +33,17 @@
                     </div>
                </div>
             </div>
+        <div class="tableDataBox1" style="margin-top:10px;">    
+             <div> <el-tag type="success">菜品评价</el-tag></div>
+              <div class="userContent" v-for="(v,i) in menusug" :key="i">
+                  <div class="userContent-l"><el-tag type="info">{{v.user.emp.empNo}}</el-tag></div>
+                  <div class="userContent-r">
+                   <div><el-rate v-model="v.menuRating" disabled  text-color="#ff9900" score-template="{value}"></el-rate></div>
+                    {{v.sugContent}}</div>
+              </div>
         </div>
-    </div>
+        </div>
+        </div>
 </template>
 
 <script>
@@ -62,7 +70,9 @@ import imgZoom from 'vue2.0-zoom'
              maskHeight:100,
              maskColor:'red',
              maskOpacity:0.2
-           }
+           },
+            value5: 3.7,
+            menusug:[],
 
         }
       },
@@ -79,8 +89,9 @@ import imgZoom from 'vue2.0-zoom'
                     this.menuPropertiesStyle = res.data.info.menu.menuPropertiesStyle.menuPropertiesStyleName
                     this.menuPropertiesTaste = res.data.info.menu.menuPropertiesTaste.menuPropertiesTasteName
                      this.shopName =  res.data.info.menu.shop.shopName
-
                      this.arr =res.data.info.matchmenu
+                     this.menusug=res.data.info.menusug
+
                    console.log(res) 
               })
              },
@@ -177,37 +188,51 @@ import imgZoom from 'vue2.0-zoom'
     background-color: #d3dce6;
   }
   .tableDataBox{
-      width: 100%;
+      border-radius: 10px;
+      margin: 50px auto;
+      width: 85%;
       display: flex;
       flex-direction: row;
       height: auto;
-      justify-content: flex-start;
+      justify-content: space-around;
+      background: #fff;
         .box{
-          width: 450px;
-          height: 450px;
-          // border: 1px solid black;
+          width: 300px;
+          height: 350px;
+          margin-top: 10px;
+          border-radius: 10px;
+          border: 1px solid #e8e2e1;
           display: flex;
           flex-direction: column;
           position: relative;
+          
                 .pic{
                     display: flex;
                     width: 100%;
-                    height: 100%;
+                    height: 300px;
                     img{
-                       width: 100%;
+                    border-radius: 10px;
+                    width: 100%;
                     height: 100%;
                     }
+                }
+                .word{
+                  color: #ff7d63;
+                    display: flex;
+                    padding: 14px;
+                    flex-direction: row;
+                    justify-content: center;
                 }
 
             }
           .box1{
             display: flex;
-              width: 400px;
+              width: 600px;
               height: 560px;
               // border: 1px solid black;
-              margin-left: 50px;
+            //  padding-left: 50px;
               flex-direction: column;
-              background: #f0f0f0;
+              // background: #f0f0f0;
               border-radius: 10px;
               padding: 20px 20px;
               div {
@@ -276,6 +301,10 @@ import imgZoom from 'vue2.0-zoom'
                         font-family: "microsoft yahei";
                         background: #f30213;
                         font-weight: 700;
+                        border-radius: 10px;
+                        &:hover{
+                          cursor: pointer;
+                        }
                     }
                     .button2{
                         width: 150px;
@@ -290,6 +319,10 @@ import imgZoom from 'vue2.0-zoom'
                         background: #ff7d63;
                         font-weight: 700;
                         margin-left: 60px;
+                        border-radius: 10px;
+                         &:hover{
+                          cursor: pointer;
+                        }
                     }
                   }
 
@@ -297,7 +330,38 @@ import imgZoom from 'vue2.0-zoom'
           }
   }
 
-  
+  .tableDataBox1{
+      margin-bottom: 100px;
+      border-radius: 10px;
+      margin: auto;
+      width: 85%;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      justify-content: flex-start;
+      background: #fff;
+      .userContent{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        border-bottom: 1px solid #e8e2e1;
+        border-top: 1px solid #e8e2e1;
+
+        .userContent-l{
+          display: flex;
+          width: 300px;
+          // border-right: 1px solid #e8e2e1;
+        }
+        .userContent-r{
+          display: flex;
+          flex-direction: column;
+            div{
+              display: flex;
+            }
+        }
+      }
+  }
+
 
 </style>
 

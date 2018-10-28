@@ -18,7 +18,7 @@
                     <li v-for="(v,i) in shopMenuName" :key="i" class="shopName" @click="searchshop(v,i)"  :class="{active : active == v.shopName}" >{{v.shopName}}</li>
                     </ul> 
                     <ul v-show="hideMenu">
-                    <li v-for="(v,i) in shopMenuMoreName" :key="i" class="shopName"  @click="searchshop(v,i)">{{v.shopName}}</li>
+                    <li v-for="(v,i) in shopMenuMoreName" :key="i" class="shopName"  @click="searchshop(v,i)" :class="{active : active == v.shopName}">{{v.shopName}}</li>
                     </ul>
                     <a href="#" @click="toggle()" style="color:red;margin-left:5px;display:inline-block"><p>{{more}}</p></a>
 
@@ -243,8 +243,8 @@ import mockdata from "../Mock/mock";
                    this.shopName1 = res.data.info.shopList[0].shopName
                    this.active = this.shopName1
                    console.log(this.shopId)
-                   this.shopMenuName=res.data.info.shopList.slice(0,3)
-                   this.shopMenuMoreName=res.data.info.shopList.slice(3)   
+                   this.shopMenuName=res.data.info.shopList.slice(0,1)
+                   this.shopMenuMoreName=res.data.info.shopList.slice(1)   
                      /**
                       * 未来七天日期
                       */

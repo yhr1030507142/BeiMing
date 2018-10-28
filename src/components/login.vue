@@ -7,12 +7,12 @@
             <form action="">
                 <div class="form-input">
                     <label>用户名</label>
-                    <input type="text" placeholder="UsingName@beiming.com" v-model="username"/>
+                    <input type="text"  :placeholder="placeholder" v-model="username" @focus="placeholder=''" @blur="placeholder='UsingName@beiming.com'"/>
                     <i class="icon"></i>
                 </div>
                 <div class="form-input">
                 <label>密码</label>
-                <input type="password" placeholder='PassWord' v-model="password"/>
+                <input type="password" :placeholder="placeholder1" v-model="password" @focus="placeholder1=''" @blur="placeholder1='PassWord'"/>
                     <i class="icon1"></i>
                 </div>
                <div class="form-input">
@@ -36,6 +36,8 @@ export default {
         return{
               username:'',
               password:'',
+              placeholder:'UsingName@beiming.com',
+              placeholder1:'PassWord'
         }
     },
     methods:{
@@ -81,6 +83,7 @@ export default {
                         });
                  window.sessionStorage.info = JSON.stringify(this.info);
                  this.$store.state.userInfo =  this.info
+                 console.log(this.info)
                  this.$router.push({name:'index'})
                     }else{
                          this.$message({
@@ -97,6 +100,10 @@ export default {
             },err=>{
                console.loga(err)
             })
+         },
+         noplaceholder(){
+             console.log(1)
+             this.placeholder=''
          }
     },
     mounted(){

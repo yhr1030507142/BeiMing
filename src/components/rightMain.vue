@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">菜品管理</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.indexLogin.userName}}</p>
                      <p>这里是菜品管理面板</p>
             </div>
             <div class="table">
@@ -27,12 +27,12 @@
                     <span style="margin-left: 10px">{{scope.row.menuId}}</span>
                     </template>    
                  </el-table-column> 
-                  <el-table-column   label="菜品编号">
+                  <el-table-column   label="菜品编号" :show-overflow-tooltip="true">
                    <template slot-scope="scope">   
-                    <span style="margin-left: 10px">{{scope.row.menuNo}}</span>
+                    <span style="margin-left: 10px" >{{scope.row.menuNo}}</span>
                     </template>    
                  </el-table-column> 
-                <el-table-column  label="菜品名称">
+                <el-table-column  label="菜品名称" :show-overflow-tooltip="true">
                     <template slot-scope="scope">   
                     <span style="margin-left: 10px">{{scope.row.menuName}}</span>
                     </template>    
@@ -125,9 +125,9 @@
               <!-- 更新模态框开始 -->
             <el-dialog  :visible.sync="updateBox" width="500px">
             <el-form :model="updateForm">
-            <el-form-item label="商铺号" :label-width="formLabelWidth">
+            <!-- <el-form-item label="商铺号" :label-width="formLabelWidth">
              <el-input v-model="updateForm.shopId" autocomplete="off" style="width:250px;"></el-input>
-            </el-form-item>
+            </el-form-item> -->
 
           
              <el-form-item label="菜品名称" :label-width="formLabelWidth">

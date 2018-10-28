@@ -43,6 +43,8 @@ export default {
         },
         getSession(){
             this.info = window.sessionStorage.info
+            console.log(JSON.parse(this.info).userInfo.emp.empName)
+
              // console.log('top'+this.info)
             this.userName = JSON.parse(this.info).userInfo.emp.empName
             this.shopName = JSON.parse(this.info).userShopInfo.shopName
@@ -50,7 +52,12 @@ export default {
             this.$store.state.indexLogin.userName = this.userName
             this.$store.state.indexLogin.shopName = this.shopName
             this.$store.state.indexLogin.shopId = this.shopId
-             //console.log(window.sessionStorage)
+
+            this.$store.state.indexLogin.morning = JSON.parse(this.info).userShopInfo.shopMorning
+            this.$store.state.indexLogin.noon = JSON.parse(this.info).userShopInfo.shopNoon
+            this.$store.state.indexLogin.evening = JSON.parse(this.info).userShopInfo.shopEvening
+
+            //console.log(window.sessionStorage)
         }
     },
     mounted(){

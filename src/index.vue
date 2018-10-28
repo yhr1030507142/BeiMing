@@ -3,25 +3,48 @@
       <topMenu></topMenu>
       <leftMenu></leftMenu>
       <div class="rightMain">
-        <div class="w">
-      <div ><p class="dishes-font">主页</p></div>
+      <div class="w">
+      
+      <div ><p class="dishes-font">管理主页</p></div>
+       <div class="showName">
+                   <p>Hi,{{$store.state.indexLogin.userName}}</p>
+                     <p>今天是{{today}},祝您心情愉快！</p>
+            </div>
+      
       <div class="table">
       <el-date-picker
+      style="margin-left:320px;"
       v-model="dateValue"
       value-format="yyyy-MM-dd"
       type="daterange"
       align="right"
       unlink-panels
       range-separator="至"
-      start-placeholder="开始预定日期"
-      end-placeholder="结束预定日期"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
       @change="changDate"
       :picker-options="pickerOptions">
     </el-date-picker>
       </div>
-     
-          <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"> </div>
+      
+      <div style="float:left">
+          <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
+      </div>      
+      <div class="showInfoBox">
+           <ul>
+              <li class="showInfo"><a href="#"><el-tag style="width:142px;text-align:center">店铺</el-tag></a><span class="span">{{this.$store.state.indexLogin.shopName}}</span></li>
+            
+              <li class="showInfo"><a href="#"><el-tag type="info">每日早餐最早预定时间</el-tag></a><span class="span">{{this.$store.state.indexLogin.morning}}</span></li>
+              <li class="showInfo"><a href="#"><el-tag type="info">每日午餐最早预定时间</el-tag></a><span class="span">{{this.$store.state.indexLogin.noon}}</span></li>
+              <li class="showInfo"><a href="#"><el-tag type="info">每日晚餐最早预定时间</el-tag></a><span class="span">{{this.$store.state.indexLogin.evening}}</span></li>
+                            
+           </ul>
+            
+      </div>
+
         </div>
+        
+
       </div>
       <router-view></router-view>
   </div>
@@ -40,9 +63,10 @@ export default {
        show:false,
        data:[],
        num:[],
-       start:'123',
+       start:'',
        end:'',
-        dateValue:[],
+       today:'',
+       dateValue:[],
        menuName:[],
       menuName1:[],
         pickerOptions: {
@@ -73,6 +97,7 @@ export default {
             }
           }]
         },
+       
      }
      
   },
@@ -88,11 +113,11 @@ export default {
     },
     width: {
       type: String,
-      default: '800px'
+      default: '600px'
     },
     height: {
       type: String,
-      default: '600px'
+      default: '400px'
     }
   },
   name: 'App',
@@ -179,7 +204,13 @@ export default {
       }
     },
     getData(){
-     
+        var dd=new Date();
+        var dateArr=[];
+        dateArr[0]=dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate()
+        this.start = dateArr[0]
+        this.end = dateArr[0] 
+        this.today = dd.getFullYear()+"年"+(dd.getMonth()+1)+"月"+dd.getDate()+"日"
+        this.dateValue=[this.start,this.end]
     },
     changDate(value){
               console.log(value)
@@ -244,6 +275,62 @@ export default {
              border-bottom: 1px solid #e8e2e1;
          }
         
+    .title-one{
+  width: 100%;
+  display: flex;
+  width: 150px;
+  flex-direction: row;
+  justify-content: flex-start;
+    }
+    .picBox{
+      display: flex;
+      width: 150px;
+      height: 50px;
+      border: 1px solid black;
+      border-radius: 10px;
+      flex-direction: column;
+    }
+    .picBox p{
+      display: flex;
+    }
+    .showInfoBox{
+      float:right;
+      border-radius:10px;
+      width:500px;
+      height:auto;
+      border:1px solid #e8e2e1;
+      margin-top:50px;
+      display: flex;
+      flex-direction: column;
+     
+    }
     
+     .showInfoBox ul{
+       width: 100%;
+        display: flex;
+        flex-direction: column; 
+        align-items:center;
+    } 
+    .showInfo{
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      border-bottom: 1px solid #e8e2e1;
+      min-height: 40px;
+      align-items:center;
+    }
+    .showInfo a{
+      display: flex;
+      flex-direction: row;
+      /* justify-content: flex-end; */
+      width: 170px;
+      margin-left: 10px;
+    }
+    .showInfo .span{
+      display: flex;
+      color: #999;
+      font-size: 14px;
+      font-weight: 500;
+    }
 
 </style>

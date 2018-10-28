@@ -22,8 +22,8 @@
                <p v-show="this.sugType==''"><el-tag type="danger">请选择建议类型</el-tag></p> <el-tag v-show="this.sugType!=''">{{this.sugType}}</el-tag>
             <div class="tableData">
                 <div >
-                <textarea name="" cols="200" rows="8"  @input = "descInput" style="font-size:24px;border:1px solid #e8e2e1;border-radius:5px;width:100%;height:300px;" v-model="sugContent" ref="text" maxlength="200"></textarea>
-               <span class="circle" style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:flex-end;"><span class="text" style="display:flex;color:#999">限制{{remnant}}/200字以内</span></span>
+                <textarea name="" cols="200" rows="8"  @input ="descInput" style="font-size:24px;border:1px solid #e8e2e1;border-radius:5px;width:100%;height:300px;" v-model="sugContent" ref="text" maxlength="200"></textarea>
+               <span class="circle" style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:flex-end;"><span class="text" style="display:flex;color:#999">剩余{{remnant}}/200字以内</span></span>
                 <div style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:center;margin-top:30px;">
                      <div style="display:flex">
                          <el-button type="danger"  style="width:200px;height:40px" @click="addSave">提交建议</el-button>
@@ -44,7 +44,7 @@ import mockdata from "../Mock/mock";
           menu:true,
           sugContent:'',
           sugType:'',
-          remnant:'',
+          remnant:200,
         }
       },
       methods:{

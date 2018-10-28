@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">菜品搭配</h2>
             <div class="showName">
-                   <p>{{$store.state.userLogin.userName}}</p>
+                   <p>{{$store.state.indexLogin.userName}}</p>
                      <p>现在为每天的菜品进行搭配吧！</p>
             </div>
             <div class="table">
@@ -40,8 +40,8 @@
                         </ul>
                </div>
                <!-- 早餐添加 -->
-               <el-dialog  :visible.sync="breakfastOpen">
-                <el-transfer v-model="value" :data="data" @change="rightContent"></el-transfer>
+               <el-dialog  :visible.sync="breakfastOpen" width="600px">
+                <el-transfer v-model="value" :data="data" @change="rightContent" :titles="['未选', '已选']"></el-transfer>
                  <div slot="footer" class="dialog-footer">
                   <el-button @click="noAddBreakFast">取 消</el-button>
                   <el-button type="primary" @click="addBreakFast">确 定</el-button>
@@ -68,8 +68,8 @@
                         </ul>
                 </div>
                  <!-- 午餐添加 -->
-               <el-dialog  :visible.sync="lunchOpen">
-                <el-transfer v-model="value1" :data="data" ></el-transfer>
+               <el-dialog  :visible.sync="lunchOpen" width="600px"> 
+                <el-transfer v-model="value1" :data="data" :titles="['未选', '已选']"></el-transfer>
                  <div slot="footer" class="dialog-footer">
                   <el-button @click="noAddBreakFast">取 消</el-button>
                   <el-button type="primary" @click="addLunch">确 定</el-button>
@@ -95,8 +95,8 @@
                         </ul>
                  </div>
                   <!-- 晚餐添加 -->
-               <el-dialog  :visible.sync="dinnerOpen">
-                <el-transfer v-model="value2" :data="data" ></el-transfer>
+               <el-dialog  :visible.sync="dinnerOpen" width="600px">
+                <el-transfer v-model="value2" :data="data"  :titles="['未选', '已选']"></el-transfer>
                  <div slot="footer" class="dialog-footer">
                   <el-button @click="noAddBreakFast">取 消</el-button>
                   <el-button type="primary" @click="addDinner">确 定</el-button>
@@ -204,9 +204,10 @@
          * 初始化显示早中晚菜品信息
          */
         showMenuInfo(){
+          console.log(this.$store.state.indexLogin.shopId)
               let param =new URLSearchParams
-              console.log(this.$store.state.userLogin.shopId)
-             param.append('shopId',this.$store.state.userLogin.shopId)
+              console.log(this.$store.state.indexLogin.shopId)
+             param.append('shopId',this.$store.state.indexLogin.shopId)
              param.append('matchMenuDate',this.dateNow)
                this.$http.post('/api1/1024/cq1024/collocationofdishes/collocationofdishes/listofdishes',param).then((res)=>{
                    console.log(res)

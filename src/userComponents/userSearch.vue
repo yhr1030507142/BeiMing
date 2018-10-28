@@ -23,10 +23,10 @@
                   <el-button slot="append" icon="el-icon-search" @click="searchShopName()"></el-button>
                 </el-input>              
                 <div>
-                    <ul class="ul1"><li class="type style" @click="searchAll()">全部</li></ul>    
-                    <ul class="ul1"><li class="type">类型：</li><li class="style" v-for="(v,i) in menuPropertiesCategory" :key="i" @click="searchCategory(v.menuPropertiesCategoryId)" >{{v.menuPropertiesCategoryName}}</li></ul>    
-                    <ul class="ul1"><li class="type">菜系：</li><li class="style" v-for="(v,i) in menuPropertiesStyle" :key="i" @click="searchStyle(v.menuPropertiesStyleId)">{{v.menuPropertiesStyleName}}</li></ul>    
-                    <ul class="ul1"><li class="type">口味：</li><li class="style" v-for="(v,i) in menuPropertiesTaste" :key="i" @click="searchTaste(v.menuPropertiesTasteId)">{{v.menuPropertiesTasteName}}</li></ul>                       
+                    <ul class="ul1"><li class="type style" @click="searchAll()">全部</li><li class="style" ><el-tag v-show="active != ''" style="height:25px;line-height:25px;">{{active}}</el-tag></li></ul>    
+                    <ul class="ul1"><li class="type">类型：</li><li class="style" v-for="(v,i) in menuPropertiesCategory" :key="i" @click="searchCategory(v.menuPropertiesCategoryId,v.menuPropertiesCategoryName)">{{v.menuPropertiesCategoryName}}</li></ul>    
+                    <ul class="ul1"><li class="type">菜系：</li><li class="style" v-for="(v,i) in menuPropertiesStyle" :key="i" @click="searchStyle(v.menuPropertiesStyleId,v.menuPropertiesStyleName)">{{v.menuPropertiesStyleName}}</li></ul>    
+                    <ul class="ul1"><li class="type">口味：</li><li class="style" v-for="(v,i) in menuPropertiesTaste" :key="i" @click="searchTaste(v.menuPropertiesTasteId,v.menuPropertiesTasteName)">{{v.menuPropertiesTasteName}}</li></ul>                       
                    
                     
                 </div> 
@@ -38,15 +38,14 @@
                        <router-link tag="a" class="li" :to="'userGoods/'+v.menuId">
                              <a href="#"><img :src="v.menuPicPath" alt=""></a>
                              <a href="#" class="aa"><i>￥</i><p>{{v.menuPrice}}</p></a>
-                             <p>菜名：{{v.menuName}}</p>
+                             <p>{{v.menuName}}</p>
                              <a href="#" class="bb">商铺：{{v.shop.shopName}}</a>
                        </router-link>
-                      
-                        
                     </li>
                 </ul>
-                 
             </div>
+
+            
         </div>
     </div>
 </template>
@@ -62,6 +61,7 @@
             menuPropertiesStyle:[],
             menuPropertiesCategory:[],
             pic:[],
+            active:'',
             
         }
       },
@@ -85,7 +85,8 @@
           searchAll(){
               this.getdata()
           },
-          searchCategory(val){
+          searchCategory(val,name){
+              this.active = name
               console.log(val)
               let param = new URLSearchParams
               param.append('menuPropertiesCategoryId',val)
@@ -97,8 +98,8 @@
                 } 
               }) 
           },
-          searchTaste(val){
-          
+          searchTaste(val,name){
+              this.active = name
                 let param = new URLSearchParams
               param.append('menuPropertiesTasteId',val)
               this.$http.post('/api1/1024/cq1024/shop-menu/findAllByMenuPropertiesTasteId',param).then(res=>{
@@ -109,12 +110,15 @@
                 }   
               }) 
           },
-          searchStyle(val){
+          searchStyle(val,name){
+               this.active = name
+              console.log(val)
                 let param = new URLSearchParams
                  param.append('menuPropertiesStyleId',val)
                  this.$http.post('/api1/1024/cq1024/shop-menu/findAllByMenuPropertiesStyleId',param).then(res=>{
+                
                 if(res.data.code == 100){
-                        this.data = res.data.info.Info
+                        this.data = res.data.info.Info  
                 }else{
                     console.log(res.data.msg)
                 }   
@@ -270,13 +274,18 @@
             font-weight: 600;
         }
         .style{
-             font-size: 14px;
+            font-size: 14px;
             color: #999;
             &:hover{
                 color: #f60;
                 cursor: pointer;
             }
+            &:active{
+                 color: #f60;
+            }
         }
+         
     }
+  
 </style>
 
