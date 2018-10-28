@@ -16,11 +16,11 @@
                     <i class="icon1"></i>
                 </div>
                <div class="form-input">
-                    <div class="forgetPas"><span>忘记密码?</span></div>
+                    <!-- <div class="forgetPas"><span>忘记密码?</span></div> -->
                </div>
                <div class="form-input">
                    <button class="btn1" @click="denglu()">登录</button>
-                   <button class="btn2">新用户注册</button>
+                   <button class="btn2" @click="clearBoth()">重置</button>
                </div>
             </form>
         </div>
@@ -78,7 +78,7 @@ export default {
                     this.info = res.data.info;
                     if(this.info.userInfo.roleId == 1){
                         this.$message({
-                         message: res.data.msg,
+                         message: '登陆成功',
                          type: 'success'
                         });
                  window.sessionStorage.info = JSON.stringify(this.info);
@@ -104,7 +104,11 @@ export default {
          noplaceholder(){
              console.log(1)
              this.placeholder=''
-         }
+         },
+         clearBoth(){
+             this.username = ''
+             this.password = ''
+         },
     },
     mounted(){
        

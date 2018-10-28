@@ -110,7 +110,10 @@ watch:{
         
     }
    
-}
+},
+beforeDestroy(){
+          mediaStreamTrack && mediaStreamTrack.stop();
+      }
 }
 </script>
 <style lang="scss">

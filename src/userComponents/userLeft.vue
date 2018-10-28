@@ -1,7 +1,7 @@
 <template>
         <div class="leftMenu">
             <ul>
-                <li v-for="(v,i) in this.leftMenu" :key="i"  @click="clickButton(v,i)"><router-link :to='v.to'><a href="#" :style="!v.flag?'border-right:3px solid #ff7d63':'border-right:none'"><i class="dishes" :style="'background-image:url('+(v.flag?v.url1:v.url)+')'+';'+'background-size:'+v.backgroundSize"></i></a></router-link></li>
+                <li ref="li" v-for="(v,i) in this.leftMenu" :key="i"  @click="clickButton(v,i)"><router-link :to='v.to'><a href="#" :style="!v.flag?'border-right:3px solid #ff7d63':'border-right:none'"><i class="dishes" :style="'background-image:url('+(v.flag?v.url1:v.url)+')'+';'+'background-size:'+v.backgroundSize"></i></a></router-link></li>
                 <!-- <li><router-link to='/'><a href="#"><i class="dishes"></i></a></router-link></li> -->
                 <!-- <li><router-link to='/'><a href="#"><i class="dishes"></i></a></router-link></li> -->
                 <!-- <li><router-link to='/'><a href="#"><i class="dishes"></i></a></router-link></li> -->
@@ -21,21 +21,17 @@ export default {
                 {to:'/userIndex/userSearch',url:require('../assets/images/商品查询1.png'),url1:require('../assets/images/商品查询.png'),backgroundSize:'40px 35px'},
                 // {to:'/userIndex/userEvaluate',url:require('../assets/images/菜品评价.png'),url1:require('../assets/images/菜品评价未选.png'),backgroundSize:'40px 35px'},      
            ],
-           
-            
-        
-          
-
-
         }
-        
     },
     methods:{
         addFlad(){
+            console.log(1)
+            this.$set(this.leftMenu[0],'flag',true)
               for(var j=0;j<this.leftMenu.length;j++){
                    this.$set(this.leftMenu[j],'flag',true)
                    if(this.leftMenu[j].to==this.$route.path){
                        this.$set(this.leftMenu[j],'flag',false)
+                        
                    }
               }
             //   alert(this.$route.path)
@@ -64,10 +60,21 @@ export default {
 
        
     },
-      mounted(){
-                this. addFlad();
-                
+    computed:{
+        routeName(){
+            return this.$route.name
         }
+    },
+      mounted(){
+            this.addFlad();   
+                
+        },
+     watch: {
+        routeName(){
+            // this.$refs.li.click()
+        }
+},
+       
 }
 </script>
 

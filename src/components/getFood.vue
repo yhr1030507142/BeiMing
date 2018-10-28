@@ -142,6 +142,9 @@ var mediaStreamTrack;
          this.openPhoto()
        
          console.log(this.$route.params.id)
+      },
+      beforeDestroy(){
+         mediaStreamTrack && mediaStreamTrack.stop();
       }
     }
   </script>

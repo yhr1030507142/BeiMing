@@ -14,8 +14,8 @@
                               <span class="span2"></span>
                               <input type="password"  placeholder="PassWord" v-model="password">
                          </div>
-                        <div class="div1"> <p>忘记密码?</p></div>
-                        <div class="div"><button class="button1" @click="denglu()">登录</button></div>
+                        <!-- <div class="div1"> <p>忘记密码?</p></div> -->
+                        <!-- <div class="div"><button class="button1" @click="denglu()">登录</button></div> -->
                         <div class="div2">
                             <i></i>
                             <p>or</p>

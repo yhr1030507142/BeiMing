@@ -3,7 +3,7 @@
         <div class="w">
            <h2 class="dishes-font">评价菜品</h2>
             <div class="showName">
-                   <p>Hi,UserName</p>
+                   <p>Hi,{{$store.state.userLogin.username}}</p>
                      <p>快来评价你的菜品吧！</p>
             </div>
             <div class="tableData" v-for="(v,i) in data" :key="i" style="margin-top:20px;">

@@ -24,11 +24,11 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   routes
 })
+
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => { 
   if (to.matched.some(res => res.meta.requireAuth)) { // 验证是否需要登陆 
    if (sessionStorage.getItem('userInfo')) { // 查询本地存储信息是否已经登陆
-     
     next(); 
    } else { 
      console.log(2)
@@ -41,6 +41,7 @@ router.beforeEach((to, from, next) => {
    next(); 
   } 
  });
+ 
 new Vue({
   el: '#user',
   router,

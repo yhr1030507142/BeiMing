@@ -75,30 +75,34 @@
                 <el-table-column prop="orderStatusName" label="订单状态"></el-table-column>
                 <el-table-column prop="totalPrice" label="订单总金额"></el-table-column>
                 <el-table-column prop="empName" label="买家姓名"></el-table-column>
-                <el-table-column fixed="right" label="操作" width="100">
+                <el-table-column  label="操作" width="100">
                  <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                  <!-- <el-button type="text" size="small" @click="handleClick(scope.row)">编辑</el-button> -->
                 </template>
                 </el-table-column>
     </el-table>
-            </div>          
+            </div>        
+            <div style="margin-top:30px;">
+        <el-pagination background :page-sizes="[1,2,5]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
+
+        </div>  
         </div>
         <el-dialog  :visible.sync="dialogFormVisible" width="500px">
             <el-form :model="form">
-            <el-form-item label="订单编号" :label-width="formLabelWidth">
+            <el-form-item label="订单编号" :label-width="formLabelWidth" :show-overflow-tooltip="true">
              <el-input v-model="form.orderNo" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
-             <el-form-item label="下单时间" :label-width="formLabelWidth">
+             <el-form-item label="下单时间" :label-width="formLabelWidth" :show-overflow-tooltip="true">
              <el-input v-model="form.orderCreateDate" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
-             <el-form-item label="订单状态" :label-width="formLabelWidth">
+             <el-form-item label="订单状态" :label-width="formLabelWidth" :show-overflow-tooltip="true">
              <el-input v-model="form.orderStatusName" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
-             <el-form-item label="订单总金额" :label-width="formLabelWidth">
+             <el-form-item label="订单总金额" :label-width="formLabelWidth" :show-overflow-tooltip="true">
              <el-input v-model="form.totalPrice" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
-            <el-form-item label="买家名臣" :label-width="formLabelWidth">
+            <el-form-item label="买家名称" :label-width="formLabelWidth" :show-overflow-tooltip="true">
              <el-input v-model="form.empName" autocomplete="off" style="width:250px;"></el-input>
             </el-form-item>
             <el-form-item label="商铺名称" :label-width="formLabelWidth">
@@ -110,10 +114,7 @@
                 <el-button @click="changeOrder(form.btn1Ur2)" v-show="form.btn2">{{form.btn2}}</el-button>   
              </div>
         </el-dialog>
-        <div style="margin-top:30px;">
-        <el-pagination background :page-sizes="[1,2,5]" :page-size="pageSize" layout="prev, sizes,pager, next,total,jumper" :total="total" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="sizeChange"></el-pagination>
-
-        </div>
+        
     </div>
 
 </template>
@@ -124,9 +125,11 @@ import mockdata from "../Mock/mock";
       data() {
         return {
           data: [],
+          //监听数据变化
+         orderChange:'',
         //分页数据开始
-          total:5,//默认数据总数
-          pageSize:2,//每页的数据条数
+          total:0,//默认数据总数
+          pageSize:5,//每页的数据条数
           currentPage:1,//默认开始页面
         //分页数据结束
           value1: '',
@@ -254,16 +257,21 @@ import mockdata from "../Mock/mock";
                       pageSize:this.pageSize, 
                       statusId: this.orderStatusId          
                   }
-                  }).then((res=>{
-                    console.log(res)
-                this.orderData=res.data.info.orders.list
-                this.total =res.data.info.orders.total
-                // this.orderDataChildren=res.data.info.orders.list
-                let arr =[];
-                for(var i = 0;i<this.orderData.length;i++){
-                        arr[i]=this.orderData[i].orderMenuDtos
-                }
-                 this.orderDataChildren = arr
+              }).then((res=>{
+                console.log(res.data.info.orders.total)
+                  this.orderChange=res.data.info.orders.total
+                   if(res.data.code==100){
+                   this.orderData=res.data.info.orders.list
+                   this.total =res.data.info.orders.total
+                   // this.orderDataChildren=res.data.info.orders.list
+                   let arr =[];
+                   for(var i = 0;i<this.orderData.length;i++){
+                           arr[i]=this.orderData[i].orderMenuDtos
+                   }
+                    this.orderDataChildren = arr
+                  }else{
+                    console.log(res.data.msg)
+                  }   
             }))
           }else{
                this.$http.get('/api1/1024/cq1024/order/list',{
@@ -276,6 +284,7 @@ import mockdata from "../Mock/mock";
                   }
                   }).then((res=>{
                     console.log(res)
+                  this.orderChange=res.data.info.orders.total
                 this.orderData=res.data.info.orders.list
                 this.total =res.data.info.orders.total
                 // this.orderDataChildren=res.data.info.orders.list
@@ -291,7 +300,7 @@ import mockdata from "../Mock/mock";
           handleCurrentChange(val){
                 this.currentPage = val;
                 console.log(this.currentPage)
-                 this.getpage()
+                this.getpage()
           },
           search(){
               this.getpage()
@@ -317,12 +326,15 @@ import mockdata from "../Mock/mock";
                        type:'success',
                        message:'操作成功'
                      })
+                     this.dialogFormVisible =false
                      this.getpage()
                 }else{
                    this.$message({
                        type:'info',
                        message:res.data.msg
                      })
+                      this.dialogFormVisible =false
+                      this.getpage()
                 }
                     console.log(res)
               })
@@ -335,7 +347,6 @@ import mockdata from "../Mock/mock";
                     if(res.data.code==100){
                     this.statusArr = res.data.info.orderStatuses
                     }
-                     
                 })
             
           },
@@ -357,6 +368,11 @@ import mockdata from "../Mock/mock";
       mounted(){
           this.getpage()
           this.getSelectData()
+      },
+      watch:{
+        updated(){
+          this.getpage()
+        }
       }
     }
   </script>

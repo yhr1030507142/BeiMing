@@ -26,10 +26,10 @@
       :picker-options="pickerOptions">
     </el-date-picker>
       </div>
-      
-      <div style="float:left">
+      <div class="boxShow">
+          <div style="display:flex">
           <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
-      </div>      
+          </div>      
       <div class="showInfoBox">
            <ul>
               <li class="showInfo"><a href="#"><el-tag style="width:142px;text-align:center">店铺</el-tag></a><span class="span">{{this.$store.state.indexLogin.shopName}}</span></li>
@@ -41,10 +41,11 @@
            </ul>
             
       </div>
+      </div>
+     
+      
 
         </div>
-        
-
       </div>
       <router-view></router-view>
   </div>
@@ -168,7 +169,7 @@ export default {
           },
           axisLabel :{
             interval:0 ,
-            rotate:-20
+            rotate:0
         }
 
         }],
@@ -187,10 +188,7 @@ export default {
      
     },
     getSession(){
-       if(this.$store.state.indexLogin.username=='' || this.$store.state.indexLogin.username==null ||this.$store.state.indexLogin.username== 'undefined'){
-          this.$router.push({name:'login'})
-          return false
-      }
+      
       console.log(this.$store.state.indexLogin.username)
       this.$http.post('api1/1024/cq1024/user/user/issession').then(res=>{
         console.log(res)
@@ -317,9 +315,9 @@ export default {
       float:right;
       border-radius:10px;
       width:500px;
-      height:auto;
+      height:300px;
       border:1px solid #e8e2e1;
-      margin-top:50px;
+      margin-top:80px;
       display: flex;
       flex-direction: column;
      
@@ -351,6 +349,12 @@ export default {
       color: #999;
       font-size: 14px;
       font-weight: 500;
+    }
+    .boxShow{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-bottom: 100px;
     }
 
 </style>

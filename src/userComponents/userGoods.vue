@@ -6,7 +6,7 @@
                    <p>Hi,{{$store.state.userLogin.userName}}</p>
                      <p>快来看看美味吧！</p>
             </div>
-            
+            <el-button type="danger" style="margin-top:10px" @click="goBack()">返回</el-button>
             <div class="tableDataBox">
                <div class="box">
                   <div class="pic">
@@ -162,7 +162,13 @@ import imgZoom from 'vue2.0-zoom'
             //  }
                 
                
-          }
+          },
+          /**
+           * 返回上一页
+           */
+          goBack(){
+              this.$router.go(-1)
+          },
         },
         mounted(){
           this.getdata(this.$route.params.id)

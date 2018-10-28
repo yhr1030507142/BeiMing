@@ -10,6 +10,7 @@
                      <p>请注视摄像头</p>
                  
             </div>
+             <el-button type="danger" style="margin-top:10px" @click="goBack()">返回</el-button>
             <div class="tableData">       
                      <div class="box">
                       <video src="" id="video" ref="video" width="320" height="320" class="video"
@@ -79,7 +80,12 @@ var mediaStreamTrack;
       mediaStreamTrack && mediaStreamTrack.stop();
        this.$router.go(-1)
     //   this.$store.state.photoBox=true
-    },   
+    },  
+    close2() {
+      mediaStreamTrack && mediaStreamTrack.stop();
+       this.$router.push({name:'userOrder'})
+    //   this.$store.state.photoBox=true
+    },     
     // 识别
     check(){
          let param = new URLSearchParams
@@ -122,6 +128,7 @@ var mediaStreamTrack;
                  type:'success',
                  message:'下单成功'
                })
+                this.btnShow=false
               let _this =this
               setTimeout(_this.close1,1500);
               }else{
@@ -143,6 +150,9 @@ var mediaStreamTrack;
         this.openPhoto()
        
         console.log( JSON.stringify(this.$store.state.accountInfo))
+      },
+      beforeDestroy(){
+          mediaStreamTrack && mediaStreamTrack.stop();
       }
     }
   </script>
